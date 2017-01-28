@@ -7,12 +7,13 @@
 
 #ifndef GRIMPEUR_H_
 #define GRIMPEUR_H_
-
+#include "config.h"
 class Grimpeur {
 public:
 	Grimpeur();
 	virtual ~Grimpeur();
 
+	void Update();
 
 
 

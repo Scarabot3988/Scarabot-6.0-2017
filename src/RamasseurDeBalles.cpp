@@ -16,3 +16,5 @@ RamasseurDeBalles::~RamasseurDeBalles() {
 	// TODO Auto-generated destructor stub
 }
 
+void RamasseurDeBalles::Update() {
+}

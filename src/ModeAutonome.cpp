@@ -7,12 +7,14 @@
 
 #include <ModeAutonome.h>
 
-ModeAutonome::ModeAutonome() {
-	// TODO Auto-generated constructor stub
+ModeAutonome::ModeAutonome(SystemesDeControle * _systemesdecontrole) : systemesdecontrole(_systemesdecontrole) {
 
 }
 
 ModeAutonome::~ModeAutonome() {
-	// TODO Auto-generated destructor stub
+}
+
+void ModeAutonome::Update()
+{
 }
 

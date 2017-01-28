@@ -16,3 +16,5 @@ Lanceur::~Lanceur() {
 	// TODO Auto-generated destructor stub
 }
 
+void Lanceur::Update() {
+}

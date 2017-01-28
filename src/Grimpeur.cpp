@@ -16,3 +16,6 @@ Grimpeur::~Grimpeur() {
 	// TODO Auto-generated destructor stub
 }
 
+void Grimpeur::Update() {
+
+}

@@ -16,3 +16,5 @@ Ramasseur::~Ramasseur() {
 	// TODO Auto-generated destructor stub
 }
 
+void Ramasseur::Update() {
+}

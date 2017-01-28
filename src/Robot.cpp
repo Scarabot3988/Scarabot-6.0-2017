@@ -1,7 +1,9 @@
 #include <iostream>
 #include <memory>
 #include <string>
-
+#include "config.h"
+#include "SystemesDeControle.h"
+#include "modeautonome.h"
 #include <IterativeRobot.h>
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
@@ -11,22 +13,38 @@ class Robot: public frc::IterativeRobot {
 public:
 	void RobotInit()
 	{
+		systemesdecontrole = SystemesDeControle();
+		systemesdecontrole.initSystemes();
+		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
+		modeautonome = new ModeAutonome(&systemesdecontrole);
 	}
 	void AutonomousInit() override
 	{
+		t = 0;
 	}
 	void AutonomousPeriodic()
 	{
+		modeautonome->Update();
+		systemesdecontrole.Update();
+		t++;
 	}
 	void TeleopInit()
 	{
 	}
 	void TeleopPeriodic()
 	{
+		systemesdecontrole.basemobile.Drive(joyPilote->GetRawAxis(0), joyPilote->GetRawAxis(1));
+		systemesdecontrole.Update();
 	}
 	void TestPeriodic()
 	{
 	}
+private:
+	SystemesDeControle systemesdecontrole;
+	Joystick * joyPilote;
+	ModeAutonome * modeautonome;
+
+	unsigned int t = 0;
 
 
 

@@ -8,11 +8,7 @@
 #ifndef SRC_BASEMOBILE_H_
 #define SRC_BASEMOBILE_H_
 #include <WPIlib.h>
-
-#define PORTMOTORDROITE1 0
-#define PORTMOTORDROITE2 1
-#define PORTMOTORGAUCHE1 2
-#define PORTMOTORGAUCHE2 3
+#include "config.h"
 
 class BaseMobile
 {
@@ -20,12 +16,18 @@ class BaseMobile
 	BaseMobile();
 	virtual ~BaseMobile();
 
-	void miseajour(Joystick *joy);
+	void Update();
+	void Drive(float _x, float _y);
 
+	private:
 	Talon *moteur1gauche;
 	Talon *moteur2gauche;
 	Talon *moteur1droite;
 	Talon *moteur2droite;
+
+
+	float x;
+	float y;
 };
 
 #endif /* SRC_BASEMOBILE_H_ */

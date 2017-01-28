@@ -12,6 +12,8 @@ class Lanceur {
 public:
 	Lanceur();
 	virtual ~Lanceur();
+
+	void Update();
 };
 
 #endif /* SRC_LANCEUR_H_ */

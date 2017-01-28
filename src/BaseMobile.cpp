@@ -7,25 +7,27 @@
 
 #include <BaseMobile.h>
 
-BaseMobile::BaseMobile()
+BaseMobile::BaseMobile() : x(0), y(0)
 {
-	// TODO Auto-generated constructor stub
 
-	moteur1droite=new Talon(PORTMOTORDROITE1);
-	moteur2droite=new Talon(PORTMOTORDROITE2);
-	moteur1gauche=new Talon(PORTMOTORGAUCHE1);
-	moteur2gauche=new Talon(PORTMOTORGAUCHE2);
+	moteur1droite = new Talon(PWM_PortMoteurDroite1);
+	moteur2droite = new Talon(PWM_PortMoteurDroite2);
+	moteur1gauche = new Talon(PWM_PortMoteurGauche1);
+	moteur2gauche = new Talon(PWM_PortMoteurGauche2);
 }
 
 BaseMobile::~BaseMobile()
 {
-	// TODO Auto-generated destructor stub
 }
 
-void BaseMobile::miseajour(Joystick *joy)
+void BaseMobile::Drive(float _x, float _y)
 {
-	float x = joy->GetRawAxis(0);
-	float y =  joy->GetRawAxis(1);
+	x = _x;
+	y = _y;
+}
+
+void BaseMobile::Update()
+{
 	float vitesseg = (x-y)/2; // TOURNER À GAUCHE
 	float vitessed = (x+y)/2; // TOURNER À DROITE
 
