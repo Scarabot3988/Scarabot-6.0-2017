@@ -37,3 +37,8 @@ void BaseMobile::Update()
 	moteur1droite->SetSpeed(vitessed);
 	moteur2droite->SetSpeed(vitessed);
 }
+
+void BaseMobile::donnersensor(Sensors& _sensor)
+{
+	sensor=_sensor;
+}
