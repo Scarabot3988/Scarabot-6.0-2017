@@ -9,7 +9,11 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
+
 #include "CANTalon.h"
+
+#include "Sensors.h"
+
 
 class Robot: public frc::IterativeRobot {
 public:
@@ -19,7 +23,11 @@ public:
 		systemesdecontrole.initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome = new ModeAutonome(&systemesdecontrole);
+
 		talon = new CANTalon(0);
+
+
+		systemesdecontrole.basemobile.donnersensor(sensor);
 
 	}
 	void AutonomousInit() override
@@ -70,8 +78,12 @@ private:
 	SystemesDeControle systemesdecontrole;
 	Joystick * joyPilote;
 	ModeAutonome * modeautonome;
+
 	CANTalon * talon;
 
+
+
+	Sensors sensor;
 
 	unsigned int t = 0;
 	int vieux = 0;
