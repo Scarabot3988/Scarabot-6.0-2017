@@ -27,7 +27,7 @@ public:
 		talon = new CANTalon(0);
 
 
-		systemesdecontrole.basemobile.donnersensor(sensor);
+		systemesdecontrole.basemobile.donnersensor(&sensor);
 
 	}
 	void AutonomousInit() override

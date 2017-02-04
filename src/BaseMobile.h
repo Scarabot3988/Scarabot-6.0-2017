@@ -17,7 +17,7 @@ class BaseMobile
 	public:
 	BaseMobile();
 	virtual ~BaseMobile();
-	void donnersensor(Sensors& _sensor);
+	void donnersensor(Sensors* _sensor);
 	void Update();
 	void Drive(float _x, float _y);
 
@@ -26,7 +26,7 @@ class BaseMobile
 	Talon *moteur2gauche;
 	Talon *moteur1droite;
 	Talon *moteur2droite;
-	Sensors& sensor;
+	Sensors *sensor;
 
 	float x;
 	float y;
