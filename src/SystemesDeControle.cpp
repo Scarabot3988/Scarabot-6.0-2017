@@ -18,5 +18,5 @@ void SystemesDeControle::Update()
 	grimpeur.Update();
 	ramasseur.Update();
 	ramasseurballes.Update();
-	monbrasprefere.Update();
+
 }

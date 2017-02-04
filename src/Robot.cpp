@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <memory>
 #include <string>
 #include "config.h"
@@ -13,7 +13,6 @@ class Robot: public frc::IterativeRobot {
 public:
 	void RobotInit()
 	{
-		systemesdecontrole = SystemesDeControle();
 		systemesdecontrole.initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome = new ModeAutonome(&systemesdecontrole);
@@ -24,9 +23,9 @@ public:
 	}
 	void AutonomousPeriodic()
 	{
-		modeautonome->Update();
+		modeautonome->Execute(t);
 		systemesdecontrole.Update();
-		t++;
+		t=t+1;
 	}
 	void TeleopInit()
 	{

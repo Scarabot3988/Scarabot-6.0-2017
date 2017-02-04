@@ -13,7 +13,6 @@
 #include "Lanceur.h"
 #include "RamasseurDeBalles.h"
 #include "RamasseurDeGear.h"
-#include "bras.h"
 
 class SystemesDeControle {
 public:
@@ -22,7 +21,7 @@ public:
 	Lanceur lanceur;
 	RamasseurDeBalles ramasseurballes;
 	Ramasseur ramasseur;
-	bras monbrasprefere;
+
 
 
 	void initSystemes();

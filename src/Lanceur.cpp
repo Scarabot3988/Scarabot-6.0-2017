@@ -6,9 +6,12 @@
  */
 
 #include <Lanceur.h>
+#include <WPILib.h>
 
-Lanceur::Lanceur() {
-	// TODO Auto-generated constructor stub
+
+Lanceur::Lanceur()
+{
+	motorx= new Victor(0);
 
 }
 

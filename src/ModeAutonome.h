@@ -9,16 +9,18 @@
 #define SRC_MODEAUTONOME_H_
 #include "config.h"
 #include "SystemesDeControle.h"
-
+#include "Commande.h"
 class ModeAutonome {
 public:
 	ModeAutonome(SystemesDeControle * _systemesdecontrole);
 	virtual ~ModeAutonome();
 
-	void Update();
+	void Execute(int t);
 
 private:
 	SystemesDeControle * systemesdecontrole;
+	std::vector<Commande> listecommande;
+	int commandeencours;
 };
 
 #endif /* SRC_MODEAUTONOME_H_ */
