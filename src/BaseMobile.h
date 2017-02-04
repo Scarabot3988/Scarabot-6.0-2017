@@ -7,15 +7,17 @@
 
 #ifndef SRC_BASEMOBILE_H_
 #define SRC_BASEMOBILE_H_
+
 #include <WPIlib.h>
 #include "config.h"
+#include "sensors.h"
 
 class BaseMobile
 {
 	public:
 	BaseMobile();
 	virtual ~BaseMobile();
-
+	void donnersensor(Sensors& _sensor);
 	void Update();
 	void Drive(float _x, float _y);
 
@@ -24,7 +26,7 @@ class BaseMobile
 	Talon *moteur2gauche;
 	Talon *moteur1droite;
 	Talon *moteur2droite;
-
+	Sensors& sensor;
 
 	float x;
 	float y;

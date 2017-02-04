@@ -8,6 +8,7 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include "Sensors.h"
 
 class Robot: public frc::IterativeRobot {
 public:
@@ -16,6 +17,7 @@ public:
 		systemesdecontrole.initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome = new ModeAutonome(&systemesdecontrole);
+		systemesdecontrole.basemobile.donnersensor(sensor);
 	}
 	void AutonomousInit() override
 	{
@@ -42,7 +44,7 @@ private:
 	SystemesDeControle systemesdecontrole;
 	Joystick * joyPilote;
 	ModeAutonome * modeautonome;
-
+	Sensors sensor;
 	unsigned int t = 0;
 
 
