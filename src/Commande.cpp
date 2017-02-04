@@ -14,15 +14,18 @@ Commande::~Commande() {
 	// TODO Auto-generated destructor stub
 }
 
-void Commande::start()
+void Commande::start(int t)
 {
-
+	if (nomdelacommande=="delai")
+	{
+		tempsdebut=t;
+	}
 }
 bool Commande::isfinished(int t)
 {
-	if (t==tempsfin)
+	if (nomdelacommande=="delai" && t>tempsdebut+deltatemps)
 		{
-		return true;
+			return true;
 		}
 
 	return false;

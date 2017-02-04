@@ -12,14 +12,24 @@
 
 class Commande {
 public:
-	Commande(std::string nom, int maxt)
+	Commande(std::string nom, float param1, float param2=0)
 {
+	if (nom=="delai")
+	{
+		deltatemps=param1;
+	}
+
+
+
+
+
+
+
 nomdelacommande = nom;
-tempsfin=maxt;
+tempsfin=0;
 demarre=false;
 termine=false;
-
-	}
+}
 
 virtual ~Commande();
 
@@ -29,6 +39,7 @@ virtual ~Commande();
 
 	bool fini;
 
+	int deltatemps;
 	int tempsdebut;
 	int tempsfin;
 
@@ -52,7 +63,7 @@ virtual ~Commande();
 
 	void tourner();
 
-	void start();
+	void start(int t);
 
 	bool isfinished(int t);
 };

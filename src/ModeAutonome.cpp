@@ -8,8 +8,8 @@
 #include <ModeAutonome.h>
 
 ModeAutonome::ModeAutonome(SystemesDeControle * _systemesdecontrole) : systemesdecontrole(_systemesdecontrole) {
- listecommande.push_back(Commande("avancer", 100));
- listecommande.push_back(Commande("tourner",200));
+ listecommande.push_back(Commande("delai", 50));
+ listecommande.push_back(Commande("delai",100));
  listecommande.push_back(Commande("avancer",300));
  listecommande.push_back(Commande("lancer",400));
  listecommande.push_back(Commande("placer la gear",500));
@@ -29,7 +29,7 @@ void ModeAutonome::Execute(int t)
 	{
 		std::cout<<"on démarre"<<std::endl;
 		listecommande[0].demarre=true;
-		listecommande[0].start();
+		listecommande[0].start(t);
 	}
 
 	if (listecommande[i].demarre==true && listecommande[i].termine==false && listecommande[i].isfinished(t)==true)
@@ -43,7 +43,7 @@ void ModeAutonome::Execute(int t)
 		std::cout<<"entre deux commandes"<<std::endl;
 		i=i+1;
 		listecommande[i].demarre=true;
-		listecommande[i].start();
+		listecommande[i].start(t);
 	}
 	commandeencours=i;
 }
