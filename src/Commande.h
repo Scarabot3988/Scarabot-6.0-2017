@@ -8,34 +8,42 @@
 #ifndef SRC_COMMANDE_H_
 #define SRC_COMMANDE_H_
 # include"string"
+#include "SystemesDeControle.h"
 
-
-class Commande {
-public:
-	Commande(std::string nom, float param1, float param2=0)
+class Commande
 {
+public:
+	Commande(SystemesDeControle* p,std::string nom, float param1, float param2=0)
+{
+
+		sdc = p;
 	if (nom=="delai")
 	{
 		deltatemps=param1;
 	}
 
-
-
-
-
-
+	if (nom=="tourner")
+		{
+		deltaangle=param1;
+		}
 
 nomdelacommande = nom;
 tempsfin=0;
 demarre=false;
 termine=false;
+
+
 }
+
 
 virtual ~Commande();
 
+
+// Place pour variables
+
 	std::string nomdelacommande;
 
-
+	SystemesDeControle *sdc;
 
 	bool fini;
 
@@ -46,6 +54,8 @@ virtual ~Commande();
 	float angledebut;
 
 	float angletarget;
+
+	float deltaangle;
 
 	int encoderdebut;
 

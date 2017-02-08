@@ -10,6 +10,8 @@
 #include "config.h"
 #include "SystemesDeControle.h"
 #include "Commande.h"
+#include "Sensors.h"
+
 class ModeAutonome {
 public:
 	ModeAutonome(SystemesDeControle * _systemesdecontrole);
@@ -20,6 +22,7 @@ public:
 private:
 	SystemesDeControle * systemesdecontrole;
 	std::vector<Commande> listecommande;
+
 	int commandeencours;
 };
 
