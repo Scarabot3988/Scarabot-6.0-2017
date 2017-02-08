@@ -21,12 +21,12 @@ class BaseMobile
 	void Update();
 	void Drive(float _x, float _y);
 
-	private:
+
 	Talon *moteur1gauche;
 	Talon *moteur2gauche;
 	Talon *moteur1droite;
 	Talon *moteur2droite;
-	Sensors *sensor;
+	Sensors *sensors;
 
 	float x;
 	float y;

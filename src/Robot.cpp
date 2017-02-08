@@ -20,14 +20,15 @@ public:
 	FILE *out = 0;
 	void RobotInit()
 	{
-		systemesdecontrole.initSystemes();
+		sdc=  new SystemesDeControle;
+		sdc->initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
-		modeautonome = new ModeAutonome(&systemesdecontrole);
+		modeautonome = new ModeAutonome(sdc);
 
 		talon = new CANTalon(0);
 
 
-		systemesdecontrole.basemobile.donnersensor(&sensor);
+
 
 	}
 	void AutonomousInit() override
@@ -37,7 +38,7 @@ public:
 	void AutonomousPeriodic()
 	{
 		modeautonome->Execute(t);
-		systemesdecontrole.Update();
+		sdc->Update();
 		t=t+1;
 	}
 
@@ -75,7 +76,7 @@ n++;
 	}
 
 private:
-	SystemesDeControle systemesdecontrole;
+	SystemesDeControle *sdc;
 	Joystick * joyPilote;
 	ModeAutonome * modeautonome;
 
@@ -83,7 +84,7 @@ private:
 
 
 
-	Sensors sensor;
+
 
 	unsigned int t = 0;
 	int vieux = 0;

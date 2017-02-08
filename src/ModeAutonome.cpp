@@ -7,13 +7,15 @@
 
 #include <ModeAutonome.h>
 
-ModeAutonome::ModeAutonome(SystemesDeControle * _systemesdecontrole) : systemesdecontrole(_systemesdecontrole) {
- listecommande.push_back(Commande("delai", 50));
- listecommande.push_back(Commande("delai",100));
- listecommande.push_back(Commande("avancer",300));
- listecommande.push_back(Commande("lancer",400));
- listecommande.push_back(Commande("placer la gear",500));
+ModeAutonome::ModeAutonome(SystemesDeControle * _systemesdecontrole)
+{
+ listecommande.push_back(Commande(_systemesdecontrole,"delai", 50));
+ listecommande.push_back(Commande(_systemesdecontrole,"avancer",300));
+ listecommande.push_back(Commande(_systemesdecontrole,"lancer",400));
+ listecommande.push_back(Commande(_systemesdecontrole,"placer la gear",500));
  commandeencours=0;
+ systemesdecontrole=_systemesdecontrole;
+
 }
 
 ModeAutonome::~ModeAutonome() {

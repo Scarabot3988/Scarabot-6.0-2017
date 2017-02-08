@@ -16,6 +16,7 @@
 
 class SystemesDeControle {
 public:
+	SystemesDeControle();
 	BaseMobile basemobile;
 	Grimpeur grimpeur;
 	Lanceur lanceur;
@@ -27,7 +28,7 @@ public:
 	void initSystemes();
 	void Update();
 
-
+	Sensors *sensors;
 
 };
 

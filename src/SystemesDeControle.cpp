@@ -7,6 +7,11 @@
 
 #include <SystemesDeControle.h>
 
+SystemesDeControle::SystemesDeControle(){
+	sensors= new Sensors;
+	basemobile.donnersensor(sensors);
+}
+
 void SystemesDeControle::initSystemes()
 {
 
@@ -14,6 +19,7 @@ void SystemesDeControle::initSystemes()
 
 void SystemesDeControle::Update()
 {
+
 	basemobile.Update();
 	grimpeur.Update();
 	ramasseur.Update();

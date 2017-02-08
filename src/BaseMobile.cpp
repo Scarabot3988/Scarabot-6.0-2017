@@ -41,6 +41,6 @@ void BaseMobile::Update()
 
 void BaseMobile::donnersensor(Sensors * _sensor)
 {
-	sensor = _sensor;
+	sensors = _sensor;
 
 }
