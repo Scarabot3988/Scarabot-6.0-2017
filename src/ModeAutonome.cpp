@@ -14,6 +14,7 @@ ModeAutonome::ModeAutonome(SystemesDeControle * _systemesdecontrole)
  listecommande.push_back(Commande(_systemesdecontrole,"avancer",300));
  listecommande.push_back(Commande(_systemesdecontrole,"lancer",400));
  listecommande.push_back(Commande(_systemesdecontrole,"placer la gear",500));
+ listecommande.push_back(Commande(_systemesdecontrole,"aligner", 50));
  commandeencours=0;
  systemesdecontrole=_systemesdecontrole;
 

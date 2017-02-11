@@ -21,7 +21,12 @@
 // Joystick ///////////////////////////////
 #define JOYSTICK_PortJoystickPilote 0
 
-// DIO	///////////									//verify DIO
+
+//mapping de manette
+
+#define MAPPING_drivex 0
+#define MAPPING_drivey 1
+// DIO													//verify DIO
 #define DIO_drive1a 0
 #define DIO_drive1b 1
 

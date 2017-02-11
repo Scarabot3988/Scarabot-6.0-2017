@@ -55,10 +55,28 @@ public:
 	}
 	void TeleopPeriodic()
 	{
+
 		sdc->lanceur.homein();
-		bool button_1=joyPilote->GetRawButton(10);
-		bool button_2=joyPilote->GetRawButton(11);
-        sdc->lanceur.mouvealign(button_1,button_2);
+		// tests alignement
+//		bool button_1=joyPilote->GetRawButton(10);
+//		bool button_2=joyPilote->GetRawButton(11);
+//        sdc->lanceur.mouvealign(button_1,button_2);
+
+		talon->Set(0.5);
+		printf("%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
+		if(out){
+				fprintf(out,"%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
+				fflush(out);
+		}
+static int n=0;
+if(!(n%20))
+	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
+n++;
+
+	sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex),joyPilote->GetRawAxis(MAPPING_drivey) );
+
+sdc->Update();
+
 	}
 
 	void TestPeriodic()
