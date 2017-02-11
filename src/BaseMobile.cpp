@@ -66,28 +66,31 @@ void BaseMobile::SetAngleDelta(double delta)
 void BaseMobile::CorrectionGyro()
 {
 
+
+
 	double delta=GetAngleDelta();
 	double absdelta=abs(delta);
 	if (absdelta>3)
 	{
-		if (absdelta<30) x=0.2;
-		else x=0.6;
+		if (absdelta<45) x=0.2;
+		else x=0.45;
 
 
 
 	}
 	else x=0;
 
-	if(delta<0) x=-x;
+	if(delta>0) x=-x;
 
+	x=x*y/abs(y);
 
 }
 
 void BaseMobile::Update()
 {
-	if (abs(x)<=0.05 )x=0;
+	if (abs(x)<=0.1 )x=0;
 
-	if(x!=0) t=15;
+	if(x!=0) t=30;
 
 	else
 	{

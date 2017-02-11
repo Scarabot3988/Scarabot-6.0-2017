@@ -23,8 +23,7 @@ public:
 		sdc=  new SystemesDeControle;
 		sdc->initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
-		modeautonome = new ModeAutonome(sdc);
-
+		//modeautonome = new ModeAutonome(sdc);
 		talon = new CANTalon(0);
 
 
@@ -44,10 +43,10 @@ public:
 
 	void TeleopInit()
 	{
-		out=fopen("/home/lvuser/talon.txt","w");
-		printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
-		if(out)
-			fprintf(out,"GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
+//out=fopen("/home/lvuser/talon.txt","w");
+	//	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
+		//if(out)
+		//	fprintf(out,"GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
 		//talon->Set(0.5);
 	//	talon->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
 	//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
@@ -58,22 +57,28 @@ public:
 
 		sdc->lanceur.homein();
 		// tests alignement
-//		bool button_1=joyPilote->GetRawButton(10);
-//		bool button_2=joyPilote->GetRawButton(11);
-//        sdc->lanceur.mouvealign(button_1,button_2);
+		bool button_1=joyPilote->GetRawButton(10);
+		bool button_2=joyPilote->GetRawButton(11);
+		sdc->lanceur.mouvealign(button_1,button_2);
 
-		talon->Set(0.5);
-		printf("%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
-		if(out){
-				fprintf(out,"%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
-				fflush(out);
+		if (button_1==false)
+		{
+			sdc->basemobile.SetAngleDelta(0);
 		}
-static int n=0;
-if(!(n%20))
-	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
-n++;
+
+		//talon->Set(0.5);
+		//printf("%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
+		//if(out){
+			//	fprintf(out,"%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
+				//fflush(out);
+	//	}
+		std::cout << "GYRO: " << sdc->sensors->gyro->GetAngle() << '\n';
+		std::cout << "ENCODEUR: " << sdc->sensors->drive1->GetDistance() << '\n';
+
+
 
 	sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex),joyPilote->GetRawAxis(MAPPING_drivey) );
+
 
 sdc->Update();
 
@@ -94,10 +99,6 @@ private:
 	ModeAutonome *modeautonome;
 
 	CANTalon *talon;
-
-
-
-
 
 	unsigned int t = 0;
 	int vieux = 0;

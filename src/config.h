@@ -13,10 +13,11 @@
 #define PWM_PortMoteurDroite2 1
 #define PWM_PortMoteurDroite3 2
 #define PWM_PortMoteurGauche1 3
-#define PWM_PortMoteurGauche2 6
+#define PWM_PortMoteurGauche2 4
 #define PWM_PortMoteurGauche3 5
 
-#define PWM_motoralignement   5
+
+#define PWM_motoralignement   6
 
 // Joystick ///////////////////////////////
 #define JOYSTICK_PortJoystickPilote 0
@@ -26,7 +27,7 @@
 
 #define MAPPING_drivex 0
 #define MAPPING_drivey 1
-// DIO													//verify DIO
+// DIO
 #define DIO_drive1a 0
 #define DIO_drive1b 1
 
