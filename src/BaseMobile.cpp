@@ -33,8 +33,10 @@ void BaseMobile::Update()
 
 	moteur1gauche->SetSpeed(vitesseg);
 	moteur2gauche->SetSpeed(vitesseg);
+	moteur3gauche->SetSpeed(vitesseg);
 	moteur1droite->SetSpeed(vitessed);
 	moteur2droite->SetSpeed(vitessed);
+	moteur3droite->SetSpeed(vitessed);
 }
 
 
