@@ -26,38 +26,20 @@ void Commande::start(int t)
 			// Le robot va tourner sur lui-même.
 		    //Le sens des angles seront dans le sens du cercle trigonométrique(SENS ANTI-HORAIRE POUR MISKA).
 			//Alors, si vous voulez tourner à gauche, il faut avoir un angle positif.
-		angledebut = sdc->sensors->gyro->GetAngle();
-		angletarget = angledebut + deltaangle;
-		if(angletarget>0)
-		{
-			sdc->basemobile.moteur1droite->SetSpeed(-0.5);
-			sdc->basemobile.moteur2droite->SetSpeed(-0.5);
-			sdc->basemobile.moteur1gauche->SetSpeed(0.5);
-			sdc->basemobile.moteur2gauche->SetSpeed(0.5);
-		}
-		else if (angletarget<0)
-		{
-			sdc->basemobile.moteur1droite->SetSpeed(0.5);
-			sdc->basemobile.moteur2droite->SetSpeed(0.5);
-			sdc->basemobile.moteur1gauche->SetSpeed(-0.5);
-			sdc->basemobile.moteur2gauche->SetSpeed(-0.5);
-		}
-		else
-		{
-			sdc->basemobile.moteur1droite->SetSpeed(0);
-			sdc->basemobile.moteur2droite->SetSpeed(0);
-			sdc->basemobile.moteur1gauche->SetSpeed(0);
-			sdc->basemobile.moteur2gauche->SetSpeed(0);
-
-		}
+		sdc->basemobile.SetAngleDelta(deltaangle);
+	}
 		if (nomdelacommande=="avancer")
 		{
+			sdc->basemobile.ResetDistance();
+			sdc->basemobile.Drive(0,1);
 
 		}
-		if (nomdelacommande=="placer")
+		if (nomdelacommande=="placergear")
 		{
 
-	}
+		}
+
+
 
 
 
@@ -68,19 +50,13 @@ bool Commande::isfinished(int t)
 		{
 			return true;
 		}
-	if (nomdelacommande=="tourner" && sdc->sensors->gyro->GetAngle()==angletarget)
+	if (nomdelacommande=="tourner" && fabs(sdc->basemobile.GetAngleDelta())<=2)
 		{
-			sdc->basemobile.moteur1droite->SetSpeed(0);
-			sdc->basemobile.moteur2droite->SetSpeed(0);
-			sdc->basemobile.moteur1gauche->SetSpeed(0);
-			sdc->basemobile.moteur2gauche->SetSpeed(0);
-
 			return true;
 		}
-	if (nomdelacommande=="avancer" && sdc->basemobile.get_distance()>=distancefin)
+	if (nomdelacommande=="avancer" && sdc->basemobile.GetDistance()>=distancefin)
 		{
-
-			sdc->basemobile.reset_distance();
+			return true;
 		}
 	return false;
 }
