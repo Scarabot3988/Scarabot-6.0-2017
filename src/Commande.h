@@ -26,7 +26,7 @@ public:
 		{
 		deltaangle=param1;
 		}
-
+	if (nom=="avancer")
 nomdelacommande = nom;
 tempsfin=0;
 demarre=false;
@@ -52,14 +52,10 @@ virtual ~Commande();
 	int tempsfin;
 
 	float angledebut;
-
 	float angletarget;
-
 	float deltaangle;
 
-	int encoderdebut;
-
-	int encoderfin;
+	int distancefin;
 
 	int commandeafaire;
 
