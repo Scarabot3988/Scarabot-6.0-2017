@@ -13,7 +13,7 @@ Lanceur::Lanceur()
 {
 	limitswitch_trouve= false;
 	motoralignement = new Talon(PWM_motoralignement);
-
+	///piston = new Solenoid()
 }
 
 // fontions ////////////
@@ -61,8 +61,29 @@ void Lanceur::mouvealign(bool button_left, bool button_right)
 	if (limitswitch_trouve == true) {
 		motoralignement->Set(vitesse);
 	}
+}
+void Lanceur::setposition(float angle)
+{
+	float tourencoder;
+	int valeurdepart = sensors->encoder_shoot_align->GetRaw();
+
+	tourencoder = angle/0.18;
+
+
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
 void Lanceur::Update() {
 
 

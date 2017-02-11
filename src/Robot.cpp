@@ -1,4 +1,4 @@
- #include <iostream>
+#include <iostream>
 #include <stdio.h>
 #include <memory>
 #include <string>
@@ -14,32 +14,27 @@
 
 #include "Sensors.h"
 
-
 class Robot: public frc::IterativeRobot {
 public:
 	FILE *out = 0;
-	void RobotInit()
-	{
-		sdc=  new SystemesDeControle;
+	void RobotInit() {
+		sdc = new SystemesDeControle;
 		sdc->initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
 		//modeautonome = new ModeAutonome(sdc);
 		talon = new CANTalon(0);
-
-
-
 
 	}
 	void AutonomousInit() override
 	{
 		t = 0;
 	}
-	void AutonomousPeriodic()
-	{
+	void AutonomousPeriodic() {
 		modeautonome->Execute(t);
 		sdc->Update();
-		t=t+1;
+		t = t + 1;
 	}
+
 
 	void TeleopInit()
 	{
@@ -47,16 +42,17 @@ public:
 	//	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
 		//if(out)
 		//	fprintf(out,"GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
+
 		//talon->Set(0.5);
-	//	talon->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
-	//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
+		//	talon->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
+		//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
 
 	}
-	void TeleopPeriodic()
-	{
+	void TeleopPeriodic() {
 
 		sdc->lanceur.homein();
 		// tests alignement
+
 		bool button_1=joyPilote->GetRawButton(10);
 		bool button_2=joyPilote->GetRawButton(11);
 		sdc->lanceur.mouvealign(button_1,button_2);
@@ -77,20 +73,26 @@ public:
 
 
 
-	sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex),joyPilote->GetRawAxis(MAPPING_drivey) );
+
+		sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex),
+				joyPilote->GetRawAxis(MAPPING_drivey));
+
 
 
 sdc->Update();
 
-	}
 
-	void TestPeriodic()
-	{
+
 
 	}
 
-	void DisabledPeriodic(){
-		if(out) fclose(out);
+	void TestPeriodic() {
+
+	}
+
+	void DisabledPeriodic() {
+		if (out)
+			fclose(out);
 	}
 
 private:
@@ -101,10 +103,7 @@ private:
 	CANTalon *talon;
 
 	unsigned int t = 0;
-	int vieux = 0;
-	bool bon = true;
-
-
+	int vieux = 0;bool bon = true;
 
 };
 

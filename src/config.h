@@ -1,5 +1,5 @@
 /*
-  * config.h
+ * config.h
  *
  *  Created on: 28 janv. 2017
  *      Author: Marc
@@ -22,7 +22,6 @@
 // Joystick ///////////////////////////////
 #define JOYSTICK_PortJoystickPilote 0
 
-
 //mapping de manette
 
 #define MAPPING_drivex 0
@@ -40,16 +39,11 @@
 #define DIO_shooteralign_a 8
 #define DIO_shooteralign_b 9
 
-
 #define DIO_limitswitch_shooter 7
 #define DIO_shootb 9
 
-
-
 #define DIO_LMS1 10
 #define DIO_LMS2 11
-
-
 
 #endif /* SRC_CONFIG_H_ */
 

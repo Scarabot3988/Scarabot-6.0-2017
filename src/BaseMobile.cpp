@@ -7,10 +7,9 @@
 
 #include <BaseMobile.h>
 
-BaseMobile::BaseMobile() : x(0), y(0)
-{
+BaseMobile::BaseMobile() :
+		x(0), y(0) {
 	moteurdroit = new MultiSpeedController();
-
 
 	moteur1droite = new Talon(PWM_PortMoteurDroite1);
 	moteur2droite = new Talon(PWM_PortMoteurDroite2);
@@ -19,9 +18,6 @@ BaseMobile::BaseMobile() : x(0), y(0)
 	moteurdroit->DonnerMoteur(moteur1droite);
 	moteurdroit->DonnerMoteur(moteur2droite);
 	moteurdroit->DonnerMoteur(moteur3droite);
-
-
-
 
 	moteurgauche = new MultiSpeedController();
 
@@ -33,35 +29,30 @@ BaseMobile::BaseMobile() : x(0), y(0)
 	moteurgauche->DonnerMoteur(moteur2gauche);
 	moteurgauche->DonnerMoteur(moteur3gauche);
 
-drive= new RobotDrive(moteurgauche, moteurdroit);
+	drive = new RobotDrive(moteurgauche, moteurdroit);
 
 }
 
-BaseMobile::~BaseMobile()
-{
+BaseMobile::~BaseMobile() {
 }
 
-void BaseMobile::Drive(float _x, float _y)
-{
+void BaseMobile::Drive(float _x, float _y) {
 	x = _x;
 	y = _y;
 
-
 }
 
-void BaseMobile::SetAngleCible(double _AngleCible)
-{
-	AngleCible= _AngleCible;
+void BaseMobile::SetAngleCible(double _AngleCible) {
+	AngleCible = _AngleCible;
 }
-double BaseMobile::GetAngleDelta()
-{
-	return AngleCible-sensors->gyro->GetAngle();
+double BaseMobile::GetAngleDelta() {
+	return AngleCible - sensors->gyro->GetAngle();
 }
 
-void BaseMobile::SetAngleDelta(double delta)
-{
-	AngleCible=sensors->gyro->GetAngle() + delta;
+void BaseMobile::SetAngleDelta(double delta) {
+	AngleCible = sensors->gyro->GetAngle() + delta;
 }
+
 
 void BaseMobile::CorrectionGyro()
 {
@@ -76,13 +67,13 @@ void BaseMobile::CorrectionGyro()
 		else x=0.45;
 
 
-
 	}
-	else x=0;
+
+
 
 	if(delta>0) x=-x;
 
-	x=x*y/abs(y);
+	if(y!=0) x=x*y/abs(y);
 
 }
 
@@ -92,40 +83,31 @@ void BaseMobile::Update()
 
 	if(x!=0) t=30;
 
-	else
-	{
-		if(t!=0) t=t-1;
+	else {
+		if (t != 0)
+			t = t - 1;
 
-		else
-		{
+		else {
 			CorrectionGyro();
 		}
 	}
 
-
-	drive->ArcadeDrive(y,x);
-x=y=0;
-
-
+	drive->ArcadeDrive(y, x);
+	x = y = 0;
 
 }
 
-
-void BaseMobile::donnersensor(Sensors * _sensor)
-{
+void BaseMobile::donnersensor(Sensors * _sensor) {
 	sensors = _sensor;
 
 }
 
-
-double BaseMobile::GetDistance()
-{
-	 return (sensors->drive1->GetDistance() + sensors->drive2->GetDistance())/2;
+double BaseMobile::GetDistance() {
+	return (sensors->drive1->GetDistance() + sensors->drive2->GetDistance()) / 2;
 
 }
 
-void BaseMobile::ResetDistance()
-{
+void BaseMobile::ResetDistance() {
 	sensors->drive1->Reset();
 	sensors->drive2->Reset();
 
