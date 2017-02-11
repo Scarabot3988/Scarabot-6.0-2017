@@ -44,5 +44,5 @@ bool Commande::isfinished(int t) {
 		return true;
 	}
 	return false;
-	s
+
 }

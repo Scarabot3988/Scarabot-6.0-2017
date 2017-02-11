@@ -18,7 +18,7 @@ public:
 	virtual ~ModeAutonome();
 
 	void Execute(int t);
-
+	void choose_scenario(int n);
 
 
 private:
