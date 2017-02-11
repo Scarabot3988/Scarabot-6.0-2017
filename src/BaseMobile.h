@@ -13,9 +13,8 @@
 #include "sensors.h"
 #include "MultiSpeedController.h"
 
-class BaseMobile
-{
-	public:
+class BaseMobile {
+public:
 	BaseMobile();
 	virtual ~BaseMobile();
 	void donnersensor(Sensors*_sensor);
@@ -28,14 +27,12 @@ class BaseMobile
 	void SetAngleCible(double);
 	double GetAngleDelta();
 
-	private:
+private:
 	void CorrectionGyro();
 
 	double AngleCible;
 
-
-
-	MultiSpeedController  *moteurgauche;
+	MultiSpeedController *moteurgauche;
 
 	Talon *moteur1gauche;
 	Talon *moteur2gauche;
@@ -50,8 +47,7 @@ class BaseMobile
 
 	RobotDrive *drive;
 
-	int t=0;
-
+	int t = 0;
 
 	double x;
 	double y;

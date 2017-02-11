@@ -16,8 +16,7 @@ public:
 	Lanceur();
 	virtual ~Lanceur();
 
-
-
+	void setposition(float angle);
 	void donnersensor(Sensors* _sensor);
 	void Update();
 	void homein();
@@ -26,13 +25,9 @@ public:
 	//variables
 	Talon * motoralignement;
 	Victor *motorshoot;
-	Sensors *sensors;
-	bool limitswitch_trouve;
-	////Solenoid piston_////
+	Sensors *sensors;bool limitswitch_trouve;
+	/////Solenoid *piston;
 
 };
-
-
-
 
 #endif /* SRC_LANCEUR_H_ */
