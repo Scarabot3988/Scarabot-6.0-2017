@@ -66,7 +66,7 @@ void ModeAutonome::choose_scenario(int n)
   ifstream fin;
 
   char str[MAX_TOKENS_PER_LINE];
-  sprintf(str,"scenario%d.txt",n);
+  sprintf(str,"/home/lvuser/scenario%d.txt",n);
   fin.open(str); // open a file
   if (!fin.good())
     return; // exit if file not found
