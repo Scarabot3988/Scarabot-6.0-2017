@@ -11,8 +11,10 @@
 // PWM
 #define PWM_PortMoteurDroite1 0
 #define PWM_PortMoteurDroite2 1
-#define PWM_PortMoteurGauche1 2
-#define PWM_PortMoteurGauche2 3
+#define PWM_PortMoteurDroite3 2
+#define PWM_PortMoteurGauche1 3
+#define PWM_PortMoteurGauche2 4
+#define PWM_PortMoteurGauche3 5
 
 
 // Joystick

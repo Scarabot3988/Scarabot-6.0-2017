@@ -24,8 +24,10 @@ class BaseMobile
 
 	Talon *moteur1gauche;
 	Talon *moteur2gauche;
+	Talon *moteur3gauche;
 	Talon *moteur1droite;
 	Talon *moteur2droite;
+	Talon *moteur3droite;
 	Sensors *sensors;
 
 	float x;

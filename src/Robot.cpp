@@ -77,10 +77,10 @@ n++;
 
 private:
 	SystemesDeControle *sdc;
-	Joystick * joyPilote;
-	ModeAutonome * modeautonome;
+	Joystick *joyPilote;
+	ModeAutonome *modeautonome;
 
-	CANTalon * talon;
+	CANTalon *talon;
 
 
 

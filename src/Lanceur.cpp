@@ -11,7 +11,7 @@
 
 Lanceur::Lanceur()
 {
-	motorx= new Victor(0);
+
 
 }
 
