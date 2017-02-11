@@ -9,14 +9,12 @@
 
 BaseMobile::BaseMobile() : x(0), y(0)
 {
-
 	moteur1droite = new Talon(PWM_PortMoteurDroite1);
 	moteur2droite = new Talon(PWM_PortMoteurDroite2);
 	moteur3droite = new Talon(PWM_PortMoteurDroite3);
 	moteur1gauche = new Talon(PWM_PortMoteurGauche1);
 	moteur2gauche = new Talon(PWM_PortMoteurGauche2);
 	moteur3gauche = new Talon(PWM_PortMoteurGauche3);
-
 }
 
 

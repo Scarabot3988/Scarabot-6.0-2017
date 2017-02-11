@@ -54,6 +54,8 @@ void Commande::start(int t)
 		{
 
 		}
+		if (nomdelacommande=="placer")
+		{
 
 	}
 
