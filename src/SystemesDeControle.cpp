@@ -10,6 +10,7 @@
 SystemesDeControle::SystemesDeControle(){
 	sensors= new Sensors;
 	basemobile.donnersensor(sensors);
+	lanceur.donnersensor(sensors);
 }
 
 void SystemesDeControle::initSystemes()

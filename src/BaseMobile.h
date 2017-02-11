@@ -16,8 +16,8 @@ class BaseMobile
 {
 	public:
 	BaseMobile();
-	virtual ~BaseMobile();
-	void donnersensor(Sensors* _sensor);
+	virtual ~BaseMobile(){}
+	void donnersensor(Sensors*_sensor);
 	void Update();
 	void Drive(float _x, float _y);
 

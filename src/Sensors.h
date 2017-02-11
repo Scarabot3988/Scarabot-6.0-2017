@@ -20,18 +20,20 @@ class Sensors
 public:
 	Sensors();
 	virtual ~Sensors();
-
+/// pointeur/////////////////////////
 Encoder *drive1;
 Encoder *drive2;
-
-Encoder *shooterx;
-Encoder *shootery;
-Encoder *shoot;
 
 ADXRS450_Gyro *gyro;
 
 DigitalInput *LMS1;
 DigitalInput *LMS2;
+
+// pour alignement du lanceur///////////////
+
+DigitalInput *limitswitch_shooter;
+Encoder *encoder_shoot_align;
+
 
 
 
