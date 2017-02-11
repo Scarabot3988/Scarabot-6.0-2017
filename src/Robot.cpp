@@ -64,6 +64,10 @@ static int n=0;
 if(!(n%20))
 	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
 n++;
+
+	sdc->basemobile.drive(joyPilote->GetRawAxis(MAPPING_drivex),joyPilote->GetRawAxis(MAPPING_drivey) );
+
+sdc->Update();
 	}
 
 	void TestPeriodic()
