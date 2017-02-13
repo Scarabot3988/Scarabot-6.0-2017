@@ -9,16 +9,14 @@
 #define SRC_SYSTEMESDECONTROLE_H_
 
 #include "BaseMobile.h"
-#include "Grimpeur.h"
 #include "Lanceur.h"
 #include "RamasseurDeBalles.h"
-#include "RamasseurDeGear.h"
+
 
 class SystemesDeControle {
 public:
 	SystemesDeControle();
 	BaseMobile basemobile;
-	Grimpeur grimpeur;
 	Lanceur lanceur;
 	RamasseurDeBalles ramasseurballes;
 	Ramasseur ramasseur;

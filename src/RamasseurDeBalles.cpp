@@ -6,9 +6,11 @@
  */
 
 #include <RamasseurDeBalles.h>
-
+#include <config.h>
 RamasseurDeBalles::RamasseurDeBalles() {
 	// TODO Auto-generated constructor stub
+
+	////Fonction/////////
 
 }
 
@@ -18,3 +20,17 @@ RamasseurDeBalles::~RamasseurDeBalles() {
 
 void RamasseurDeBalles::Update() {
 }
+
+void  RamasseurDeBallesmouvealign(bool button_down, bool button_up) {
+	float vitesse = 0;
+	if (button_up == true)
+	{
+		vitesse = 0.5;
+	}
+	if (button_down == true)
+	{
+		vitesse = -0.5;
+	}
+	//motorramasseurdeballes->Set(vitesse);
+
+

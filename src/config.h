@@ -15,9 +15,10 @@
 #define PWM_PortMoteurGauche1 3
 #define PWM_PortMoteurGauche2 4
 #define PWM_PortMoteurGauche3 5
-
-
 #define PWM_motoralignement   6
+#define PWM_motorramasseurdeballes1 7
+
+
 
 // Joystick ///////////////////////////////
 #define JOYSTICK_PortJoystickPilote 0
