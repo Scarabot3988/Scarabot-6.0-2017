@@ -11,29 +11,33 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include "CANTalon.h"
 #include "Sensors.h"
+#include "RamasseurDeBalles.h"
 
 class Robot: public frc::IterativeRobot
 {
-public:
-	FILE *out = 0;
-	void RobotInit()
-	{
-		sdc = new SystemesDeControle;
-		sdc->initSystemes();
-		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
-		//modeautonome = new ModeAutonome(sdc);
-		talon = new CANTalon(0);
-	}
+	public:
+		FILE *out = 0;
+		void RobotInit()
+			{
+				sdc = new SystemesDeControle;
+				sdc->initSystemes();
+				joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
+				//modeautonome = new ModeAutonome(sdc);
+				talon = new CANTalon(0);
+			}
+
 void AutonomousInit() override
 	{
 		t = 0;
 	}
+
 void AutonomousPeriodic()
 	{
 		modeautonome->Execute(t);
 		sdc->Update();
 		t = t + 1;
 	}
+
 void TeleopInit()
 	{
 	//out=fopen("/home/lvuser/talon.txt","w");
@@ -46,10 +50,11 @@ void TeleopInit()
 	//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
 
 	}
+
 void TeleopPeriodic()
 	{
 		sdc->lanceur.homein();
-		// tests alignement
+		//tests alignement
 
 		bool button_1=joyPilote->GetRawButton(10);
 		bool button_2=joyPilote->GetRawButton(11);
@@ -59,6 +64,9 @@ void TeleopPeriodic()
 			{
 				sdc->basemobile.SetAngleDelta(0);
 			}
+
+		//Ramasseur/////////////////////////
+
 
 		//talon->Set(0.5);
 		//printf("%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
@@ -76,26 +84,25 @@ void TeleopPeriodic()
 		sdc->Update();
 	}
 
-	void TestPeriodic()
+void TestPeriodic()
 	{
 	}
 
-	void DisabledPeriodic()
+void DisabledPeriodic()
 	{
 		if (out)
-			fclose(out);
+		fclose(out);
 	}
 
-private:
-	SystemesDeControle *sdc;
-	Joystick *joyPilote;
-	ModeAutonome *modeautonome;
+	private:
+		SystemesDeControle *sdc;
+		Joystick *joyPilote;
+		ModeAutonome *modeautonome;
 
-	CANTalon *talon;
+		CANTalon *talon;
 
-	unsigned int t = 0;
-	int vieux = 0;bool bon = true;
-
+		unsigned int t = 0;
+		int vieux = 0;bool bon = true;
 };
 
 START_ROBOT_CLASS(Robot)

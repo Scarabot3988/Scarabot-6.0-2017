@@ -9,24 +9,23 @@
 #define SRC_LANCEUR_H_
 #include <WPILib.h>
 #include "sensors.h"
-class Lanceur {
-public:
+class Lanceur
+{
+	public:
+		Lanceur();
+		virtual ~Lanceur();
+		void Update();
+		void setposition(float angle);
+		void donnersensor(Sensors* _sensor);
+		void homein();
+		void mouvealign(bool button_left, bool button_right);
 
-	// fontions
-	Lanceur();
-	virtual ~Lanceur();
-
-	void setposition(float angle);
-	void donnersensor(Sensors* _sensor);
-	void Update();
-	void homein();
-	void mouvealign(bool button_left, bool button_right);
-
-	//variables
-	Talon * motoralignement;
-	Victor *motorshoot;
-	Sensors *sensors;bool limitswitch_trouve;
-	/////Solenoid *piston;
+		Talon *alignement;
+		Talon *shoot;
+		Sensors *sensors;
+		bool limitswitch_trouve;
+		int valeurdepart;
+		//Solenoid *piston;
 
 };
 

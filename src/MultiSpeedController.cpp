@@ -49,9 +49,9 @@ void MultiSpeedController::DonnerMoteur(SpeedController * moteur)
 void MultiSpeedController::SetInverted(bool isInverted)
 	{
 		for (unsigned int i = 0; i < speedControllers.size(); i++)
-		{
-			speedControllers[i]->SetInverted(isInverted);
-		}
+			{
+				speedControllers[i]->SetInverted(isInverted);
+			}
 	}
 
 bool MultiSpeedController::GetInverted() const
@@ -69,7 +69,7 @@ bool MultiSpeedController::GetInverted() const
 void MultiSpeedController::StopMotor()
 	{
     	for (unsigned int i = 0; i < speedControllers.size(); i++)
-    	{
-    		speedControllers[i]->StopMotor();
-    	}
+    		{
+    			speedControllers[i]->StopMotor();
+    		}
 	}

@@ -12,22 +12,17 @@
 #include "Lanceur.h"
 #include "RamasseurDeBalles.h"
 
+class SystemesDeControle
+{
+	public:
+		SystemesDeControle();
+		BaseMobile basemobile;
+		Lanceur lanceur;
+		RamasseurDeBalles ramasseur;
+		Sensors *sensors;
 
-class SystemesDeControle {
-public:
-	SystemesDeControle();
-	BaseMobile basemobile;
-	Lanceur lanceur;
-	RamasseurDeBalles ramasseurballes;
-	Ramasseur ramasseur;
-
-
-
-	void initSystemes();
-	void Update();
-
-	Sensors *sensors;
-
+		void initSystemes();
+		void Update();
 };
 
 #endif /* SRC_SYSTEMESDECONTROLE_H_ */

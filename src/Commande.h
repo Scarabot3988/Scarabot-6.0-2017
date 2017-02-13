@@ -59,6 +59,8 @@ virtual ~Commande();
 
 	int commandeafaire;
 
+	int i;
+
 	bool demarre;
 
 	bool termine;

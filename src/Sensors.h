@@ -5,7 +5,6 @@
  *      Author: XPS15
  */
 
-
 #ifndef SRC_SENSORS_H_
 #define SRC_SENSORS_H_
 
@@ -13,31 +12,22 @@
 #include<WPILib.h>
 #include "config.h"
 
-
 class Sensors
-
 {
-public:
-	Sensors();
-	virtual ~Sensors();
-/// pointeur/////////////////////////
-Encoder *drive1;
-Encoder *drive2;
+	public:
+		Sensors();
+		virtual ~Sensors();
 
-ADXRS450_Gyro *gyro;
+		Encoder *drive1;
+		Encoder *drive2;
 
-DigitalInput *LMS1;
-DigitalInput *LMS2;
+		ADXRS450_Gyro *gyro;
 
-// pour alignement du lanceur///////////////
+		DigitalInput *LMS1;
+		DigitalInput *LMS2;
 
-DigitalInput *limitswitch_shooter;
-Encoder *encoder_shoot_align;
-
-
-
-
+		DigitalInput *limitswitch_shooter;
+		Encoder *encoder_shoot_align;
 };
 
 #endif /* SRC_SENSORS_H_ */
-

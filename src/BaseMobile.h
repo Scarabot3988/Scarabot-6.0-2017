@@ -13,44 +13,45 @@
 #include "sensors.h"
 #include "MultiSpeedController.h"
 
-class BaseMobile {
-public:
-	BaseMobile();
-	virtual ~BaseMobile();
-	void donnersensor(Sensors*_sensor);
-	void Update();
-	void Drive(float _x, float _y);
-	double GetDistance();
-	void ResetDistance();
+class BaseMobile
+{
+	public:
+		BaseMobile();
+		virtual ~BaseMobile();
+		void donnersensor(Sensors*_sensor);
+		void Update();
+		void Drive(float _x, float _y);
+		double GetDistance();
+		void ResetDistance();
+		void SetAngleDelta(double);
+		void SetAngleCible(double);
+		double GetAngleDelta();
 
-	void SetAngleDelta(double);
-	void SetAngleCible(double);
-	double GetAngleDelta();
+	private:
+		void CorrectionGyro();
 
-private:
-	void CorrectionGyro();
+		double AngleCible;
 
-	double AngleCible;
+		MultiSpeedController *moteurgauche;
 
-	MultiSpeedController *moteurgauche;
+		Talon *moteur1gauche;
+		Talon *moteur2gauche;
+		Talon *moteur3gauche;
 
-	Talon *moteur1gauche;
-	Talon *moteur2gauche;
-	Talon *moteur3gauche;
+		MultiSpeedController *moteurdroit;
 
-	MultiSpeedController *moteurdroit;
+		Talon *moteur1droite;
+		Talon *moteur2droite;
+		Talon *moteur3droite;
 
-	Talon *moteur1droite;
-	Talon *moteur2droite;
-	Talon *moteur3droite;
-	Sensors *sensors;
+		Sensors *sensors;
 
-	RobotDrive *drive;
+		RobotDrive *drive;
 
-	int t = 0;
+		int t = 0;
 
-	double x;
-	double y;
+		double x;
+		double y;
 };
 
 #endif /* SRC_BASEMOBILE_H_ */

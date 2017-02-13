@@ -12,55 +12,59 @@
 Lanceur::Lanceur()
 {
 	limitswitch_trouve= false;
-	motoralignement = new Talon(PWM_motoralignement);
-	///piston = new Solenoid()
+	alignement = new Talon(PWM_motoralignement);
+	shoot = new Talon(PWM_motorshoot);
+	sensors =new Sensors;
+	//piston = new Solenoid();
 }
 
-// fonctions ////////////
-Lanceur::~Lanceur() {
+Lanceur::~Lanceur()
+{
 	// TODO Auto-generated destructor stub
 }
+
 void Lanceur::donnersensor(Sensors * _sensor)
 {
-
 	sensors = _sensor;
-
 }
 
 void Lanceur::homein()
 {
 	float vitesse;
-	if (limitswitch_trouve == false) {
-		vitesse = -0.15;
+	if (limitswitch_trouve == false)
+		{
+			vitesse = -0.15;
 
-		bool etat_limitswitch;
-		etat_limitswitch = sensors->limitswitch_shooter->Get();
+			bool etat_limitswitch;
+			etat_limitswitch = sensors->limitswitch_shooter->Get();
 
-		if (etat_limitswitch == true) {
+			if (etat_limitswitch == true)
+				{
+					vitesse = 0;
+					limitswitch_trouve = true;
+					sensors->encoder_shoot_align->Reset();
+				}
 
-			vitesse = 0;
-			limitswitch_trouve = true;
-			sensors->encoder_shoot_align->Reset();
-
+			alignement->Set(vitesse);
 		}
-
-		motoralignement->Set(vitesse);
-
-	}
 }
 void Lanceur::mouvealign(bool button_left, bool button_right)
 {
 	float vitesse = 0;
-	if (button_left == true && sensors->encoder_shoot_align->GetRaw() <= 1000) {
-		vitesse = 0.5;
-	}
-	if (button_right == true && sensors->encoder_shoot_align->GetRaw() >= 0) {
-		vitesse = -0.5;
-	}
+	if (button_left == true && sensors->encoder_shoot_align->GetRaw() <= 1000)
+		{
+			vitesse = 0.5;
+		}
 
-	if (limitswitch_trouve == true) {
-		motoralignement->Set(vitesse);
-	}
+	if (button_right == true && sensors->encoder_shoot_align->GetRaw() >= 0)
+		{
+			vitesse = -0.5;
+		}
+
+	if (limitswitch_trouve == true)
+		{
+			alignement->Set(vitesse);
+		}
 }
 void Lanceur::setposition(float angle)
 {
@@ -68,23 +72,8 @@ void Lanceur::setposition(float angle)
 	int valeurdepart = sensors->encoder_shoot_align->GetRaw();
 
 	tourencoder = angle/0.18;
-
-
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
-void Lanceur::Update() {
-
-
+void Lanceur::Update()
+{
 }

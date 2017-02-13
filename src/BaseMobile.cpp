@@ -8,8 +8,9 @@
 #include <BaseMobile.h>
 
 BaseMobile::BaseMobile() :
-		x(0), y(0)
 {
+	x(0), y(0)
+
 	moteurdroit = new MultiSpeedController();
 
 	moteur1droite = new Talon(PWM_PortMoteurDroite1);
@@ -35,6 +36,7 @@ BaseMobile::BaseMobile() :
 
 BaseMobile::~BaseMobile()
 {
+	// TODO Auto-generated destructor stub
 }
 
 void BaseMobile::Drive(float _x, float _y)
@@ -47,6 +49,7 @@ void BaseMobile::SetAngleCible(double _AngleCible)
 {
 	AngleCible = _AngleCible;
 }
+
 double BaseMobile::GetAngleDelta()
 {
 	return AngleCible - sensors->gyro->GetAngle();
@@ -56,7 +59,6 @@ void BaseMobile::SetAngleDelta(double delta)
 {
 	AngleCible = sensors->gyro->GetAngle() + delta;
 }
-
 
 void BaseMobile::CorrectionGyro()
 {
@@ -74,8 +76,6 @@ void BaseMobile::CorrectionGyro()
 				}
 		}
 
-
-
 	if(delta>0)
 		{
 			x=-x;
@@ -85,7 +85,6 @@ void BaseMobile::CorrectionGyro()
 		{
 			x=x*y/abs(y);
 		}
-
 }
 
 void BaseMobile::Update()
@@ -115,7 +114,6 @@ void BaseMobile::Update()
 
 	drive->ArcadeDrive(y, x);
 	x = y = 0;
-
 }
 
 void BaseMobile::donnersensor(Sensors * _sensor)
@@ -133,4 +131,3 @@ void BaseMobile::ResetDistance()
 	sensors->drive1->Reset();
 	sensors->drive2->Reset();
 }
-
