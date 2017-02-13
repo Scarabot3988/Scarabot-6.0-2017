@@ -64,7 +64,7 @@ void BaseMobile::CorrectionGyro()
 	if (absdelta>3)
 	{
 		if (absdelta<45) x=0.2;
-		else x=0.45;
+		else x=0.3;
 
 
 	}
@@ -81,13 +81,15 @@ void BaseMobile::Update()
 {
 	if (abs(x)<=0.1 )x=0;
 
-	if(x!=0) t=30;
+	if(x!=0) t=20;
 
-	else {
+	else
+	{
 		if (t != 0)
 			t = t - 1;
 
-		else {
+		else
+		{
 			CorrectionGyro();
 		}
 	}
