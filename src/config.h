@@ -8,7 +8,7 @@
 #ifndef SRC_CONFIG_H_
 #define SRC_CONFIG_H_
 
-// PWM ////////////////////////////
+//PWM////////////////////////////
 #define PWM_PortMoteurDroite1 0
 #define PWM_PortMoteurDroite2 1
 #define PWM_PortMoteurDroite3 2
@@ -16,16 +16,21 @@
 #define PWM_PortMoteurGauche2 4
 #define PWM_PortMoteurGauche3 5
 #define PWM_motoralignement   6
+<<<<<<< HEAD
 #define PWM_motorramaseur     7
+=======
+#define PWM_motorshoot        7
+#define PWM_motorramasseur    8
+>>>>>>> origin/master
 
-// Joystick ///////////////////////////////
+//Joystick///////////////////////////////
 #define JOYSTICK_PortJoystickPilote 0
 
 //mapping de manette
-
 #define MAPPING_drivex 0
 #define MAPPING_drivey 1
-// DIO
+
+//DIO
 #define DIO_drive1a 0
 #define DIO_drive1b 1
 
@@ -45,4 +50,3 @@
 #define DIO_LMS2 11
 
 #endif /* SRC_CONFIG_H_ */
-

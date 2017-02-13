@@ -12,20 +12,20 @@
 #include "Commande.h"
 #include "Sensors.h"
 
-class ModeAutonome {
-public:
-	ModeAutonome(SystemesDeControle * _systemesdecontrole);
-	virtual ~ModeAutonome();
+class ModeAutonome
+{
+	public:
+		ModeAutonome(SystemesDeControle * _systemesdecontrole);
+		virtual ~ModeAutonome();
 
-	void Execute(int t);
-	void choose_scenario(int n);
+		void Execute(int t);
+		void choose_scenario(int n);
 
+	private:
+		SystemesDeControle * systemesdecontrole;
+		std::vector<Commande> listecommande;
 
-private:
-	SystemesDeControle * systemesdecontrole;
-	std::vector<Commande> listecommande;
-
-	int commandeencours;
+		int commandeencours;
 };
 
 #endif /* SRC_MODEAUTONOME_H_ */

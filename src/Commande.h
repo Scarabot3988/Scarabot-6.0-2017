@@ -59,6 +59,8 @@ virtual ~Commande();
 
 	int commandeafaire;
 
+	int i;
+
 	bool demarre;
 
 	bool termine;
@@ -72,6 +74,8 @@ virtual ~Commande();
 	void start(int t);
 
 	bool isfinished(int t);
+
+	Solenoid *pistongear;
 };
 
 
