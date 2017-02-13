@@ -8,7 +8,8 @@
 #include <BaseMobile.h>
 
 BaseMobile::BaseMobile() :
-		x(0), y(0) {
+		x(0), y(0)
+{
 	moteurdroit = new MultiSpeedController();
 
 	moteur1droite = new Talon(PWM_PortMoteurDroite1);
@@ -30,86 +31,106 @@ BaseMobile::BaseMobile() :
 	moteurgauche->DonnerMoteur(moteur3gauche);
 
 	drive = new RobotDrive(moteurgauche, moteurdroit);
-
 }
 
-BaseMobile::~BaseMobile() {
+BaseMobile::~BaseMobile()
+{
 }
 
-void BaseMobile::Drive(float _x, float _y) {
+void BaseMobile::Drive(float _x, float _y)
+{
 	x = _x;
 	y = _y;
-
 }
 
-void BaseMobile::SetAngleCible(double _AngleCible) {
+void BaseMobile::SetAngleCible(double _AngleCible)
+{
 	AngleCible = _AngleCible;
 }
-double BaseMobile::GetAngleDelta() {
+double BaseMobile::GetAngleDelta()
+{
 	return AngleCible - sensors->gyro->GetAngle();
 }
 
-void BaseMobile::SetAngleDelta(double delta) {
+void BaseMobile::SetAngleDelta(double delta)
+{
 	AngleCible = sensors->gyro->GetAngle() + delta;
 }
 
 
 void BaseMobile::CorrectionGyro()
 {
-
-
-
 	double delta=GetAngleDelta();
 	double absdelta=abs(delta);
 	if (absdelta>3)
-	{
-		if (absdelta<45) x=0.2;
-		else x=0.45;
+		{
+			if (absdelta<45)
+				{
+					x=0.2;
+				}
+			else
+				{
+					x=0.45;
+				}
+		}
 
 
-	}
 
+	if(delta>0)
+		{
+			x=-x;
+		}
 
-
-	if(delta>0) x=-x;
-
-	if(y!=0) x=x*y/abs(y);
+	if(y!=0)
+		{
+			x=x*y/abs(y);
+		}
 
 }
 
 void BaseMobile::Update()
 {
-	if (abs(x)<=0.1 )x=0;
-
-	if(x!=0) t=30;
-
-	else {
-		if (t != 0)
-			t = t - 1;
-
-		else {
-			CorrectionGyro();
+	if (abs(x)<=0.1 )
+		{
+			x=0;
 		}
-	}
+
+	if(x!=0)
+		{
+			t=30;
+		}
+
+	else
+		{
+			if (t != 0)
+				{
+					t = t - 1;
+				}
+
+			else
+				{
+					CorrectionGyro();
+				}
+		}
 
 	drive->ArcadeDrive(y, x);
 	x = y = 0;
 
 }
 
-void BaseMobile::donnersensor(Sensors * _sensor) {
+void BaseMobile::donnersensor(Sensors * _sensor)
+{
 	sensors = _sensor;
-
 }
 
-double BaseMobile::GetDistance() {
+double BaseMobile::GetDistance()
+{
 	return (sensors->drive1->GetDistance() + sensors->drive2->GetDistance()) / 2;
-
 }
 
-void BaseMobile::ResetDistance() {
+void BaseMobile::ResetDistance()
+{
 	sensors->drive1->Reset();
 	sensors->drive2->Reset();
-
 }
 

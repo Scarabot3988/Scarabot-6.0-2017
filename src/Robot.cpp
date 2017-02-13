@@ -9,47 +9,45 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
-
 #include "CANTalon.h"
-
 #include "Sensors.h"
 
-class Robot: public frc::IterativeRobot {
+class Robot: public frc::IterativeRobot
+{
 public:
 	FILE *out = 0;
-	void RobotInit() {
+	void RobotInit()
+	{
 		sdc = new SystemesDeControle;
 		sdc->initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
 		//modeautonome = new ModeAutonome(sdc);
 		talon = new CANTalon(0);
-
 	}
-	void AutonomousInit() override
+void AutonomousInit() override
 	{
 		t = 0;
 	}
-	void AutonomousPeriodic() {
+void AutonomousPeriodic()
+	{
 		modeautonome->Execute(t);
 		sdc->Update();
 		t = t + 1;
 	}
-
-
-	void TeleopInit()
+void TeleopInit()
 	{
-//out=fopen("/home/lvuser/talon.txt","w");
+	//out=fopen("/home/lvuser/talon.txt","w");
 	//	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
-		//if(out)
-		//	fprintf(out,"GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
+	//if(out)
+	//	fprintf(out,"GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
 
-		//talon->Set(0.5);
-		//	talon->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
-		//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
+	//talon->Set(0.5);
+	//	talon->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
+	//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
 
 	}
-	void TeleopPeriodic() {
-
+void TeleopPeriodic()
+	{
 		sdc->lanceur.homein();
 		// tests alignement
 
@@ -58,39 +56,32 @@ public:
 		sdc->lanceur.mouvealign(button_1,button_2);
 
 		if (button_1==false)
-		{
-			sdc->basemobile.SetAngleDelta(0);
-		}
+			{
+				sdc->basemobile.SetAngleDelta(0);
+			}
 
 		//talon->Set(0.5);
 		//printf("%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
-		//if(out){
-			//	fprintf(out,"%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
-				//fflush(out);
-	//	}
+		//if(out)
+		//	{
+		//		fprintf(out,"%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
+		//		fflush(out);
+		//	}
 		std::cout << "GYRO: " << sdc->sensors->gyro->GetAngle() << '\n';
 		std::cout << "ENCODEUR: " << sdc->sensors->drive1->GetDistance() << '\n';
 
-
-
-
 		sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex),
-				joyPilote->GetRawAxis(MAPPING_drivey));
+		joyPilote->GetRawAxis(MAPPING_drivey));
 
-
-
-sdc->Update();
-
-
-
-
+		sdc->Update();
 	}
 
-	void TestPeriodic() {
-
+	void TestPeriodic()
+	{
 	}
 
-	void DisabledPeriodic() {
+	void DisabledPeriodic()
+	{
 		if (out)
 			fclose(out);
 	}

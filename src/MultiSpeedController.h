@@ -11,14 +11,17 @@
 #include <SpeedController.h>
 #include <vector>
 
-class MultiSpeedController: public frc::SpeedController {
+class MultiSpeedController: public frc::SpeedController
+{
 	private:
-		std::vector <SpeedController*> speedControllers;
-		double speed;
+	std::vector <SpeedController*> speedControllers;
+
+	double speed;
 
 	public:
-	    MultiSpeedController ();
-    virtual double Get() const;
+	MultiSpeedController ();
+
+	virtual double Get() const;
 
     virtual void Set(double speed);
 
@@ -33,10 +36,5 @@ class MultiSpeedController: public frc::SpeedController {
 
     void DonnerMoteur(SpeedController* moteur);
 };
-
-
-
-
-
 
 #endif /* MULTISPEEDCONTROLLER_H_ */

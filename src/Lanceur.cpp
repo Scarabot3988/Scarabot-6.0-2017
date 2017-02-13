@@ -16,7 +16,7 @@ Lanceur::Lanceur()
 	///piston = new Solenoid()
 }
 
-// fontions ////////////
+// fonctions ////////////
 Lanceur::~Lanceur() {
 	// TODO Auto-generated destructor stub
 }
