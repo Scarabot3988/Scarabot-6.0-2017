@@ -115,6 +115,6 @@ void ModeAutonome::choose_scenario(int n)
     		param2=atof(token[2]);
        }
     listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
+    {
 
-  }
-}
+    };
