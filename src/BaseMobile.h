@@ -12,7 +12,7 @@
 #include "config.h"
 #include "sensors.h"
 #include "MultiSpeedController.h"
-
+#include "math.h"
 class BaseMobile
 {
 	public:
@@ -26,6 +26,8 @@ class BaseMobile
 		void SetAngleDelta(double);
 		void SetAngleCible(double);
 		double GetAngleDelta();
+
+
 
 	private:
 		void CorrectionGyro();

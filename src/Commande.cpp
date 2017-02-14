@@ -67,7 +67,7 @@ bool Commande::isfinished(int t)
 			return true;
 		}
 
-	if (nomdelacommande == "placergear" && i=1)
+	if (nomdelacommande == "placergear" && i==1)
 		{
 			pistongear->Set(false);
 			return true;

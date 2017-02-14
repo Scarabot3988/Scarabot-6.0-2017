@@ -11,45 +11,27 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include "CANTalon.h"
 #include "Sensors.h"
-<<<<<<< HEAD
-
-class Robot: public frc::IterativeRobot {
-public:
-	FILE *out = 0;
-	void RobotInit() {
-		sdc = new SystemesDeControle;
-		sdc->initSystemes();
-		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
-		//modeautonome = new ModeAutonome(sdc);
-
-		capot=new Solenoid(3);
-		ramasseur=new CANTalon(0);
-
-	}
-
-
-	Solenoid *capot;
-	CANTalon *ramasseur;
-
-	void AutonomousInit() override
-=======
-#include "RamasseurDeBalles.h"
 
 class Robot: public frc::IterativeRobot
 {
 	public:
 		FILE *out = 0;
-		void RobotInit()
-			{
-				sdc = new SystemesDeControle;
-				sdc->initSystemes();
-				joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
-				//modeautonome = new ModeAutonome(sdc);
-				talon = new CANTalon(0);
-			}
+		Solenoid *capot;
+		CANTalon *ramasseur;
+
+void RobotInit()
+	{
+		sdc = new SystemesDeControle;
+		sdc->initSystemes();
+		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
+		modeautonome = new ModeAutonome(sdc);
+		modeautonome->choose_scenario(0);
+		capot=new Solenoid(3);
+		ramasseur=new CANTalon(6);
+
+	}
 
 void AutonomousInit() override
->>>>>>> origin/master
 	{
 		t = 0;
 	}
@@ -63,15 +45,6 @@ void AutonomousPeriodic()
 
 void TeleopInit()
 	{
-	//out=fopen("/home/lvuser/talon.txt","w");
-	//	printf("GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
-	//if(out)
-	//	fprintf(out,"GetClosedLoopError\tEncPosition\tGetOutputCurrent\tPosition\tVitesse\n");
-
-	//talon->Set(0.5);
-	//	talon->ConfigLimitMode(frc::CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
-	//	talon->SetFeedbackDevice(CANTalon::QuadEncoder);
-
 	}
 
 void TeleopPeriodic()
@@ -88,29 +61,13 @@ void TeleopPeriodic()
 				sdc->basemobile.SetAngleDelta(0);
 			}
 
-		//Ramasseur/////////////////////////
-
-
-<<<<<<< HEAD
-
-=======
-		//talon->Set(0.5);
-		//printf("%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
-		//if(out)
-		//	{
-		//		fprintf(out,"%d\t%d\t%f\t%f\t%f\n", talon->GetClosedLoopError(), talon->GetEncPosition(), talon->GetOutputCurrent(), talon->GetPosition(),talon->GetSpeed() );
-		//		fflush(out);
-		//	}
->>>>>>> origin/master
 		std::cout << "GYRO: " << sdc->sensors->gyro->GetAngle() << '\n';
-		std::cout << "ENCODEUR: " << sdc->sensors->drive1->GetDistance() << '\n';
-
-		sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex),
-<<<<<<< HEAD
-				joyPilote->GetRawAxis(MAPPING_drivey));
+		std::cout << "ENCODEUR: " << sdc->sensors->encoderdrive1->GetRaw() << '\n';
 
 
-		///////////////////////////// CAPOT
+		sdc->basemobile.Drive(joyPilote->GetRawAxis(MAPPING_drivex), joyPilote->GetRawAxis(MAPPING_drivey));
+
+/////////////////////////////////////////// CAPOT
 		bool button_capot=joyPilote->GetRawButton(4);
 		if(button_capot==true) capot->Set(true);
 		else capot->Set(false);
@@ -126,14 +83,6 @@ void TeleopPeriodic()
 		else ramasseur->Set(0);
 		if (button_invert==true && button_ramasseur==true) ramasseur->Set(-1);
 		else ramasseur->Set(0);
-
-sdc->Update();
-
-
-
-=======
-		joyPilote->GetRawAxis(MAPPING_drivey));
->>>>>>> origin/master
 
 		sdc->Update();
 	}

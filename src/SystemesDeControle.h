@@ -10,7 +10,6 @@
 
 #include "BaseMobile.h"
 #include "Lanceur.h"
-#include "RamasseurDeBalles.h"
 
 class SystemesDeControle
 {
@@ -18,7 +17,6 @@ class SystemesDeControle
 		SystemesDeControle();
 		BaseMobile basemobile;
 		Lanceur lanceur;
-		RamasseurDeBalles ramasseur;
 		Sensors *sensors;
 
 		void initSystemes();

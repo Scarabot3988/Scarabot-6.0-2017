@@ -16,12 +16,8 @@
 #define PWM_PortMoteurGauche2 4
 #define PWM_PortMoteurGauche3 5
 #define PWM_motoralignement   6
-<<<<<<< HEAD
-#define PWM_motorramaseur     7
-=======
 #define PWM_motorshoot        7
 #define PWM_motorramasseur    8
->>>>>>> origin/master
 
 //Joystick///////////////////////////////
 #define JOYSTICK_PortJoystickPilote 0
@@ -44,9 +40,9 @@
 #define DIO_shooteralign_b 9
 
 #define DIO_limitswitch_shooter 7
-#define DIO_shootb 9
 
-#define DIO_LMS1 10
-#define DIO_LMS2 11
+
+//#define DIO_LMS1 10
+//#define DIO_LMS2 11
 
 #endif /* SRC_CONFIG_H_ */

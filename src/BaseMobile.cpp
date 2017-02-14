@@ -7,9 +7,10 @@
 
 #include <BaseMobile.h>
 
-BaseMobile::BaseMobile() :
+BaseMobile::BaseMobile()
 {
-	x(0), y(0)
+	x=0;
+	y=0;
 
 	moteurdroit = new MultiSpeedController();
 
@@ -41,9 +42,19 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
-	x = _x;
-	y = _y;
+	if(t<=150)
+		{
+			moteurgauche->Set(pow(1.2599,t)-1);
+			moteurdroit->Set(pow(1.2599,t)-1);
+		}
+	else
+		{
+			x = _x;
+			y = _y;
+		}
+	t=t+1;
 }
+
 
 void BaseMobile::SetAngleCible(double _AngleCible)
 {
@@ -65,18 +76,18 @@ void BaseMobile::CorrectionGyro()
 	double delta=GetAngleDelta();
 	double absdelta=abs(delta);
 	if (absdelta>3)
-<<<<<<< HEAD
-	{
-		if (absdelta<45) x=0.2;
-		else x=0.3;
-
-
-	}
-
-
+		{
+			if (absdelta<45)
+				{
+					x=0.2;
+				}
+			else
+				{
+					x=0.3;
+				}
+		}
 
 	if(delta>0) x=-x;
-=======
 		{
 			if (absdelta<45)
 				{
@@ -87,7 +98,6 @@ void BaseMobile::CorrectionGyro()
 					x=0.45;
 				}
 		}
->>>>>>> origin/master
 
 	if(delta>0)
 		{
@@ -102,46 +112,23 @@ void BaseMobile::CorrectionGyro()
 
 void BaseMobile::Update()
 {
-<<<<<<< HEAD
-	if (abs(x)<=0.1 )x=0;
+	if (abs(x)<=0.1)
+	{x=0;}
 
-	if(x!=0) t=20;
+	if(x!=0)
+	{t=20;}
 
 	else
 	{
 		if (t != 0)
-			t = t - 1;
+		{t = t - 1;}
 
 		else
-		{
-			CorrectionGyro();
-=======
-	if (abs(x)<=0.1 )
-		{
-			x=0;
-		}
+		{CorrectionGyro();}
+	}
 
-	if(x!=0)
-		{
-			t=30;
-		}
-
-	else
-		{
-			if (t != 0)
-				{
-					t = t - 1;
-				}
-
-			else
-				{
-					CorrectionGyro();
-				}
->>>>>>> origin/master
-		}
-
-	drive->ArcadeDrive(y, x);
-	x = y = 0;
+		drive->ArcadeDrive(y, x);
+		x = y = 0;
 }
 
 void BaseMobile::donnersensor(Sensors * _sensor)
@@ -151,11 +138,11 @@ void BaseMobile::donnersensor(Sensors * _sensor)
 
 double BaseMobile::GetDistance()
 {
-	return (sensors->drive1->GetDistance() + sensors->drive2->GetDistance()) / 2;
+	return (sensors->encoderdrive1->GetRaw() + sensors->encoderdrive2->GetRaw()) / 2;
 }
 
 void BaseMobile::ResetDistance()
 {
-	sensors->drive1->Reset();
-	sensors->drive2->Reset();
+	sensors->encoderdrive1->Reset();
+	sensors->encoderdrive2->Reset();
 }

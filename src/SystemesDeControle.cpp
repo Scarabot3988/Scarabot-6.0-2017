@@ -21,5 +21,5 @@ void SystemesDeControle::initSystemes()
 void SystemesDeControle::Update()
 {
 	basemobile.Update();
-	ramasseur.Update();
+
 }

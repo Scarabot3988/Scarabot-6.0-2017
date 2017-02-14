@@ -18,8 +18,8 @@ class Sensors
 		Sensors();
 		virtual ~Sensors();
 
-		Encoder *drive1;
-		Encoder *drive2;
+		Encoder *encoderdrive1;
+		Encoder *encoderdrive2;
 
 		ADXRS450_Gyro *gyro;
 
