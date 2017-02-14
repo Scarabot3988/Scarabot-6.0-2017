@@ -42,6 +42,12 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
+
+
+	// ML
+
+	/*
+
 	if(t<=150)
 		{
 			moteurgauche->Set(pow(1.2599,t)-1);
@@ -52,6 +58,22 @@ void BaseMobile::Drive(float _x, float _y)
 			x = _x;
 			y = _y;
 		}
+
+		*/
+	// Cas exponentiel
+	if(t<150)
+	{
+		// magie: https://fr.wikipedia.org/wiki/Sigmo%C3%AFde_(math%C3%A9matiques)
+		float vitesse = 1.0/(1+std::exp(-5.0*(-1+t/100.0)));
+		moteurgauche->Set(vitesse);
+		moteurdroit->Set(vitesse);
+
+	} // sinon autres cas
+	else {
+		x=_x;
+		y=_y;
+	}
+
 	t=t+1;
 }
 
