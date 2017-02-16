@@ -9,7 +9,7 @@
 
 Commande::~Commande()
 {
-	pistongear=new Solenoid(0);
+
 }
 
 int i=0;
@@ -52,13 +52,14 @@ void Commande::start(int t)
 
 bool Commande::isfinished(int t)
 {
-	if (nomdelacommande == "delai" && t > tempsdebut + deltatemps)
+	if (nomdelacommande == "delai" && t > tempsdebut + 50*deltatemps)
 		{
 			return true;
 		}
 
 	if (nomdelacommande == "tourner" && fabs(sdc->basemobile.GetAngleDelta()) <= 2)
 		{
+		std::cout << "atteint"<< std::endl;
 			return true;
 		}
 

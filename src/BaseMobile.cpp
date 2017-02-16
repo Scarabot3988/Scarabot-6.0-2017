@@ -64,9 +64,10 @@ void BaseMobile::Drive(float _x, float _y)
 	if(t<150)
 	{
 		// magie: https://fr.wikipedia.org/wiki/Sigmo%C3%AFde_(math%C3%A9matiques)
-		float vitesse = 1.0/(1+std::exp(-5.0*(-1+t/100.0)));
+	float vitesse = 1.0/(1+std::exp(-5.0*(-1+t/100.0)));
 		moteurgauche->Set(vitesse);
 		moteurdroit->Set(vitesse);
+//	vitesserobot=vitesse;
 
 	} // sinon autres cas
 	else {

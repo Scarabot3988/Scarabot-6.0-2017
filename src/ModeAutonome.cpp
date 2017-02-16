@@ -24,6 +24,7 @@ ModeAutonome::ModeAutonome(SystemesDeControle * _systemesdecontrole)
 {
 	commandeencours=0;
 	systemesdecontrole=_systemesdecontrole;
+	bEndOfExecution = false;
 }
 
 ModeAutonome::~ModeAutonome()
@@ -33,8 +34,15 @@ ModeAutonome::~ModeAutonome()
 void ModeAutonome::Execute(int t)
 {
 	int i=commandeencours;
-	std::cout << "commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
+	static int n=0;
+	n++;
 
+	if(bEndOfExecution==true)
+		return;
+
+	if(!(n%20)){
+	   std::cout << commandeencours << "  commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
+	}
 	if(listecommande[0].demarre==false)
 		{
 			std::cout<<"on démarre"<<std::endl;
@@ -46,6 +54,8 @@ void ModeAutonome::Execute(int t)
 		{
 			std::cout<<"commande finie"<<std::endl;
 			listecommande[i].termine=true;
+			if(i==listecommande.size()-1)
+				bEndOfExecution = true;
 		}
 
 	if (listecommande[i].termine==true && listecommande[i+1].demarre==false)
@@ -117,7 +127,13 @@ void ModeAutonome::choose_scenario(int n)
 					param2=atof(token[2]);
 				}
 			listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
+			std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
 		}
+
+	std::cout << listecommande.size() << " commandes lues" << std::endl;
+	for(int j=0; j<listecommande.size(); j++)
+		std::cout << listecommande[j].nomdelacommande << std::endl;
+
 }
 
 

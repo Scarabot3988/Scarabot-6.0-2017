@@ -26,13 +26,14 @@ public:
 		{
 		deltaangle=param1;
 		}
-	if (nom=="avancer")
+	if (nom=="avancer"){}
+
 nomdelacommande = nom;
 tempsfin=0;
 demarre=false;
 termine=false;
 
-
+pistongear=new Solenoid(0);
 }
 
 

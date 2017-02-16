@@ -26,6 +26,7 @@ class ModeAutonome
 		std::vector<Commande> listecommande;
 
 		int commandeencours;
+		bool bEndOfExecution;
 };
 
 #endif /* SRC_MODEAUTONOME_H_ */

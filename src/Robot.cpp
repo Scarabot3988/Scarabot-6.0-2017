@@ -25,7 +25,7 @@ void RobotInit()
 		sdc->initSystemes();
 		joyPilote = new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome = new ModeAutonome(sdc);
-		modeautonome->choose_scenario(0);
+		modeautonome->choose_scenario(1);
 		capot=new Solenoid(3);
 		ramasseur=new CANTalon(6);
 

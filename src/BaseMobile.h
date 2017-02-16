@@ -39,7 +39,7 @@ class BaseMobile
 		Talon *moteur1gauche;
 		Talon *moteur2gauche;
 		Talon *moteur3gauche;
-
+		float vitesserobot;
 		MultiSpeedController *moteurdroit;
 
 		Talon *moteur1droite;
