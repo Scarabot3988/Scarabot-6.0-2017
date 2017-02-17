@@ -80,7 +80,7 @@ void ModeAutonome::choose_scenario(int n)
 		{
 			return; // exit if file not found
 		}
-
+bool bCommentaire=false;
 	//read each line of the file
 	while (!fin.eof())
 		{
@@ -114,9 +114,15 @@ void ModeAutonome::choose_scenario(int n)
 			std::string nomdelacommande;
 			float param1=0;
 			float param2=0;
+			bCommentaire=false;
 			if(token[0])
 				{
-					nomdelacommande=std::string(token[0]);
+				    if(strlen(token[0])<2)
+				    	bCommentaire=true;
+				    else if(token[0][0]=='/')
+				    	bCommentaire=true;
+				    else
+					    nomdelacommande=std::string(token[0]);
 				}
 			if(token[1])
 				{
@@ -126,8 +132,10 @@ void ModeAutonome::choose_scenario(int n)
 				{
 					param2=atof(token[2]);
 				}
-			listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
-			std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
+			if(bCommentaire==false){
+			   listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
+			   std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
+			}
 		}
 
 	std::cout << listecommande.size() << " commandes lues" << std::endl;
