@@ -6,7 +6,7 @@
  */
 
 // trouvé ici https://www.reddit.com/r/FRC/comments/2qr29j/6_cim_tank_drive_wpilib/
-
+#include <iostream>
 #include "MultiSpeedController.h"
 
 MultiSpeedController::MultiSpeedController()
@@ -25,6 +25,7 @@ void MultiSpeedController::Set(double speed)
 
 		for (unsigned int i = 0; i < speedControllers.size(); i++)
 		{
+			std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
 			speedControllers[i]->Set(speed);
 		}
 	}
