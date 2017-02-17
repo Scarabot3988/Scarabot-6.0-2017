@@ -11,11 +11,10 @@
 
 Lanceur::Lanceur()
 {
-	limitswitch_trouve= false;
-	alignement = new Talon(PWM_motoralignement);
-	shoot = new Talon(PWM_motorshoot);
-	sensors =new Sensors;
-	//piston = new Solenoid();
+	limitswitch_trouve=false;
+	alignement=new Talon(PWM_motoralignement);
+	shoot=new Talon(PWM_motorshoot);
+	//piston=new Solenoid();
 }
 
 Lanceur::~Lanceur()
@@ -48,7 +47,7 @@ void Lanceur::homein()
 			alignement->Set(vitesse);
 		}
 }
-void Lanceur::mouvealign(bool button_left, bool button_right)
+void Lanceur::mouve_align(bool button_left, bool button_right)
 {
 	float vitesse = 0;
 	if (button_left == true && sensors->encoder_shoot_align->GetRaw() <= 1000)

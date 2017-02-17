@@ -18,7 +18,7 @@ class Lanceur
 		void setposition(float angle);
 		void donnersensor(Sensors* _sensor);
 		void homein();
-		void mouvealign(bool button_left, bool button_right);
+		void mouve_align(bool button_left, bool button_right);
 
 		Talon *alignement;
 		Talon *shoot;
