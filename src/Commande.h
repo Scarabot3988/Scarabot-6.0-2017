@@ -10,35 +10,33 @@
 # include"string"
 #include "SystemesDeControle.h"
 
-class Commande
-{
+class Commande {
 public:
-	Commande(SystemesDeControle* p,std::string nom, float param1, float param2=0)
-{
+	Commande(SystemesDeControle* p, std::string nom, float param1,
+			float param2 = 0) {
 
 		sdc = p;
-	if (nom=="delai")
-	{
-		deltatemps=param1;
+		if (nom == "delai") {
+			deltatemps = param1;
+		}
+
+		if (nom == "tourner") {
+			deltaangle = param1;
+		}
+		if (nom == "avancer") {
+			targetdistance = param1;
+			targetspeed = param2;
+		}
+
+		nomdelacommande = nom;
+		tempsfin = 0;
+		demarre = false;
+		termine = false;
+
+		pistongear = new Solenoid(0);
 	}
 
-	if (nom=="tourner")
-		{
-		deltaangle=param1;
-		}
-	if (nom=="avancer"){}
-
-nomdelacommande = nom;
-tempsfin=0;
-demarre=false;
-termine=false;
-
-pistongear=new Solenoid(0);
-}
-
-
-virtual ~Commande();
-
+	virtual ~Commande();
 
 // Place pour variables
 
@@ -55,7 +53,8 @@ virtual ~Commande();
 	float angledebut;
 	float angletarget;
 	float deltaangle;
-
+	float targetdistance;
+	float targetspeed;
 	int distancefin;
 
 	int commandeafaire;
@@ -78,7 +77,5 @@ virtual ~Commande();
 
 	Solenoid *pistongear;
 };
-
-
 
 #endif /* SRC_COMMANDE_H_ */

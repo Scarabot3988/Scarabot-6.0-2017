@@ -29,7 +29,7 @@ void Commande::start(int t)
 	if (nomdelacommande == "avancer")
 		{
 			sdc->basemobile.ResetDistance();
-			sdc->basemobile.Drive(0, 1);
+			sdc->basemobile.Drive(0, targetspeed);
 		}
 
 	if (nomdelacommande == "placergear")
@@ -63,7 +63,7 @@ bool Commande::isfinished(int t)
 			return true;
 		}
 
-	if (nomdelacommande == "avancer" && sdc->basemobile.GetDistance() >= distancefin)
+	if (nomdelacommande == "avancer" && sdc->basemobile.GetDistance() >= targetdistance)
 		{
 			return true;
 		}
