@@ -65,6 +65,7 @@ bool Commande::isfinished(int t)
 
 	if (nomdelacommande == "avancer" && sdc->basemobile.GetDistance() >= targetdistance)
 		{
+		sdc->basemobile.Drive(0, 0);
 			return true;
 		}
 
