@@ -42,40 +42,31 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
+	/*float vitesseR;
+	float vitesseL;
 
-
-	// ML
-
-	/*
-
-	if(t<=150)
+	vitesseR=(_x+_y)/2;
+	vitesseL=(_x-_y)/2;
+ std::cout<<_y<<std::endl;
+	moteurgauche->Set(vitesseL);
+	moteurdroit->Set(vitesseR);
+return;
+	int t=0;
+	if (t<150)
 		{
-			moteurgauche->Set(pow(1.2599,t)-1);
-			moteurdroit->Set(pow(1.2599,t)-1);
+			vitesseR=1.0/(1+std::exp(-5.0*(-1+t/100.0)));
+			vitesseL=1.0/(1+std::exp(-5.0*(-1+t/100.0)));
+			moteurgauche->Set(vitesseL);
+			moteurdroit->Set(vitesseR);
 		}
 	else
 		{
-			x = _x;
-			y = _y;
+			vitesseR=(x+y)/2;
+			vitesseL=(x-y)/2;
 		}
-
-		*/
-	// Cas exponentiel
-	if(t<150)
-	{
-		// magie: https://fr.wikipedia.org/wiki/Sigmo%C3%AFde_(math%C3%A9matiques)
-	float vitesse = 1.0/(1+std::exp(-5.0*(-1+t/100.0)));
-		moteurgauche->Set(vitesse);
-		moteurdroit->Set(vitesse);
-//	vitesserobot=vitesse;
-
-	} // sinon autres cas
-	else {
-		x=_x;
-		y=_y;
-	}
-
-	t=t+1;
+	t=t+1;*/
+	x=_x;
+	y=_y;
 }
 
 
@@ -86,6 +77,10 @@ void BaseMobile::SetAngleCible(double _AngleCible)
 
 double BaseMobile::GetAngleDelta()
 {
+	static int n=0;
+	n++;
+	if(!(n%20))
+	   std::cout << "gyro: " << sensors->gyro->GetAngle() << " cible="<< AngleCible << std::endl;
 	return AngleCible - sensors->gyro->GetAngle();
 }
 
@@ -110,8 +105,10 @@ void BaseMobile::CorrectionGyro()
 				}
 		}
 
-	if(delta>0) x=-x;
+	if(delta>0)
 		{
+			x=-x;
+
 			if (absdelta<45)
 				{
 					x=0.2;
@@ -122,11 +119,6 @@ void BaseMobile::CorrectionGyro()
 				}
 		}
 
-	if(delta>0)
-		{
-			x=-x;
-		}
-
 	if(y!=0)
 		{
 			x=x*y/abs(y);
@@ -135,7 +127,7 @@ void BaseMobile::CorrectionGyro()
 
 void BaseMobile::Update()
 {
-	if (abs(x)<=0.1)
+	/*if (abs(x)<=0.1)
 	{x=0;}
 
 	if(x!=0)
@@ -148,10 +140,10 @@ void BaseMobile::Update()
 
 		else
 		{CorrectionGyro();}
-	}
+	}*/
 
 		drive->ArcadeDrive(y, x);
-		x = y = 0;
+		//x = y = 0;
 }
 
 void BaseMobile::donnersensor(Sensors * _sensor)
@@ -161,11 +153,15 @@ void BaseMobile::donnersensor(Sensors * _sensor)
 
 double BaseMobile::GetDistance()
 {
-	return (sensors->encoderdrive1->GetRaw() + sensors->encoderdrive2->GetRaw()) / 2;
+	std::cout<<"encoder1 d="<<sensors->encoderdrive1->Get()<<std::endl;
+	std::cout<<"encoder2 d="<<sensors->encoderdrive2->Get()<<std::endl;
+
+	return (sensors->encoderdrive1->Get() + sensors->encoderdrive2->Get()) / 400.0;
 }
 
 void BaseMobile::ResetDistance()
 {
+	std::cout<<"resetdistance"<<std::endl;
 	sensors->encoderdrive1->Reset();
 	sensors->encoderdrive2->Reset();
 }
