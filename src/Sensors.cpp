@@ -12,7 +12,7 @@ Sensors::Sensors()
 {
 	std::cout << "dans ctr() sensors" << std::endl;
 	encoderdrive1=new Encoder(DIO_drive1a,DIO_drive1b);
-	encoderdrive2=new Encoder(DIO_drive2a,DIO_drive2b,true);
+	encoderdrive2=new Encoder(DIO_drive2a,DIO_drive2b);
 
 	gyro=new ADXRS450_Gyro();
 	//LMS1=new DigitalInput(DIO_LMS1);
