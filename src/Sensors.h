@@ -23,10 +23,11 @@ class Sensors
 
 		ADXRS450_Gyro *gyro;
 
-		DigitalInput *LMS1;
-		DigitalInput *LMS2;
+		//DigitalInput *LMS1;
+		//DigitalInput *LMS2;
 
 		DigitalInput *limitswitch_shooter;
+
 		Encoder *encoder_shoot_align;
 };
 
