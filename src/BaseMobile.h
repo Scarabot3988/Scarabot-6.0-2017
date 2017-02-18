@@ -26,13 +26,18 @@ class BaseMobile
 		void SetAngleDelta(double);
 		void SetAngleCible(double);
 		double GetAngleDelta();
-
+		void SetTurbo(){
+			turbo=true;}
+		void ResetTurbo(){
+			turbo=false;}
 
 
 	private:
 		void CorrectionGyro();
 
 		double AngleCible;
+bool turbo;
+
 
 		MultiSpeedController *moteurgauche;
 
@@ -41,6 +46,8 @@ class BaseMobile
 		Talon *moteur3gauche;
 		float vitesserobot;
 		MultiSpeedController *moteurdroit;
+
+
 
 		Talon *moteur1droite;
 		Talon *moteur2droite;

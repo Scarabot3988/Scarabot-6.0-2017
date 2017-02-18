@@ -17,8 +17,10 @@ class MultiSpeedController: public frc::SpeedController
 {
 	private:
 		std::vector <SpeedController*> speedControllers;
+		std::vector <SpeedController*> auxSpeedControllers;
 
 		double speed;
+		bool turbo;
 
 	public:
 		MultiSpeedController ();
@@ -30,7 +32,13 @@ class MultiSpeedController: public frc::SpeedController
 		virtual void SetInverted(bool);
 		virtual bool GetInverted() const;
 		virtual void StopMotor();
+		void ResetAux();
+		 void ResetTurbo(){turbo=false;
+		 ResetAux();}
+		 void SetTurbo(){turbo=true;}
+
 		void DonnerMoteur(SpeedController* moteur);
+		void DonnerAuxMoteur(SpeedController* moteur);
 };
 
 #endif /* MULTISPEEDCONTROLLER_H_ */

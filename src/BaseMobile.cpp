@@ -18,8 +18,8 @@ BaseMobile::BaseMobile()
 	moteur2droite = new Talon(PWM_PortMoteurDroite2);
 	moteur3droite = new Talon(PWM_PortMoteurDroite3);
 
-	moteurdroit->DonnerMoteur(moteur1droite);
-	moteurdroit->DonnerMoteur(moteur2droite);
+	moteurdroit->DonnerAuxMoteur(moteur1droite);
+	moteurdroit->DonnerAuxMoteur(moteur2droite);
 	moteurdroit->DonnerMoteur(moteur3droite);
 
 	moteurgauche = new MultiSpeedController();
@@ -28,11 +28,15 @@ BaseMobile::BaseMobile()
 	moteur2gauche = new Talon(PWM_PortMoteurGauche2);
 	moteur3gauche = new Talon(PWM_PortMoteurGauche3);
 
-	moteurgauche->DonnerMoteur(moteur1gauche);
-	moteurgauche->DonnerMoteur(moteur2gauche);
+	moteurgauche->DonnerAuxMoteur(moteur1gauche);
+	moteurgauche->DonnerAuxMoteur(moteur2gauche);
 	moteurgauche->DonnerMoteur(moteur3gauche);
 
+
+
 	drive = new RobotDrive(moteurgauche, moteurdroit);
+
+	turbo=false;
 }
 
 BaseMobile::~BaseMobile()
@@ -42,31 +46,12 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
-	/*float vitesseR;
-	float vitesseL;
 
-	vitesseR=(_x+_y)/2;
-	vitesseL=(_x-_y)/2;
- std::cout<<_y<<std::endl;
-	moteurgauche->Set(vitesseL);
-	moteurdroit->Set(vitesseR);
-return;
-	int t=0;
-	if (t<150)
-		{
-			vitesseR=1.0/(1+std::exp(-5.0*(-1+t/100.0)));
-			vitesseL=1.0/(1+std::exp(-5.0*(-1+t/100.0)));
-			moteurgauche->Set(vitesseL);
-			moteurdroit->Set(vitesseR);
-		}
-	else
-		{
-			vitesseR=(x+y)/2;
-			vitesseL=(x-y)/2;
-		}
-	t=t+1;*/
+
 	x=_x;
 	y=_y;
+
+
 }
 
 
@@ -142,7 +127,20 @@ void BaseMobile::Update()
 		{CorrectionGyro();}
 	}*/
 
-		drive->ArcadeDrive(y, x);
+
+			if(turbo==false)
+			{
+moteurgauche->ResetTurbo();
+moteurdroit->ResetTurbo();
+			}
+			else
+			{
+				moteurgauche->SetTurbo();
+				moteurdroit->SetTurbo();
+			}
+
+
+	drive->ArcadeDrive(y, x);
 		//x = y = 0;
 }
 

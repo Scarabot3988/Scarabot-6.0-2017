@@ -12,6 +12,7 @@
 MultiSpeedController::MultiSpeedController()
 	{
         Set(0.0);
+        turbo=false;
     }
 
 double MultiSpeedController::Get() const
@@ -28,6 +29,15 @@ void MultiSpeedController::Set(double speed)
 			std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
 			speedControllers[i]->Set(speed);
 		}
+
+		if(turbo==true){
+			for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
+			{
+				std::cout<<"vitesse moteur aux "<<i<<"="<<speed<<std::endl;
+				auxSpeedControllers[i]->Set(speed);
+			}
+
+		}
 	}
 void MultiSpeedController::PIDWrite(double output)
 	{
@@ -40,11 +50,19 @@ void MultiSpeedController::Disable()
     		{
 				speedControllers[i]->Disable();
     		}
+		for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
+		    		{
+						auxSpeedControllers[i]->Disable();
+		    		}
 	}
 
 void MultiSpeedController::DonnerMoteur(SpeedController * moteur)
 	{
 		speedControllers.push_back(moteur);
+	}
+void MultiSpeedController::DonnerAuxMoteur(SpeedController * moteur)
+	{
+		auxSpeedControllers.push_back(moteur);
 	}
 
 void MultiSpeedController::SetInverted(bool isInverted)
@@ -53,6 +71,11 @@ void MultiSpeedController::SetInverted(bool isInverted)
 			{
 				speedControllers[i]->SetInverted(isInverted);
 			}
+
+		for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
+					{
+						auxSpeedControllers[i]->SetInverted(isInverted);
+					}
 	}
 
 bool MultiSpeedController::GetInverted() const
@@ -72,5 +95,14 @@ void MultiSpeedController::StopMotor()
     	for (unsigned int i = 0; i < speedControllers.size(); i++)
     		{
     			speedControllers[i]->StopMotor();
+    		}
+    	ResetTurbo();
+
+	}
+void MultiSpeedController::ResetAux()
+	{
+    	for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
+    		{
+    			auxSpeedControllers[i]->StopMotor();
     		}
 	}
