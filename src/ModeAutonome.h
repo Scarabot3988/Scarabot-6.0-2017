@@ -19,7 +19,7 @@ class ModeAutonome
 		virtual ~ModeAutonome();
 
 		void Execute(int t);
-		void choose_scenario(int n);
+		void choose_scenario(std::string nomScenario );
 
 	private:
 		SystemesDeControle * systemesdecontrole;

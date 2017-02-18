@@ -33,7 +33,7 @@ ModeAutonome::~ModeAutonome()
 
 void ModeAutonome::Execute(int t)
 {
-	int i=commandeencours;
+	unsigned int i=commandeencours;
 	static int n=0;
 	n++;
 
@@ -68,13 +68,14 @@ void ModeAutonome::Execute(int t)
 	commandeencours=i;
 }
 
-void ModeAutonome::choose_scenario(int n)
+void ModeAutonome::choose_scenario(std::string nomScenario )
 {
+	std::cout<<"Scenario "<<nomScenario<<std::endl;
 	//create a file-reading object
 	ifstream fin;
 
 	char str[MAX_TOKENS_PER_LINE];
-	sprintf(str,"/home/lvuser/scenario%d.txt",n);
+	sprintf(str,"/home/lvuser/%s.txt",nomScenario.c_str());
 	fin.open(str); // open a file
 	if (!fin.good())
 		{
@@ -139,7 +140,7 @@ bool bCommentaire=false;
 		}
 
 	std::cout << listecommande.size() << " commandes lues" << std::endl;
-	for(int j=0; j<listecommande.size(); j++)
+	 for (unsigned int j=0; j<listecommande.size(); j++)
 		std::cout << listecommande[j].nomdelacommande << std::endl;
 
 }
