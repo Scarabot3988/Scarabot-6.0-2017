@@ -10,6 +10,7 @@
 
 #include "BaseMobile.h"
 #include "Lanceur.h"
+#include "Vision.h"
 
 class SystemesDeControle
 {
@@ -18,6 +19,8 @@ class SystemesDeControle
 		BaseMobile basemobile;
 		Lanceur lanceur;
 		Sensors *sensors;
+		Vision moduleVision;
+
 
 		void initSystemes();
 		void Update();
