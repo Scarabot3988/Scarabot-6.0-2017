@@ -23,15 +23,23 @@ class Robot: public frc::IterativeRobot
 		DoubleSolenoid *gear;
 		DoubleSolenoid *capot;
 		Compressor *compressor;
+		bool activation_grimpeur;
+		bool transition_grimpeur;
+		bool activation_blocker;
 
 void RobotInit()
 	{
-		sdc=new SystemesDeControle;
+
+	chooser.AddDefault(autoNameDefault, autoNameDefault);
+			chooser.AddObject(autoNameCustom, autoNameCustom);
+			frc::SmartDashboard::PutData("Auto Modes", &chooser);
+
+	sdc=new SystemesDeControle;
 		sdc->initSystemes();
 		joyPilote=new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome=new ModeAutonome(sdc);
-		modeautonome->choose_scenario(1);
-		ramasseur=new CANTalon(0);
+
+		ramasseur=new CANTalon(2);
 		shifter=new Solenoid(7);
 		grimpeurpiston=new Solenoid(6);
 		blocker=new DoubleSolenoid(0,5);
@@ -39,18 +47,28 @@ void RobotInit()
 		capot=new DoubleSolenoid(2,3);
 		compressor=new Compressor;
 		compressor->Start();
+		activation_grimpeur= false;
+		activation_blocker=false;
+		transition_grimpeur=false;
+		blocker->Set(DoubleSolenoid::Value::kReverse);
+
+
 	}
 
 void AutonomousInit() override
 	{
-		t=0;
+
+	autoSelected=chooser.GetSelected();
+	modeautonome->choose_scenario(autoSelected);
+	t=0;
 	}
 
 void AutonomousPeriodic()
 	{
-		modeautonome->Execute(t);
-		sdc->Update();
-		t=t+1;
+		//modeautonome->Execute(t);
+		//sdc->Update();
+		//t=t+1;
+		sdc->moduleVision.test();
 	}
 
 void TeleopInit()
@@ -90,18 +108,18 @@ void TeleopPeriodic()
 		else capot->Set(DoubleSolenoid::Value::kOff);
 
 // RAMASSEUR DE BALLES //////////////////////////////////////////////////////////////////
-
+        std::cout << "Courant ramasseur: " << ramasseur->GetOutputCurrent()<< std::endl;
 		bool button_ramasseur=joyPilote->GetRawButton(5);
-		bool button_invert=joyPilote->GetRawButton(6);
 
-		if(button_ramasseur==true && button_invert==false)
-			{ramasseur->Set(1);}
+		if(button_ramasseur==true )
+			{ramasseur->Set(0.9);
+
+			std::cout<<"on ramasse"<<std::endl;
+			}
+
 		else
-			{ramasseur->Set(0);}
-
-		//if (button_invert==true && button_ramasseur==true)
-			//{ramasseur->Set(-1);}
-		//else ramasseur->Set(0);
+			{ramasseur->Set(0);
+			}
 
 
 
@@ -109,15 +127,36 @@ void TeleopPeriodic()
 
 		bool button_pistongrimpeur=joyPilote->GetRawButton(12);
 
-		if (button_pistongrimpeur==true)
-		{
-			grimpeurpiston->Set(true);
-		}
-		else
-		{
-			grimpeurpiston->Set(false);
-		}
+		if (button_pistongrimpeur==true){
+			if(transition_grimpeur==false){
+			   activation_grimpeur = !activation_grimpeur;
+			   transition_grimpeur=true;
 
+		    }
+		}
+		else transition_grimpeur=false;
+
+		grimpeurpiston->Set(activation_grimpeur);
+
+
+				std::cout << activation_grimpeur<<std::endl;
+
+
+
+//BLOCKER/////////////////////////////////////////////////////////
+		bool button_blocker=joyPilote->GetRawButton(9);
+		if(button_blocker==true)
+
+			blocker->Set(DoubleSolenoid::Value::kForward);
+
+
+
+////TURBO////////////////////////////////////////////////////
+
+		bool turbo=joyPilote->GetRawButton(8);
+		if(turbo==true)
+			sdc->basemobile.SetTurbo();
+			else sdc->basemobile.ResetTurbo();
 	}
 
 void TestPeriodic()
@@ -134,7 +173,13 @@ void DisabledPeriodic()
 		SystemesDeControle *sdc;
 		Joystick *joyPilote;
 		ModeAutonome *modeautonome;
-		CANTalon *talon;
+
+		frc::LiveWindow* lw = LiveWindow::GetInstance();
+		frc::SendableChooser<std::string> chooser;
+		const std::string autoNameDefault = "RB";
+		const std::string autoNameCustom = "RBS";
+		std::string autoSelected;
+
 
 		unsigned int t = 0;
 		int vieux = 0;bool bon = true;
