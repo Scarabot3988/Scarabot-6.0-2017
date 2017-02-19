@@ -26,14 +26,14 @@ void MultiSpeedController::Set(double speed)
 
 		for (unsigned int i = 0; i < speedControllers.size(); i++)
 		{
-			std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
+			//std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
 			speedControllers[i]->Set(speed);
 		}
 
 		if(turbo==true){
 			for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
 			{
-				std::cout<<"vitesse moteur aux "<<i<<"="<<speed<<std::endl;
+				//std::cout<<"vitesse moteur aux "<<i<<"="<<speed<<std::endl;
 				auxSpeedControllers[i]->Set(speed);
 			}
 
