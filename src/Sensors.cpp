@@ -17,8 +17,9 @@ Sensors::Sensors()
 	gyro=new ADXRS450_Gyro();
 	//LMS1=new DigitalInput(DIO_LMS1);
 	//LMS2=new DigitalInput(DIO_LMS2);
-//	limitswitch_shooter=new DigitalInput(DIO_limitswitch_shooter);
-//	encoder_shoot_align=new Encoder(DIO_shooteralign_a,DIO_shooteralign_b);
+	limitswitch_shooter=new DigitalInput(DIO_limitswitch_shooter);
+	encoder_shoot_align=new Encoder(DIO_shooteralign_a,DIO_shooteralign_b);
+	encoder_shoot_align->Reset();
 }
 
 Sensors::~Sensors()
