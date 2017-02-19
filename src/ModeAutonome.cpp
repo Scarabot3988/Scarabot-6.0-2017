@@ -40,9 +40,9 @@ void ModeAutonome::Execute(int t)
 	if(bEndOfExecution==true)
 		return;
 
-	if(!(n%20)){
+	//if(!(n%20)){
 	   std::cout << commandeencours << "  commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
-	}
+	//}
 	if(listecommande[0].demarre==false)
 		{
 			std::cout<<"on démarre"<<std::endl;

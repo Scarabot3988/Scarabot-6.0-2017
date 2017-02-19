@@ -57,18 +57,20 @@ void RobotInit()
 
 void AutonomousInit() override
 	{
-
+	grimpeurpiston->Set(true);
 	autoSelected=chooser.GetSelected();
-	modeautonome->choose_scenario(autoSelected);
+	 modeautonome->choose_scenario(autoSelected);
 	t=0;
 	}
 
 void AutonomousPeriodic()
 	{
-		//modeautonome->Execute(t);
-		//sdc->Update();
-		//t=t+1;
-		sdc->moduleVision.test();
+		modeautonome->Execute(t);
+		sdc->Update();
+		//sdc->moduleVision.test();
+		//sdc->lanceur.homein();
+		//sdc->lanceur.Update();
+		t=t+1;
 	}
 
 void TeleopInit()
@@ -77,6 +79,7 @@ void TeleopInit()
 
 void TeleopPeriodic()
 	{
+		//sdc->lanceur.Update();
 
 // SHOOTER //////////////////////////////////////////////////////////////////////////
 
