@@ -9,6 +9,7 @@
 #define SRC_LANCEUR_H_
 #include <WPILib.h>
 #include "sensors.h"
+#include <CANTalon.h>
 class Lanceur
 {
 	public:
@@ -20,11 +21,15 @@ class Lanceur
 		void homein();
 		void mouve_align(bool button_left, bool button_right);
 
-		Talon *alignement;
+		CANTalon *motoralignement;
 		Talon *shoot;
 		Sensors *sensors;
 		bool limitswitch_trouve;
 		int valeurdepart;
+		float anglecible;
+		float anglepresent;
+		float angledepart;
+		float v;
 		//Solenoid *piston;
 
 };
