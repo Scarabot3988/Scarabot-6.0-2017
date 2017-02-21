@@ -12,17 +12,16 @@
 
 #include <memory>
 
-class Vision {
-public:
+class Vision
+{
+	public:
+		Vision();
 
-	std::shared_ptr<NetworkTable> Net;
+		virtual ~Vision();
+		void test();
+		float calculdistance(int pix);
 
-	Vision();
-	virtual ~Vision();
-
-	void test();
-
-	float calculdistance(int pix);
+		std::shared_ptr<NetworkTable> Net;
 };
 
 #endif /* SRC_VISION_H_ */

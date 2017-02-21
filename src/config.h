@@ -8,7 +8,7 @@
 #ifndef SRC_CONFIG_H_
 #define SRC_CONFIG_H_
 
-//PWM////////////////////////////
+// PWM ////////////////////////////////////
 #define PWM_PortMoteurDroite1 0
 #define PWM_PortMoteurDroite2 1
 #define PWM_PortMoteurDroite3 2
@@ -19,13 +19,12 @@
 #define PWM_motorshoot        7
 #define PWM_motorramasseur    8
 
-//Joystick///////////////////////////////
+// Joystick ///////////////////////////////
+
 #define JOYSTICK_PortJoystickPilote 0
 
-//mapping de manette
+// DIO ////////////////////////////////////
 
-
-//DIO
 #define DIO_drive1a 0
 #define DIO_drive1b 1
 
@@ -35,13 +34,33 @@
 #define DIO_shooterxa 4
 #define DIO_shooterxb 5
 
+#define DIO_limitswitch_shooter 7
+
 #define DIO_shooteralign_a 8
 #define DIO_shooteralign_b 9
 
-#define DIO_limitswitch_shooter 7
+// CAN //////////////////////////
+
+#define CAN_feeder 3
+
+#define CAN_shooter1 5
+
+#define CAN_ramasseur 7
+
+// SOL ///////////////////////////////
+
+#define SOL_shifter 7
+
+#define SOL_grimpeurpiston 6
+
+#define SOL_secoue 0
+
+#define SOL_blocker 5
+
+#define SOL_capot1 2
+#define SOL_capot2 3
 
 
-//#define DIO_LMS1 10
-//#define DIO_LMS2 11
+
 
 #endif /* SRC_CONFIG_H_ */

@@ -17,21 +17,24 @@
 Vision::Vision()
 {
 	Net= NetworkTable::GetTable("Data");
-
 }
 
-Vision::~Vision() {
+Vision::~Vision()
+{
 	// TODO Auto-generated destructor stub
 }
 
 void Vision::test()
 {
-	try{
-	float valeur = Net.get()->GetNumber("x",0);
-	//std::cout<<"Number :"<<valeur<<std::endl;
-	} catch(...){
-		std::cout<<"Pas de valeur"<<std::endl;
-	}
+	try
+		{
+			float valeur = Net.get()->GetNumber("x",0);
+			//std::cout<<"Number :"<<valeur<<std::endl;
+		}
+	catch(...)
+		{
+				std::cout<<"Pas de valeur"<<std::endl;
+		}
 }
 
 float Vision::calculdistance(int pix)
@@ -40,9 +43,9 @@ float Vision::calculdistance(int pix)
 	float b;
 	float d;
 
-	a=(D2-D1)/(X2-X1);   //la pente
-	b=D1-(X1*a);   //l"ordonnée à l'origine
-	d=pix*a+b;   //le y
+	a=(D2-D1)/(X2-X1);	//la pente
+	b=D1-(X1*a);		//l"ordonnée à l'origine
+	d=pix*a+b;			//le y
 
 	return d;
 }
