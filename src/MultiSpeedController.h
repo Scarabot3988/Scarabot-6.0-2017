@@ -5,7 +5,7 @@
  *      Author: XPS15
  */
 
-//  trouvé ici https://www.reddit.com/r/FRC/comments/2qr29j/6_cim_tank_drive_wpilib/
+// trouvé ici https://www.reddit.com/r/FRC/comments/2qr29j/6_cim_tank_drive_wpilib/
 
 #ifndef MULTISPEEDCONTROLLER_H_
 #define MULTISPEEDCONTROLLER_H_
@@ -33,10 +33,15 @@ class MultiSpeedController: public frc::SpeedController
 		virtual bool GetInverted() const;
 		virtual void StopMotor();
 		void ResetAux();
-		 void ResetTurbo(){turbo=false;
-		 ResetAux();}
-		 void SetTurbo(){turbo=true;}
-
+		void ResetTurbo()
+			{
+				turbo=false;
+				ResetAux();
+			}
+		void SetTurbo()
+			{
+				turbo=true;
+			}
 		void DonnerMoteur(SpeedController* moteur);
 		void DonnerAuxMoteur(SpeedController* moteur);
 };
