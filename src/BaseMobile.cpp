@@ -11,30 +11,27 @@ BaseMobile::BaseMobile()
 {
 	x=0;
 	y=0;
+	anglecible=0;
+	vitesserobot=0;
 
 	moteurdroit = new MultiSpeedController();
-
 	moteur1droite = new Talon(PWM_PortMoteurDroite1);
 	moteur2droite = new Talon(PWM_PortMoteurDroite2);
 	moteur3droite = new Talon(PWM_PortMoteurDroite3);
-
-	moteurdroit->DonnerAuxMoteur(moteur1droite);
-	moteurdroit->DonnerAuxMoteur(moteur2droite);
-	moteurdroit->DonnerMoteur(moteur3droite);
-
 	moteurgauche = new MultiSpeedController();
-
 	moteur1gauche = new Talon(PWM_PortMoteurGauche1);
 	moteur2gauche = new Talon(PWM_PortMoteurGauche2);
 	moteur3gauche = new Talon(PWM_PortMoteurGauche3);
+	drive = new RobotDrive(moteurgauche, moteurdroit);
+	//sensors=new Sensors;
+
+	moteurdroit->DonnerAuxMoteur(moteur1droite);
+	moteurdroit->DonnerMoteur(moteur2droite);
+	moteurdroit->DonnerMoteur(moteur3droite);
 
 	moteurgauche->DonnerAuxMoteur(moteur1gauche);
-	moteurgauche->DonnerAuxMoteur(moteur2gauche);
+	moteurgauche->DonnerMoteur(moteur2gauche);
 	moteurgauche->DonnerMoteur(moteur3gauche);
-
-
-
-	drive = new RobotDrive(moteurgauche, moteurdroit);
 
 	turbo=false;
 }
@@ -46,18 +43,13 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
-
-
 	x=_x;
 	y=_y;
-
-
 }
 
-
-void BaseMobile::SetAngleCible(double _AngleCible)
+void BaseMobile::SetAngleCible(double _anglecible)
 {
-	AngleCible = _AngleCible;
+	anglecible = _anglecible;
 }
 
 double BaseMobile::GetAngleDelta()
@@ -65,17 +57,23 @@ double BaseMobile::GetAngleDelta()
 	static int n=0;
 	n++;
 	if(!(n%1))
-	   std::cout << "gyro: " << sensors->gyro->GetAngle() << " cible="<< AngleCible << std::endl;
-	return AngleCible - sensors->gyro->GetAngle();
+	{
+		std::cout << "gyro: " << sensors->gyro->GetAngle() << " cible="<< anglecible << std::endl;
+		return anglecible - sensors->gyro->GetAngle();
+	}
 }
 
 void BaseMobile::SetAngleDelta(double delta)
 {
-	AngleCible = sensors->gyro->GetAngle() + delta;
+	anglecible = sensors->gyro->GetAngle() + delta;
 	if(delta<0)
-	x=.75;
+		{
+			x=.75;
+		}
 	else
-		x=-.75;
+		{
+			x=-.75;
+		}
 	y=0;
 }
 
@@ -118,35 +116,43 @@ void BaseMobile::CorrectionGyro()
 void BaseMobile::Update()
 {
 	/*if (abs(x)<=0.1)
-	{x=0;}
+		{
+			x=0;
+		}
 
 	if(x!=0)
-	{t=20;}
+		{
+			t=20;
+		}
 
 	else
-	{
-		if (t != 0)
-		{t = t - 1;}
+		{
+			if (t != 0)
+				{
+					t = t - 1;
+				}
 
-		else
-		{CorrectionGyro();}
-	}*/
-
-
-			if(turbo==false)
-			{
-moteurgauche->ResetTurbo();
-moteurdroit->ResetTurbo();
-			}
 			else
-			{
-				moteurgauche->SetTurbo();
-				moteurdroit->SetTurbo();
-			}
+				{
+					CorrectionGyro();
 
+				}
+		}*/
+
+
+	if(turbo==false)
+		{
+			moteurgauche->ResetTurbo();
+			moteurdroit->ResetTurbo();
+		}
+	else
+		{
+			moteurgauche->SetTurbo();
+			moteurdroit->SetTurbo();
+		}
 
 	drive->ArcadeDrive(y, x);
-		//x = y = 0;
+	//x = y = 0;
 }
 
 void BaseMobile::donnersensor(Sensors * _sensor)
@@ -164,7 +170,7 @@ double BaseMobile::GetDistance()
 
 void BaseMobile::ResetDistance()
 {
-	std::cout<<"resetdistance"<<std::endl;
+	std::cout<<"reset distance"<<std::endl;
 	sensors->encoderdrive1->Reset();
 	sensors->encoderdrive2->Reset();
 }

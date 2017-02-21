@@ -13,52 +13,49 @@
 #include "sensors.h"
 #include "MultiSpeedController.h"
 #include "math.h"
+
 class BaseMobile
 {
 	public:
 		BaseMobile();
+
 		virtual ~BaseMobile();
 		void donnersensor(Sensors*_sensor);
 		void Update();
 		void Drive(float _x, float _y);
-		double GetDistance();
 		void ResetDistance();
 		void SetAngleDelta(double);
 		void SetAngleCible(double);
+		void SetTurbo()
+			{
+				turbo=true;
+			}
+		void ResetTurbo()
+			{
+				turbo=false;
+			}
+		double GetDistance();
 		double GetAngleDelta();
-		void SetTurbo(){
-			turbo=true;}
-		void ResetTurbo(){
-			turbo=false;}
-
 
 	private:
 		void CorrectionGyro();
 
-		double AngleCible;
-bool turbo;
-
+		double anglecible;
+		bool turbo;
 
 		MultiSpeedController *moteurgauche;
-
+		MultiSpeedController *moteurdroit;
 		Talon *moteur1gauche;
 		Talon *moteur2gauche;
 		Talon *moteur3gauche;
-		float vitesserobot;
-		MultiSpeedController *moteurdroit;
-
-
-
 		Talon *moteur1droite;
 		Talon *moteur2droite;
 		Talon *moteur3droite;
-
 		Sensors *sensors;
-
 		RobotDrive *drive;
 
 		int t = 0;
-
+		float vitesserobot;
 		double x;
 		double y;
 };
