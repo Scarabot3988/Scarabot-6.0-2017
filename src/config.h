@@ -25,11 +25,11 @@
 
 // DIO ////////////////////////////////////
 
-#define DIO_drive1a 0
-#define DIO_drive1b 1
+#define DIO_driveRa 0
+#define DIO_driveRb 1
 
-#define DIO_drive2a 2
-#define DIO_drive2b 3
+#define DIO_driveLa 2
+#define DIO_driveLb 3
 
 #define DIO_shooterxa 4
 #define DIO_shooterxb 5
