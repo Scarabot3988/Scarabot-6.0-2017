@@ -14,6 +14,7 @@ class Lanceur
 {
 	public:
 		Lanceur();
+
 		virtual ~Lanceur();
 		void Update();
 		void setposition(float angle);
@@ -24,14 +25,14 @@ class Lanceur
 		CANTalon *motoralignement;
 		Talon *shoot;
 		Sensors *sensors;
-		bool limitswitch_trouve;
-		int valeurdepart;
+		//Solenoid *piston;
+
+		float valeurdepart;
 		float anglecible;
 		float anglepresent;
 		float angledepart;
 		float v;
-		//Solenoid *piston;
-
+		bool limitswitch_trouve;
 };
 
 #endif /* SRC_LANCEUR_H_ */

@@ -12,11 +12,15 @@
 Lanceur::Lanceur()
 {
 	limitswitch_trouve=false;
-	motoralignement=new CANTalon(3);
+	motoralignement=new CANTalon(4);
 	shoot=new Talon(PWM_motorshoot);
+	//sensors=new Sensors;
 	//piston=new Solenoid();
 	v=0;
 	anglecible=0;
+	angledepart=0;
+	anglepresent=0;
+	valeurdepart=0;
 }
 
 Lanceur::~Lanceur()
@@ -55,12 +59,12 @@ void Lanceur::mouve_align(bool button_left, bool button_right)
 	float vitesse = 0;
 	if (button_left == true && sensors->encoder_shoot_align->GetRaw() >= 0)
 		{
-		vitesse = -0.2;
+			vitesse = -0.2;
 		}
 
 	if (button_right == true && sensors->encoder_shoot_align->GetRaw() <= 1000)
 		{
-		vitesse = 0.2;
+			vitesse = 0.2;
 		}
 
 	if (limitswitch_trouve == true)
@@ -72,16 +76,16 @@ void Lanceur::mouve_align(bool button_left, bool button_right)
 void Lanceur::setposition(float angle)
 {
 	float tourencoder;
-	int valeurdepart = sensors->encoder_shoot_align->GetRaw();
+	float valeurdepart = sensors->encoder_shoot_align->GetRaw();
 	tourencoder = angle/0.18;
 	angledepart=valeurdepart*0.18;
 	anglecible=angle;
-
 
 	if (anglecible<angledepart)
 		{
 			v=-0.2;
 		}
+
 	if (anglecible>angledepart)
 		{
 			v=0.2;
@@ -97,6 +101,7 @@ void Lanceur::Update()
 			v=0;
 			stop=true;
 		}
+
 	if (angledepart>anglecible && anglepresent<anglecible)
 		{
 			v=0;
@@ -109,5 +114,6 @@ void Lanceur::Update()
 		    if(v<0) signv=-1;
 			v=signv*(0.05+fabs(anglepresent-anglecible) /100.0);
 		}
+
 	motoralignement->Set(v);
 }
