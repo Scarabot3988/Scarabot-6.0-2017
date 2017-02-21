@@ -6,6 +6,7 @@
  */
 
 // trouvé ici https://www.reddit.com/r/FRC/comments/2qr29j/6_cim_tank_drive_wpilib/
+
 #include <iostream>
 #include "MultiSpeedController.h"
 
@@ -25,20 +26,22 @@ void MultiSpeedController::Set(double speed)
 		this->speed = speed;
 
 		for (unsigned int i = 0; i < speedControllers.size(); i++)
-		{
-			//std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
-			speedControllers[i]->Set(speed);
-		}
-
-		if(turbo==true){
-			for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
 			{
-				//std::cout<<"vitesse moteur aux "<<i<<"="<<speed<<std::endl;
-				auxSpeedControllers[i]->Set(speed);
+				//std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
+				speedControllers[i]->Set(speed);
 			}
 
-		}
+		if(turbo==true)
+			{
+				for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
+					{
+						//std::cout<<"vitesse moteur aux "<<i<<"="<<speed<<std::endl;
+						auxSpeedControllers[i]->Set(speed);
+					}
+
+			}
 	}
+
 void MultiSpeedController::PIDWrite(double output)
 	{
 		this->Set(output);
@@ -51,15 +54,16 @@ void MultiSpeedController::Disable()
 				speedControllers[i]->Disable();
     		}
 		for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
-		    		{
-						auxSpeedControllers[i]->Disable();
-		    		}
+		    {
+				auxSpeedControllers[i]->Disable();
+		    }
 	}
 
 void MultiSpeedController::DonnerMoteur(SpeedController * moteur)
 	{
 		speedControllers.push_back(moteur);
 	}
+
 void MultiSpeedController::DonnerAuxMoteur(SpeedController * moteur)
 	{
 		auxSpeedControllers.push_back(moteur);
@@ -73,9 +77,9 @@ void MultiSpeedController::SetInverted(bool isInverted)
 			}
 
 		for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
-					{
-						auxSpeedControllers[i]->SetInverted(isInverted);
-					}
+			{
+				auxSpeedControllers[i]->SetInverted(isInverted);
+			}
 	}
 
 bool MultiSpeedController::GetInverted() const
@@ -97,8 +101,8 @@ void MultiSpeedController::StopMotor()
     			speedControllers[i]->StopMotor();
     		}
     	ResetTurbo();
-
 	}
+
 void MultiSpeedController::ResetAux()
 	{
     	for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
