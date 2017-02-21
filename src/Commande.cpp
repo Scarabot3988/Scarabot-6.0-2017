@@ -32,12 +32,19 @@ void Commande::start(int t)
 			sdc->basemobile.Drive(0, targetspeed);
 		}
 
-	if (nomdelacommande == "placergear")
+	if (nomdelacommande == "reculer")
 		{
-			pistongear->Set(true);
-			i=1;
+			sdc->basemobile.ResetDistance();
+			sdc->basemobile.Drive(0, -targetspeed);
 		}
 
+	if (nomdelacommande == "placergear")
+		{
+			sdc->gear->Set(DoubleSolenoid::Value::kForward);
+			tempsdebut=t;
+		}
+
+	//allo
 	if (nomdelacommande == "lancer")
 		{
 
@@ -60,6 +67,7 @@ bool Commande::isfinished(int t)
 	if (nomdelacommande == "tourner" && fabs(sdc->basemobile.GetAngleDelta()) <= 2)
 		{
 		std::cout << "atteint"<< std::endl;
+		sdc->basemobile.Drive(0, 0);
 			return true;
 		}
 
@@ -69,20 +77,24 @@ bool Commande::isfinished(int t)
 			return true;
 		}
 
-	if (nomdelacommande == "placergear" && i==1)
+	if (nomdelacommande == "reculer" && sdc->basemobile.GetDistance() <= targetdistance)
 		{
-			pistongear->Set(false);
+			sdc->basemobile.Drive(0, 0);
 			return true;
+		}
+
+	if (nomdelacommande == "placergear" && t > tempsdebut +50)
+		{
+			sdc->gear->Set(DoubleSolenoid::Value::kOff);
+		 return true;
 		}
 
 	if (nomdelacommande == "lancer")
 		{
-
 		}
 
 	if (nomdelacommande == "aligner")
 		{
-
 		}
 
 	return false;

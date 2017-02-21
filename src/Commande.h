@@ -10,72 +10,60 @@
 # include"string"
 #include "SystemesDeControle.h"
 
-class Commande {
-public:
-	Commande(SystemesDeControle* p, std::string nom, float param1,
-			float param2 = 0) {
+class Commande
+{
+	public:
+		Commande(SystemesDeControle* p, std::string nom, float param1, float param2 = 0)
+			{
+				sdc = p;
+					if (nom == "delai")
+						{
+							deltatemps = param1;
+						}
 
-		sdc = p;
-		if (nom == "delai") {
-			deltatemps = param1;
-		}
+					if (nom == "tourner")
+						{
+							deltaangle = param1;
+						}
 
-		if (nom == "tourner") {
-			deltaangle = param1;
-		}
-		if (nom == "avancer") {
-			targetdistance = param1;
-			targetspeed = param2;
-		}
+					if (nom == "avancer")
+						{
+							targetdistance = param1;
+							targetspeed = param2;
+						}
 
-		nomdelacommande = nom;
-		tempsfin = 0;
-		demarre = false;
-		termine = false;
+					if (nom == "reculer")
+						{
+							targetdistance = -param1;
+							targetspeed = param2;
+						}
 
-		pistongear = new Solenoid(0);
-	}
+					nomdelacommande = nom;
+					tempsfin = 0;
+					demarre = false;
+					termine = false;
 
-	virtual ~Commande();
+			}
 
-// Place pour variables
+		virtual ~Commande();
+		void avancer();
+		void tourner();
+		void start(int t);
+		bool isfinished(int t);
+		bool avancefinie();
 
-	std::string nomdelacommande;
+		std::string nomdelacommande;
+		SystemesDeControle *sdc;
 
-	SystemesDeControle *sdc;
 
-	bool fini;
-
-	int deltatemps;
-	int tempsdebut;
-	int tempsfin;
-
-	float angledebut;
-	float angletarget;
-	float deltaangle;
-	float targetdistance;
-	float targetspeed;
-	int distancefin;
-
-	int commandeafaire;
-
-	int i;
-
-	bool demarre;
-
-	bool termine;
-
-	bool avancefinie();
-
-	void avancer();
-
-	void tourner();
-
-	void start(int t);
-
-	bool isfinished(int t);
-
-	Solenoid *pistongear;
+		int deltatemps;
+		int tempsdebut;
+		int tempsfin;
+		float deltaangle;
+		float targetdistance;
+		float targetspeed;
+		bool demarre;
+		bool termine;
 };
 
 #endif /* SRC_COMMANDE_H_ */
