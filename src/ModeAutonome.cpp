@@ -40,9 +40,11 @@ void ModeAutonome::Execute(int t)
 	if(bEndOfExecution==true)
 		return;
 
-	//if(!(n%20)){
-	   std::cout << commandeencours << "  commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
-	//}
+	//if(!(n%20))
+		{
+			std::cout << commandeencours << "  commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
+		}
+
 	if(listecommande[0].demarre==false)
 		{
 			std::cout<<"on démarre"<<std::endl;
@@ -65,29 +67,39 @@ void ModeAutonome::Execute(int t)
 			listecommande[i].demarre=true;
 			listecommande[i].start(t);
 		}
+
 	commandeencours=i;
 }
 
 void ModeAutonome::choose_scenario(std::string nomScenario )
 {
 	std::cout<<"Scenario "<<nomScenario<<std::endl;
-	//create a file-reading object
-	ifstream fin;
+	listecommande.clear();
+	bEndOfExecution=false;
+	commandeencours=0;
+
+
+	ifstream fin;	//create a file-reading object
 
 	char str[MAX_TOKENS_PER_LINE];
+
 	sprintf(str,"/home/lvuser/%s.txt",nomScenario.c_str());
-	fin.open(str); // open a file
+
+	fin.open(str);	//open a file
+
 	if (!fin.good())
 		{
-			return; // exit if file not found
+			return;	//exit if file not found
 		}
-bool bCommentaire=false;
-	//read each line of the file
-	while (!fin.eof())
+
+	bool bCommentaire=false;
+
+	while (!fin.eof())	//read each line of the file
 		{
 			//read an entire line into memory
 			char buf[MAX_CHARS_PER_LINE];
 			fin.getline(buf, MAX_CHARS_PER_LINE);
+
 			//parse the line into blank-delimited tokens
 			int n = 0; // a for-loop index
 
@@ -109,9 +121,9 @@ bool bCommentaire=false;
 				}
 
 			// process (print) the tokens
-			for (int i = 0; i < n; i++) // n = #of tokens
-			cout << "Token[" << i << "] = " << token[i] << endl;
-			cout << endl;
+			//for (int i = 0; i < n; i++) // n = #of tokens
+			//cout << "Token[" << i << "] = " << token[i] << endl;
+			//cout << endl;
 			std::string nomdelacommande;
 			float param1=0;
 			float param2=0;
@@ -119,30 +131,38 @@ bool bCommentaire=false;
 			if(token[0])
 				{
 				    if(strlen(token[0])<2)
-				    	bCommentaire=true;
+				    	{
+				    		bCommentaire=true;
+				    	}
+
 				    else if(token[0][0]=='/')
-				    	bCommentaire=true;
+				    	{
+				    		bCommentaire=true;
+				    	}
 				    else
-					    nomdelacommande=std::string(token[0]);
+					    {
+				    		nomdelacommande=std::string(token[0]);
+					    }
 				}
+
 			if(token[1])
 				{
 					param1=atof(token[1]);
 				}
+
 			if(token[2])
 				{
 					param2=atof(token[2]);
 				}
-			if(bCommentaire==false){
-			   listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
-			   std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
-			}
+
+			if(bCommentaire==false)
+				{
+					listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
+					//std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
+				}
 		}
 
-	std::cout << listecommande.size() << " commandes lues" << std::endl;
-	 for (unsigned int j=0; j<listecommande.size(); j++)
-		std::cout << listecommande[j].nomdelacommande << std::endl;
-
+	//std::cout << listecommande.size() << " commandes lues" << std::endl;
+	for (unsigned int j=0; j<listecommande.size(); j++)
+	std::cout << listecommande[j].nomdelacommande << std::endl;
 }
-
-
