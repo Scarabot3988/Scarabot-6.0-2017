@@ -16,14 +16,15 @@ class SystemesDeControle
 {
 	public:
 		SystemesDeControle();
+
+		void initSystemes();
+		void Update();
+
 		BaseMobile basemobile;
 		Lanceur lanceur;
 		Sensors *sensors;
 		Vision moduleVision;
-
-
-		void initSystemes();
-		void Update();
+		DoubleSolenoid *gear;
 };
 
 #endif /* SRC_SYSTEMESDECONTROLE_H_ */

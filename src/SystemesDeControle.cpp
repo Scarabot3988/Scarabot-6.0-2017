@@ -9,9 +9,11 @@
 
 SystemesDeControle::SystemesDeControle()
 {
+	std::cout << "inside sdc" << std::endl;
 	sensors = new Sensors;
 	basemobile.donnersensor(sensors);
 	lanceur.donnersensor(sensors);
+	gear=new DoubleSolenoid(1,4);
 }
 
 void SystemesDeControle::initSystemes()
@@ -21,5 +23,4 @@ void SystemesDeControle::initSystemes()
 void SystemesDeControle::Update()
 {
 	basemobile.Update();
-
 }
