@@ -12,11 +12,11 @@ Sensors::Sensors()
 {
 	std::cout << "dans ctr() sensors" << std::endl;
 
-	encoderdrive1=new Encoder(DIO_drive1a,DIO_drive1b);
-	encoderdrive2=new Encoder(DIO_drive2a,DIO_drive2b);
+	encoderdriveR=new Encoder(DIO_driveRa,DIO_driveRb);
+	encoderdriveL=new Encoder(DIO_driveLa,DIO_driveLb);
 	gyro=new ADXRS450_Gyro();
-	limitswitch_shooter=new DigitalInput(DIO_limitswitch_shooter);
-	encoder_shoot_align=new Encoder(DIO_shooteralign_a,DIO_shooteralign_b);
+	//limitswitch_shooter=new DigitalInput(DIO_limitswitch_shooter);
+	//encoder_shoot_align=new Encoder(DIO_shooteralign_a,DIO_shooteralign_b);
 
 	encoder_shoot_align->Reset();
 }

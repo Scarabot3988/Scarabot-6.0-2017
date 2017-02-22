@@ -18,8 +18,8 @@ class Sensors
 		Sensors();
 		virtual ~Sensors();
 
-		Encoder *encoderdrive1;
-		Encoder *encoderdrive2;
+		Encoder *encoderdriveR;
+		Encoder *encoderdriveL;
 		ADXRS450_Gyro *gyro;
 		DigitalInput *limitswitch_shooter;
 		Encoder *encoder_shoot_align;

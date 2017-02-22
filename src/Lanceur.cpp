@@ -12,8 +12,8 @@
 Lanceur::Lanceur()
 {
 	limitswitch_trouve=false;
-	motoralignement=new CANTalon(4);
-	shoot=new Talon(PWM_motorshoot);
+	//motoralignement=new CANTalon(4);
+	//shoot=new Talon(PWM_motorshoot);
 	//sensors=new Sensors;
 	//piston=new Solenoid();
 	v=0;

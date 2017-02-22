@@ -63,14 +63,11 @@ void RobotInit()
 		sdc->initSystemes();
 		joyPilote=new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome=new ModeAutonome(sdc);
-
 		shifter=new Solenoid(SOL_shifter);
-		grimpeurpiston=new Solenoid(SOL_grimpeurpiston);
+		grimpeurpiston=new Solenoid(SOL_pistongrimpeur);
 		secoue=new Solenoid(SOL_secoue);
 		blocker=new Solenoid(SOL_blocker);
-
 		capot=new DoubleSolenoid(SOL_capot1,SOL_capot2);
-
 		feeder=new CANTalon(3);
 		shooter1=new CANTalon(5);
 		shooter2=new CANTalon(9);
@@ -111,9 +108,6 @@ void TeleopPeriodic()
 
 // CORRECTION ///////////////////////////////////////////////////////////////
 
-
-
-
 // DRIVE //////////////////////////////////////////////////////////////////////////////////////
 
 		sdc->basemobile.Drive(joyPilote->GetRawAxis(0), joyPilote->GetRawAxis(1));
@@ -121,14 +115,14 @@ void TeleopPeriodic()
 
 // CAPOT //////////////////////////////////////////////////////////////////////////////////////
 
-		bool button_capot=joyPilote->GetRawButton(4);
+		bool button_capot=joyPilote->GetRawButton(1);
 		if(button_capot==true) capot->Set(DoubleSolenoid::Value::kReverse);
 		else capot->Set(DoubleSolenoid::Value::kForward);
 
 // RAMASSEUR DE BALLES ////////////////////////////////////////////////////////////////////////
 
 		//std::cout << "Courant ramasseur: " << ramasseur->GetOutputCurrent()<< std::endl;
-		bool button_ramasseur=joyPilote->GetRawButton(5);
+		bool button_ramasseur=joyPilote->GetRawButton(2);
 
 		if(button_ramasseur==true )
 			{
@@ -142,7 +136,7 @@ void TeleopPeriodic()
 
 // PISTONS GRIMPEUR //////////////////////////////////////////////////////////
 
-		bool button_pistongrimpeur=joyPilote->GetRawButton(12);
+		bool button_pistongrimpeur=joyPilote->GetRawButton(3);
 
 		if (button_pistongrimpeur==true)
 			{
@@ -162,7 +156,7 @@ void TeleopPeriodic()
 
 // BLOCKER /////////////////////////////////////////////////////////
 
-		bool button_blocker=joyPilote->GetRawButton(9);
+		bool button_blocker=joyPilote->GetRawButton(4);
 		if(button_blocker==true)
 			{
 				blocker->Set(false);
@@ -174,7 +168,7 @@ void TeleopPeriodic()
 
 // TURBO ///////////////////////////////////////////////////////////
 
-		bool turbo=joyPilote->GetRawButton(8);
+		bool turbo=joyPilote->GetRawButton(5);
 		if(turbo==true)
 			{
 				sdc->basemobile.SetTurbo();
@@ -186,8 +180,8 @@ void TeleopPeriodic()
 
 // GEAR ///////////////////////////////////////////////////////////
 
-		bool button_secoue= joyPilote->GetRawButton(19);
-		bool button_gear =joyPilote->GetRawButton(13);
+		bool button_secoue= joyPilote->GetRawButton(6);
+		bool button_gear =joyPilote->GetRawButton(7);
 		if(button_gear==true)
 			{
 				sdc->gear->Set(DoubleSolenoid::Value::kForward);
@@ -197,38 +191,48 @@ void TeleopPeriodic()
 				sdc->gear->Set(DoubleSolenoid::Value::kReverse);
 			}
 
-		if(button_secoue==true)		secoue->Set(true);
-		else secoue->Set(false);
+		if(button_secoue==true)
+			{
+				secoue->Set(true);
+			}
+		else
+			{
+				secoue->Set(false);
+			}
 
 
-		//////SHOOTER///////////////////////////////////////////////////
+// SHOOTER ///////////////////////////////////////////////////////////////////////
 
-				bool button_feeder=joyPilote->GetRawButton(6);
-				bool button_vitesseDown=joyPilote->GetRawButton(15);
-				bool button_vitesseUP=joyPilote->GetRawButton(16);
+				bool button_feeder=joyPilote->GetRawButton(8);
+				bool button_vitesseDown=joyPilote->GetRawButton(9);
+				bool button_vitesseUP=joyPilote->GetRawButton(10);
 
 				if(button_feeder==true)
-				{
-				std::cout<<"message"<<std::endl;
-					feeder->Set(0.4);
-				}
-				else feeder->Set(0);
+					{
+						std::cout<<"message"<<std::endl;
+						feeder->Set(0.4);
+					}
+				else
+					{
+						feeder->Set(0);
+					}
 
+				if(button_vitesseUP==true)
+					{
+						v=v+0.05;
+					}
 
-				if(button_vitesseUP==true) v=v+0.05;
-
-
-
-				if(button_vitesseDown==true) v=v-0.05;
-
-
-
+				if(button_vitesseDown==true)
+					{
+						v=v-0.05;
+					}
 
 				shooter1->Set(v);
 				shooter2->Set(v);
 
-///////SHIFTER//////////////////////////////////////////////////////////////
-				bool button_shifter=joyPilote->GetRawButton(20);
+// SHIFTER //////////////////////////////////////////////////////////////
+
+				bool button_shifter=joyPilote->GetRawButton(11);
 				if(button_shifter==true) shifter->Set(true);
 				else shifter->Set(false);
 
