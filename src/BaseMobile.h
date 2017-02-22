@@ -18,7 +18,6 @@ class BaseMobile
 {
 	public:
 		BaseMobile();
-
 		virtual ~BaseMobile();
 		void donnersensor(Sensors*_sensor);
 		void Update();
@@ -42,6 +41,10 @@ class BaseMobile
 
 		double anglecible;
 		bool turbo;
+		int t = 0;
+		float vitesserobot;
+		double x;
+		double y;
 
 		MultiSpeedController *moteurgauche;
 		MultiSpeedController *moteurdroit;
@@ -53,11 +56,6 @@ class BaseMobile
 		Talon *moteur3droite;
 		Sensors *sensors;
 		RobotDrive *drive;
-
-		int t = 0;
-		float vitesserobot;
-		double x;
-		double y;
 };
 
 #endif /* SRC_BASEMOBILE_H_ */

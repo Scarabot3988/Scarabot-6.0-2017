@@ -24,7 +24,6 @@ class MultiSpeedController: public frc::SpeedController
 
 	public:
 		MultiSpeedController ();
-
 		virtual double Get() const;
 		virtual void Set(double speed);
 		virtual void PIDWrite(double output);

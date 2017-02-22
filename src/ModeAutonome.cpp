@@ -38,7 +38,9 @@ void ModeAutonome::Execute(int t)
 	n++;
 
 	if(bEndOfExecution==true)
-		return;
+		{
+			return;
+		}
 
 	//if(!(n%20))
 		{

@@ -53,6 +53,7 @@ void MultiSpeedController::Disable()
     		{
 				speedControllers[i]->Disable();
     		}
+
 		for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
 		    {
 				auxSpeedControllers[i]->Disable();
@@ -100,6 +101,7 @@ void MultiSpeedController::StopMotor()
     		{
     			speedControllers[i]->StopMotor();
     		}
+
     	ResetTurbo();
 	}
 

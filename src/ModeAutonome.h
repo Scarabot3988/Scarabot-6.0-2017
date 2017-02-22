@@ -17,7 +17,6 @@ class ModeAutonome
 	public:
 		ModeAutonome(SystemesDeControle * _systemesdecontrole);
 		virtual ~ModeAutonome();
-
 		void Execute(int t);
 		void choose_scenario(std::string nomScenario );
 

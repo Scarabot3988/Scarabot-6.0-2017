@@ -22,7 +22,7 @@ class Lanceur
 		void homein();
 		void mouve_align(bool button_left, bool button_right);
 
-		CANTalon *motoralignement;
+		//CANTalon *motoralignement;
 		Talon *shoot;
 		Sensors *sensors;
 		//Solenoid *piston;
@@ -32,7 +32,7 @@ class Lanceur
 		float anglepresent;
 		float angledepart;
 		float v;
-		bool limitswitch_trouve;
+		//bool limitswitch_trouve;
 };
 
 #endif /* SRC_LANCEUR_H_ */

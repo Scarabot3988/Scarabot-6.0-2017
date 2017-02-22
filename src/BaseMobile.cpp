@@ -57,10 +57,10 @@ double BaseMobile::GetAngleDelta()
 	static int n=0;
 	n++;
 	if(!(n%1))
-	{
-		std::cout << "gyro: " << sensors->gyro->GetAngle() << " cible="<< anglecible << std::endl;
-		return anglecible - sensors->gyro->GetAngle();
-	}
+		{
+			std::cout << "gyro: " << sensors->gyro->GetAngle() << " cible="<< anglecible << std::endl;
+			return anglecible - sensors->gyro->GetAngle();
+		}
 }
 
 void BaseMobile::SetAngleDelta(double delta)
@@ -164,7 +164,6 @@ double BaseMobile::GetDistance()
 {
 	std::cout<<"encoderR d="<<sensors->encoderdriveR->Get()<<std::endl;
 	std::cout<<"encoderL d="<<sensors->encoderdriveL->Get()<<std::endl;
-
 	return (-sensors->encoderdriveR->Get() + sensors->encoderdriveL->Get()) / 310.0;
 }
 

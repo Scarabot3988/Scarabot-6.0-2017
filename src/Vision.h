@@ -16,7 +16,6 @@ class Vision
 {
 	public:
 		Vision();
-
 		virtual ~Vision();
 		void test();
 		float calculdistance(int pix);

@@ -16,7 +16,6 @@ class SystemesDeControle
 {
 	public:
 		SystemesDeControle();
-
 		void initSystemes();
 		void Update();
 
