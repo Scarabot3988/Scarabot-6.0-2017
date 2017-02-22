@@ -6,10 +6,10 @@
  */
 
 #include <Commande.h>
+#include <Lanceur.h>
 
 Commande::~Commande()
 {
-
 }
 
 int i=0;
@@ -40,21 +40,15 @@ void Commande::start(int t)
 
 	if (nomdelacommande == "placergear")
 		{
-			sdc->gear->Set(DoubleSolenoid::Value::kForward);
+		std::cout<<"on place la gear"<<std::endl;
+		sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
 
-	//allo
 	if (nomdelacommande == "lancer")
 		{
-
+			sdc->lanceur.shoot->Set(0.5);
 		}
-
-	if (nomdelacommande == "aligner")
-		{
-
-		}
-
 }
 
 bool Commande::isfinished(int t)
@@ -66,8 +60,8 @@ bool Commande::isfinished(int t)
 
 	if (nomdelacommande == "tourner" && fabs(sdc->basemobile.GetAngleDelta()) <= 2)
 		{
-		std::cout << "atteint"<< std::endl;
-		sdc->basemobile.Drive(0, 0);
+			std::cout << "atteint"<< std::endl;
+			sdc->basemobile.Drive(0, 0);
 			return true;
 		}
 
@@ -85,16 +79,13 @@ bool Commande::isfinished(int t)
 
 	if (nomdelacommande == "placergear" && t > tempsdebut +50)
 		{
-			sdc->gear->Set(DoubleSolenoid::Value::kOff);
-		 return true;
+			sdc->gear->Set(DoubleSolenoid::Value::kReverse);
+			return true;
 		}
 
 	if (nomdelacommande == "lancer")
 		{
-		}
-
-	if (nomdelacommande == "aligner")
-		{
+			return true;
 		}
 
 	return false;

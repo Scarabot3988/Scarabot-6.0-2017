@@ -7,7 +7,7 @@
 
 #ifndef SRC_COMMANDE_H_
 #define SRC_COMMANDE_H_
-# include"string"
+#include"string"
 #include "SystemesDeControle.h"
 
 class Commande
@@ -16,33 +16,36 @@ class Commande
 		Commande(SystemesDeControle* p, std::string nom, float param1, float param2 = 0)
 			{
 				sdc = p;
-					if (nom == "delai")
-						{
-							deltatemps = param1;
-						}
+				if (nom == "delai")
+					{
+						deltatemps = param1;
+					}
 
-					if (nom == "tourner")
-						{
-							deltaangle = param1;
-						}
+				if (nom == "tourner")
+					{
+						deltaangle = param1;
+					}
 
-					if (nom == "avancer")
-						{
-							targetdistance = param1;
-							targetspeed = param2;
-						}
+				if (nom == "avancer")
+					{
+						targetdistance = param1;
+						targetspeed = param2;
+					}
 
-					if (nom == "reculer")
-						{
-							targetdistance = -param1;
-							targetspeed = param2;
-						}
+				if (nom == "reculer")
+					{
+						targetdistance = -param1;
+						targetspeed = param2;
+					}
 
-					nomdelacommande = nom;
-					tempsfin = 0;
-					demarre = false;
-					termine = false;
+				if (nom == "lancer")
+					{
+					}
 
+				nomdelacommande = nom;
+				tempsfin = 0;
+				demarre = false;
+				termine = false;
 			}
 
 		virtual ~Commande();
@@ -54,7 +57,6 @@ class Commande
 
 		std::string nomdelacommande;
 		SystemesDeControle *sdc;
-
 
 		int deltatemps;
 		int tempsdebut;
