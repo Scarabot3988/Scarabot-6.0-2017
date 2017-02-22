@@ -11,8 +11,7 @@
 
 Lanceur::Lanceur()
 {
-	limitswitch_trouve=false;
-	motoralignement=new CANTalon(4);
+	//limitswitch_trouve=false;
 	shoot=new Talon(PWM_motorshoot);
 	//sensors=new Sensors;
 	//piston=new Solenoid();
@@ -35,7 +34,7 @@ void Lanceur::donnersensor(Sensors * _sensor)
 
 void Lanceur::homein()
 {
-	float vitesse;
+	/*float vitesse;
 	if (limitswitch_trouve == false)
 		{
 			vitesse = -0.2;
@@ -51,11 +50,11 @@ void Lanceur::homein()
 				}
 
 			motoralignement->Set(vitesse);
-		}
+		}*/
 }
 
 void Lanceur::mouve_align(bool button_left, bool button_right)
-{
+{/*
 	float vitesse = 0;
 	if (button_left == true && sensors->encoder_shoot_align->GetRaw() >= 0)
 		{
@@ -70,7 +69,7 @@ void Lanceur::mouve_align(bool button_left, bool button_right)
 	if (limitswitch_trouve == true)
 		{
 			motoralignement->Set(vitesse);
-		}
+		}*/
 }
 
 void Lanceur::setposition(float angle)
@@ -115,5 +114,5 @@ void Lanceur::Update()
 			v=signv*(0.05+fabs(anglepresent-anglecible) /100.0);
 		}
 
-	motoralignement->Set(v);
+	//motoralignement->Set(v);
 }
