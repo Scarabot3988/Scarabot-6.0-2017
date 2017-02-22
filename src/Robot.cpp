@@ -125,6 +125,7 @@ void TeleopPeriodic()
 				capot->Set(DoubleSolenoid::Value::kForward);
 			}
 
+
 // RAMASSEUR DE BALLES ////////////////////////////////////////////////////////////////////////
 
 		//std::cout << "Courant ramasseur: " << ramasseur->GetOutputCurrent()<< std::endl;

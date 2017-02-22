@@ -15,9 +15,6 @@
 #define PWM_PortMoteurGauche1 3
 #define PWM_PortMoteurGauche2 4
 #define PWM_PortMoteurGauche3 5
-#define PWM_motoralignement   6
-#define PWM_motorshoot        7
-#define PWM_motorramasseur    8
 
 // Joystick ///////////////////////////////
 
@@ -29,6 +26,7 @@
 #define DIO_driveRb 1
 #define DIO_driveLa 2
 #define DIO_driveLb 3
+
 #define DIO_shooterxa 4
 #define DIO_shooterxb 5
 #define DIO_limitswitch_shooter 7

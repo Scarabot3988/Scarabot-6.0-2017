@@ -12,7 +12,7 @@
 Lanceur::Lanceur()
 {
 	//limitswitch_trouve=false;
-	shoot=new Talon(PWM_motorshoot);
+	//shoot=new Talon(PWM_motorshoot);
 	//sensors=new Sensors;
 	//piston=new Solenoid();
 	v=0;
