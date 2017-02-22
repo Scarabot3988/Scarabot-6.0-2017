@@ -42,7 +42,7 @@ void ModeAutonome::Execute(int t)
 			return;
 		}
 
-	//if(!(n%20))
+	if(!(n%20))
 		{
 			std::cout << commandeencours << "  commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
 		}
