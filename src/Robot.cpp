@@ -18,17 +18,19 @@ class Robot: public frc::IterativeRobot
 		SystemesDeControle *sdc;
 		Joystick *joyPilote;
 		ModeAutonome *modeautonome;
-
 		frc::LiveWindow* lw = LiveWindow::GetInstance();
 		frc::SendableChooser<std::string> chooser;
 		const std::string autoNameDefault = "RB";
 		const std::string autoNameCustom = "RBS";
+
 		std::string autoSelected;
 
 		unsigned int t = 0;
 		int vieux = 0;
-		 bool bon = true;
-		 float v=0;
+		bool bon = true;
+		float v=0;
+		unsigned int t_avantgrimpeur=0;
+		bool entraingrimper;
 
 	public:
 		FILE *out = 0;
@@ -50,38 +52,34 @@ class Robot: public frc::IterativeRobot
 void RobotInit()
 	{
 
-	std::cout<<"message "<<std::endl;
-
-	chooser.AddDefault(autoNameDefault, autoNameDefault);
+		chooser.AddDefault(autoNameDefault, autoNameDefault);
 		chooser.AddObject(autoNameCustom, autoNameCustom);
+		chooser.AddDefault("RC", "RC");
+		chooser.AddObject("RF", "RF");
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
 		activation_grimpeur= false;
 		activation_blocker=false;
 		transition_grimpeur=false;
+		CameraServer::GetInstance()->StartAutomaticCapture();
 
 		sdc=new SystemesDeControle;
 		sdc->initSystemes();
 		joyPilote=new Joystick(JOYSTICK_PortJoystickPilote);
 		modeautonome=new ModeAutonome(sdc);
-
 		shifter=new Solenoid(SOL_shifter);
 		grimpeurpiston=new Solenoid(SOL_grimpeurpiston);
 		secoue=new Solenoid(SOL_secoue);
 		blocker=new Solenoid(SOL_blocker);
-
 		capot=new DoubleSolenoid(SOL_capot1,SOL_capot2);
-
 		feeder=new CANTalon(3);
 		shooter1=new CANTalon(5);
 		shooter2=new CANTalon(9);
 		ramasseur=new CANTalon(7);
-
-		CameraServer::GetInstance()->StartAutomaticCapture();
 	}
 
 void AutonomousInit() override
 	{
-		grimpeurpiston->Set(true);
+		grimpeurpiston->Set(false);
 		autoSelected=chooser.GetSelected();
 		modeautonome->choose_scenario(autoSelected);
 		t=0;
@@ -103,16 +101,12 @@ void TeleopInit()
 
 void TeleopPeriodic()
 	{
-		//sdc->lanceur.Update();
-
 // SHOOTER //////////////////////////////////////////////////////////////////
 
+		//sdc->lanceur.Update();
 		//sdc->lanceur.homein();
 
 // CORRECTION ///////////////////////////////////////////////////////////////
-
-
-
 
 // DRIVE //////////////////////////////////////////////////////////////////////////////////////
 
@@ -121,16 +115,22 @@ void TeleopPeriodic()
 
 // CAPOT //////////////////////////////////////////////////////////////////////////////////////
 
-		bool button_capot=joyPilote->GetRawButton(4);
-		if(button_capot==true) capot->Set(DoubleSolenoid::Value::kReverse);
-		else capot->Set(DoubleSolenoid::Value::kForward);
+		bool button_capot=joyPilote->GetRawButton(1);
+		if(button_capot==true)
+			{
+				capot->Set(DoubleSolenoid::Value::kReverse);
+			}
+		else
+			{
+				capot->Set(DoubleSolenoid::Value::kForward);
+			}
 
 // RAMASSEUR DE BALLES ////////////////////////////////////////////////////////////////////////
 
 		//std::cout << "Courant ramasseur: " << ramasseur->GetOutputCurrent()<< std::endl;
-		bool button_ramasseur=joyPilote->GetRawButton(5);
+		bool button_ramasseur=joyPilote->GetRawButton(2);
 
-		if(button_ramasseur==true )
+		if(button_ramasseur==true)
 			{
 				ramasseur->Set(1);
 				std::cout<<"on ramasse"<<std::endl;
@@ -142,7 +142,7 @@ void TeleopPeriodic()
 
 // PISTONS GRIMPEUR //////////////////////////////////////////////////////////
 
-		bool button_pistongrimpeur=joyPilote->GetRawButton(12);
+		bool button_pistongrimpeur=joyPilote->GetRawButton(3);
 
 		if (button_pistongrimpeur==true)
 			{
@@ -158,11 +158,11 @@ void TeleopPeriodic()
 			}
 
 		grimpeurpiston->Set(activation_grimpeur);
-		std::cout << activation_grimpeur<<std::endl;
+
 
 // BLOCKER /////////////////////////////////////////////////////////
 
-		bool button_blocker=joyPilote->GetRawButton(9);
+		bool button_blocker=joyPilote->GetRawButton(4);
 		if(button_blocker==true)
 			{
 				blocker->Set(false);
@@ -174,7 +174,7 @@ void TeleopPeriodic()
 
 // TURBO ///////////////////////////////////////////////////////////
 
-		bool turbo=joyPilote->GetRawButton(8);
+		bool turbo=joyPilote->GetRawButton(5);
 		if(turbo==true)
 			{
 				sdc->basemobile.SetTurbo();
@@ -186,8 +186,8 @@ void TeleopPeriodic()
 
 // GEAR ///////////////////////////////////////////////////////////
 
-		bool button_secoue= joyPilote->GetRawButton(19);
-		bool button_gear =joyPilote->GetRawButton(13);
+		bool button_secoue= joyPilote->GetRawButton(6);
+		bool button_gear =joyPilote->GetRawButton(7);
 		if(button_gear==true)
 			{
 				sdc->gear->Set(DoubleSolenoid::Value::kForward);
@@ -197,43 +197,66 @@ void TeleopPeriodic()
 				sdc->gear->Set(DoubleSolenoid::Value::kReverse);
 			}
 
-		if(button_secoue==true)		secoue->Set(true);
-		else secoue->Set(false);
+		if(button_secoue==true)
+			{
+				secoue->Set(true);
+			}
+		else
+			{
+				secoue->Set(false);
+			}
 
+// SHOOTER ///////////////////////////////////////////////////
 
-		//////SHOOTER///////////////////////////////////////////////////
+			bool button_vitesseUP=joyPilote->GetRawButton(8);
 
-				bool button_feeder=joyPilote->GetRawButton(6);
-				bool button_vitesseDown=joyPilote->GetRawButton(15);
-				bool button_vitesseUP=joyPilote->GetRawButton(16);
-
-				if(button_feeder==true)
-				{
-				std::cout<<"message"<<std::endl;
-					feeder->Set(0.4);
-				}
-				else feeder->Set(0);
-
-
-				if(button_vitesseUP==true) v=v+0.05;
-
-
-
-				if(button_vitesseDown==true) v=v-0.05;
-
-
-
+				if (button_vitesseUP==true)
+					{
+						v=0.75;
+					}
+				else
+					{
+						v=0;
+					}
 
 				shooter1->Set(v);
 				shooter2->Set(v);
+				feeder->Set(v);
 
-///////SHIFTER//////////////////////////////////////////////////////////////
-				bool button_shifter=joyPilote->GetRawButton(20);
+// SHIFTER //////////////////////////////////////////////////////////////
+
+				bool button_shifter=joyPilote->GetRawButton(9);
 				if(button_shifter==true) shifter->Set(true);
 				else shifter->Set(false);
 
+///////boutton grimpeur//////////////////////////////////////////////////////
 
+				bool button_grimpeur=joyPilote->GetRawButton(10);
+				if(button_grimpeur==true)
+				{
 
+					if(t_avantgrimpeur==0)
+						{
+						std::cout << "on grimpe a t="<< t << std::endl;
+							t_avantgrimpeur=t;
+						}
+
+					grimpeurpiston->Set(true);
+					blocker->Set(false);
+					sdc->basemobile.SetTurbo();
+					if(t>t_avantgrimpeur+100)
+						{
+						std::cout << "fin grimpe" << std::endl;
+							sdc->basemobile.Drive(0,0.5);
+							entraingrimper=true;
+						}
+				}
+
+				else if(entraingrimper==true);
+					{
+						sdc->basemobile.Drive(0,0);
+					}
+		t=t+1;
 
 	} // FIN DE TELEOP /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
