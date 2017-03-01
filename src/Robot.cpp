@@ -54,8 +54,25 @@ void RobotInit()
 
 		chooser.AddDefault(autoNameDefault, autoNameDefault);
 		chooser.AddObject(autoNameCustom, autoNameCustom);
+
 		chooser.AddDefault("RC", "RC");
-		chooser.AddObject("RF", "RF");
+
+		chooser.AddObject("RCS", "RCS");
+
+		chooser.AddDefault("RF", "RF");
+
+		chooser.AddObject("RFS", "RFS");
+
+		chooser.AddDefault("BB", "BB");
+
+		chooser.AddObject("BBS", "BBS");
+
+		chooser.AddDefault("BC", "BC");
+
+		chooser.AddObject("BCS", "BCS");
+
+		chooser.AddDefault("BF", "BF");
+
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
 		activation_grimpeur= false;
 		activation_blocker=false;
