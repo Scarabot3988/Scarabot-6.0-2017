@@ -72,6 +72,8 @@ void ModeAutonome::Execute(int t)
 	commandeencours=i;
 }
 
+// ON NE REGARDE PAS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void ModeAutonome::choose_scenario(std::string nomScenario )
 {
 	std::cout<<"Scenario "<<nomScenario<<std::endl;

@@ -18,7 +18,7 @@ Sensors::Sensors()
 	//limitswitch_shooter=new DigitalInput(DIO_limitswitch_shooter);
 	//encoder_shoot_align=new Encoder(DIO_shooteralign_a,DIO_shooteralign_b);
 
-	encoder_shoot_align->Reset();
+	//encoder_shoot_align->Reset();
 }
 
 Sensors::~Sensors()
