@@ -21,8 +21,6 @@ class Sensors
 		Encoder *encoderdriveR;
 		Encoder *encoderdriveL;
 		ADXRS450_Gyro *gyro;
-		DigitalInput *limitswitch_shooter;
-		Encoder *encoder_shoot_align;
 };
 
 #endif /* SRC_SENSORS_H_ */

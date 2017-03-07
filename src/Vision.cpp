@@ -9,11 +9,6 @@
 #include "WPILib.h"
 #include "NetworkTables/NetworkTable.h"
 
-#define X1    113.0
-#define X2    335.0
-#define D1    60.0
-#define D2    120.0
-
 Vision::Vision()
 {
 	Net= NetworkTable::GetTable("Data");
@@ -37,15 +32,6 @@ void Vision::test()
 		}
 }
 
-float Vision::calculdistance(int pix)
+/*float Vision::calculdistance(int pix)
 {
-	float a;
-	float b;
-	float d;
-
-	a=(D2-D1)/(X2-X1);	//la pente
-	b=D1-(X1*a);		//l"ordonnée à l'origine
-	d=pix*a+b;			//le y
-
-	return d;
-}
+}*/

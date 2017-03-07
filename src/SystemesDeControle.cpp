@@ -9,11 +9,10 @@
 
 SystemesDeControle::SystemesDeControle()
 {
-	std::cout << "inside sdc" << std::endl;
 	sensors = new Sensors;
+	gear=new DoubleSolenoid(1,4);
 	basemobile.donnersensor(sensors);
 	lanceur.donnersensor(sensors);
-	gear=new DoubleSolenoid(1,4);
 }
 
 void SystemesDeControle::initSystemes()

@@ -17,22 +17,9 @@ class Lanceur
 
 		virtual ~Lanceur();
 		void Update();
-		void setposition(float angle);
-		void donnersensor(Sensors* _sensor);
-		void homein();
-		void mouve_align(bool button_left, bool button_right);
 
-		//CANTalon *motoralignement;
-		Talon *shoot;
-		Sensors *sensors;
-		//Solenoid *piston;
-
-		float valeurdepart;
-		float anglecible;
-		float anglepresent;
-		float angledepart;
 		float v;
-		//bool limitswitch_trouve;
+
 };
 
 #endif /* SRC_LANCEUR_H_ */

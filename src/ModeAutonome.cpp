@@ -44,7 +44,6 @@ void ModeAutonome::Execute(int t)
 
 	if(!(n%20))
 		{
-		//	std::cout << commandeencours << "  commande en exécution: " << listecommande[i].nomdelacommande <<std::endl;
 		}
 
 	if(listecommande[0].demarre==false)
@@ -55,7 +54,6 @@ void ModeAutonome::Execute(int t)
 
 	if (listecommande[i].demarre==true && listecommande[i].termine==false && listecommande[i].isfinished(t)==true)
 		{
-			//std::cout<<"commande finie"<<std::endl;
 			listecommande[i].termine=true;
 			if(i==listecommande.size()-1)
 				bEndOfExecution = true;
@@ -63,7 +61,6 @@ void ModeAutonome::Execute(int t)
 
 	if (bEndOfExecution==false && listecommande[i].termine==true && listecommande[i+1].demarre==false)
 		{
-			//std::cout<<"entre deux commandes"<<std::endl;
 			i=i+1;
 			listecommande[i].demarre=true;
 			listecommande[i].start(t);

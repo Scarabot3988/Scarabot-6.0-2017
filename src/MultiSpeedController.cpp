@@ -27,7 +27,6 @@ void MultiSpeedController::Set(double speed)
 
 		for (unsigned int i = 0; i < speedControllers.size(); i++)
 			{
-				//std::cout<<"vitesse moteur"<<i<<"="<<speed<<std::endl;
 				speedControllers[i]->Set(speed);
 			}
 
@@ -35,10 +34,8 @@ void MultiSpeedController::Set(double speed)
 			{
 				for (unsigned int i = 0; i < auxSpeedControllers.size(); i++)
 					{
-						//std::cout<<"vitesse moteur aux "<<i<<"="<<speed<<std::endl;
 						auxSpeedControllers[i]->Set(speed);
 					}
-
 			}
 	}
 
@@ -60,12 +57,12 @@ void MultiSpeedController::Disable()
 		    }
 	}
 
-void MultiSpeedController::DonnerMoteur(SpeedController * moteur)
+void MultiSpeedController::DonnerMoteur(SpeedController *moteur)
 	{
 		speedControllers.push_back(moteur);
 	}
 
-void MultiSpeedController::DonnerAuxMoteur(SpeedController * moteur)
+void MultiSpeedController::DonnerAuxMoteur(SpeedController *moteur)
 	{
 		auxSpeedControllers.push_back(moteur);
 	}

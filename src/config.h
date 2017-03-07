@@ -27,12 +27,6 @@
 #define DIO_driveLa 2
 #define DIO_driveLb 3
 
-#define DIO_shooterxa 4
-#define DIO_shooterxb 5
-#define DIO_limitswitch_shooter 7
-#define DIO_shooteralign_a 8
-#define DIO_shooteralign_b 9
-
 // CAN //////////////////////////
 
 #define CAN_feeder 3

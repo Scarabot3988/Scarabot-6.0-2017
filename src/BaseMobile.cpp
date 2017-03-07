@@ -162,7 +162,6 @@ void BaseMobile::donnersensor(Sensors * _sensor)
 
 double BaseMobile::GetDistance()
 {
-
 	std::cout<<"distance parcourue ="<<sensors->encoderdriveL->Get()/155.0<<std::endl;
 	return (-sensors->encoderdriveR->Get() + sensors->encoderdriveL->Get()) / 310.0;
 }
