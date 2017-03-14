@@ -56,7 +56,9 @@ void ModeAutonome::Execute(int t)
 		{
 			listecommande[i].termine=true;
 			if(i==listecommande.size()-1)
-				bEndOfExecution = true;
+				{
+					bEndOfExecution = true;
+				}
 		}
 
 	if (bEndOfExecution==false && listecommande[i].termine==true && listecommande[i+1].demarre==false)
