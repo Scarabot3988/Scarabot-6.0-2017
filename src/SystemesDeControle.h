@@ -9,8 +9,9 @@
 #define SRC_SYSTEMESDECONTROLE_H_
 
 #include "BaseMobile.h"
-#include "Lanceur.h"
 #include "Vision.h"
+#include "CANTalon.h"
+
 
 class SystemesDeControle
 {
@@ -20,10 +21,12 @@ class SystemesDeControle
 		void Update();
 
 		BaseMobile basemobile;
-		Lanceur lanceur;
 		Sensors *sensors;
-		Vision moduleVision;
+		Vision modulevision;
 		DoubleSolenoid *gear;
+		CANTalon *shooter1;
+		CANTalon *shooter2;
+		CANTalon *intake;
 };
 
 #endif /* SRC_SYSTEMESDECONTROLE_H_ */
