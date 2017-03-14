@@ -40,9 +40,13 @@ class Commande
 
 				if (nom == "lancer")
 					{
+						shooter1 = param1;
+						shooter2 = param1;
+						intake = param1;
 					}
 
 				nomdelacommande = nom;
+				tempsdebut = 0;
 				tempsfin = 0;
 				demarre = false;
 				termine = false;
@@ -64,6 +68,9 @@ class Commande
 		float deltaangle;
 		float targetdistance;
 		float targetspeed;
+		float shooter1;
+		float shooter2;
+		float intake;
 		bool demarre;
 		bool termine;
 };
