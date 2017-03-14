@@ -6,7 +6,6 @@
  */
 
 #include <Commande.h>
-#include <Lanceur.h>
 
 Commande::~Commande()
 {
@@ -40,14 +39,18 @@ void Commande::start(int t)
 
 	if (nomdelacommande == "placergear")
 		{
-		std::cout<<"on place la gear"<<std::endl;
-		sdc->gear->Set(DoubleSolenoid::Value::kForward);
+			std::cout<<"on place la gear"<<std::endl;
+			sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
 
 	if (nomdelacommande == "lancer")
 		{
-			sdc->lanceur.shoot->Set(0.5);
+			std::cout<<"on shoot"<<std::endl;
+			sdc->shooter1->Set(0.75);
+			sdc->shooter2->Set(0.75);
+			sdc->intake->Set(0.75);
+
 		}
 }
 
@@ -85,6 +88,10 @@ bool Commande::isfinished(int t)
 
 	if (nomdelacommande == "lancer")
 		{
+			std::cout<<"fin shoot"<<std::endl;
+			sdc->shooter1->Set(0);
+			sdc->shooter2->Set(0);
+			sdc->intake->Set(0);
 			return true;
 		}
 
