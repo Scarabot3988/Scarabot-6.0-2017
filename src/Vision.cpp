@@ -24,11 +24,10 @@ void Vision::test()
 	try
 		{
 			float valeur = Net.get()->GetNumber("x",0);
-			//std::cout<<"Number :"<<valeur<<std::endl;
 		}
 	catch(...)
 		{
-				std::cout<<"Pas de valeur"<<std::endl;
+			std::cout<<"Pas de valeur"<<std::endl;
 		}
 }
 

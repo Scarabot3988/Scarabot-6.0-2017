@@ -23,7 +23,7 @@ BaseMobile::BaseMobile()
 	moteur2gauche = new Talon(PWM_PortMoteurGauche2);
 	moteur3gauche = new Talon(PWM_PortMoteurGauche3);
 	drive = new RobotDrive(moteurgauche, moteurdroit);
-	//sensors=new Sensors;
+	sensors=new Sensors;
 
 	moteurdroit->DonnerAuxMoteur(moteur1droite);
 	moteurdroit->DonnerMoteur(moteur2droite);
