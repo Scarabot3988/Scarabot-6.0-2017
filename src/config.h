@@ -29,17 +29,17 @@
 
 // CAN //////////////////////////
 
-#define CAN_feeder 3
+#define CAN_intake 3
 #define CAN_shooter1 5
 #define CAN_ramasseur 7
 
 // SOL ///////////////////////////////
 
-#define SOL_shifter 7
-#define SOL_grimpeurpiston 6
 #define SOL_secoue 0
-#define SOL_blocker 5
 #define SOL_capot1 2
 #define SOL_capot2 3
+#define SOL_blocker 5
+#define SOL_grimpeurpiston 6
+#define SOL_shifter 7
 
 #endif /* SRC_CONFIG_H_ */
