@@ -45,6 +45,8 @@ class BaseMobile
 		float vitesserobot;
 		double x;
 		double y;
+		double ancienx;
+		double ancieny;
 
 		MultiSpeedController *moteurgauche;
 		MultiSpeedController *moteurdroit;

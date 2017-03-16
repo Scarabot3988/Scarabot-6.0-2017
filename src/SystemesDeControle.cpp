@@ -12,9 +12,9 @@ SystemesDeControle::SystemesDeControle()
 {
 	sensors = new Sensors;
 	gear=new DoubleSolenoid(1,4);
-	shooter1=new CANTalon(13);
-	shooter2=new CANTalon(14);
-	intake=new CANTalon(15);
+	//shooter1=new CANTalon(13);
+	//shooter2=new CANTalon(14);
+	//intake=new CANTalon(15);
 	basemobile.donnersensor(sensors);
 }
 

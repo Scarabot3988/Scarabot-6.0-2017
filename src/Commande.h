@@ -38,12 +38,12 @@ class Commande
 						targetspeed = param2;
 					}
 
-				if (nom == "lancer")
+				/*if (nom == "lancer")
 					{
 						shooter1 = param1;
 						shooter2 = param1;
 						intake = param1;
-					}
+					}*/
 
 				nomdelacommande = nom;
 				tempsdebut = 0;

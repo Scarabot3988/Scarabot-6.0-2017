@@ -35,6 +35,8 @@ void ModeAutonome::Execute(int t)
 {
 	unsigned int i=commandeencours;
 	static int n=0;
+	if(listecommande.size()==0)
+		return;
 	n++;
 
 	if(bEndOfExecution==true)
@@ -79,7 +81,8 @@ void ModeAutonome::choose_scenario(std::string nomScenario )
 	listecommande.clear();
 	bEndOfExecution=false;
 	commandeencours=0;
-
+	if(nomScenario=="NONE")
+		return;
 
 	ifstream fin;	//create a file-reading object
 

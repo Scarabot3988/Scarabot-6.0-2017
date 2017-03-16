@@ -44,14 +44,14 @@ void Commande::start(int t)
 			tempsdebut=t;
 		}
 
-	if (nomdelacommande == "lancer")
+	/*if (nomdelacommande == "lancer")
 		{
 			std::cout<<"on shoot"<<std::endl;
 			sdc->shooter1->Set(0.75);
 			sdc->shooter2->Set(0.75);
 			sdc->intake->Set(0.75);
 
-		}
+		}*/
 }
 
 bool Commande::isfinished(int t)
@@ -86,14 +86,14 @@ bool Commande::isfinished(int t)
 			return true;
 		}
 
-	if (nomdelacommande == "lancer")
+	/*if (nomdelacommande == "lancer")
 		{
 			std::cout<<"fin shoot"<<std::endl;
 			sdc->shooter1->Set(0);
 			sdc->shooter2->Set(0);
 			sdc->intake->Set(0);
 			return true;
-		}
+		}*/
 
 	return false;
 }

@@ -23,7 +23,6 @@ BaseMobile::BaseMobile()
 	moteur2gauche = new Talon(PWM_PortMoteurGauche2);
 	moteur3gauche = new Talon(PWM_PortMoteurGauche3);
 	drive = new RobotDrive(moteurgauche, moteurdroit);
-	sensors=new Sensors;
 
 	moteurdroit->DonnerAuxMoteur(moteur1droite);
 	moteurdroit->DonnerMoteur(moteur2droite);
@@ -43,8 +42,37 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
-	x=_x;
-	y=_y;
+	float accy;
+	accy=_y-y;
+	if (accy>0.1)
+		{
+			accy = 0.1;
+		}
+
+	if (accy<-0.1)
+		{
+			accy = -0.1;
+		}
+
+	y = y+accy;
+
+	float accx;
+	accx=_x-x;
+	if(accx<-0.1)
+		{
+			accx=-0.1;
+		}
+
+	if(accx>0.1)
+		{
+			accx=0.1;
+		}
+
+	x=x+accx;
+
+
+	//x=_x;
+	//y=_y;
 }
 
 void BaseMobile::SetAngleCible(double _anglecible)
