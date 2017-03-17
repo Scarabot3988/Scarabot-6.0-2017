@@ -147,8 +147,8 @@ void TeleopPeriodic()
 
 		if(button_ramasseur==true)
 			{
-				ramasseur->Set(1);
-				std::cout<<"on ramasse"<<std::endl;
+				ramasseur->Set(0.25);
+				std::cout << "Courant ramasseur : " << ramasseur->GetOutputCurrent() << std::endl;
 			}
 		else
 			{
@@ -258,6 +258,9 @@ void TeleopPeriodic()
 		bool button_grimpeur=joyPilote->GetRawButton(10);
 		if(button_grimpeur==true)
 			{
+				if(entraingrimper==false)
+					sdc->basemobile.ResetDistance();
+				std::cout << "Distance grimpage: " << sdc->basemobile.GetDistance()<<std::endl;
 				grimpeurpiston->Set(true);
 				blocker->Set(false);
 				sdc->basemobile.SetTurbo();
