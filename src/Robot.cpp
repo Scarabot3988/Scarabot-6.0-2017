@@ -90,6 +90,7 @@ void RobotInit()
 		//intake=new CANTalon(15);
 		compressor=new Compressor(0);
 		compressor->Start();
+		blocker->Set(true);
 
 	}
 
@@ -155,7 +156,7 @@ void TeleopPeriodic()
 			}
 
 // PISTONS GRIMPEUR //////////////////////////////////////////////////////////
-
+#if 0
 		bool button_pistongrimpeur=joyPilote->GetRawButton(3);
 
 		if (button_pistongrimpeur==true)
@@ -185,6 +186,8 @@ void TeleopPeriodic()
 			{
 				blocker->Set(true);
 			}
+
+#endif
 
 // TURBO ///////////////////////////////////////////////////////////
 
@@ -255,20 +258,11 @@ void TeleopPeriodic()
 		bool button_grimpeur=joyPilote->GetRawButton(10);
 		if(button_grimpeur==true)
 			{
-				if(t_avantgrimpeur==0)
-					{
-						std::cout << "on grimpe a t="<< t << std::endl;
-						t_avantgrimpeur=t;
-					}
-
 				grimpeurpiston->Set(true);
-				blocker->Set(true);
+				blocker->Set(false);
 				sdc->basemobile.SetTurbo();
-				//if(t>t_avantgrimpeur+100)
-					{
-						sdc->basemobile.Drive(0,0.5);
-						entraingrimper=true;
-					}
+				sdc->basemobile.Drive(0,0.5);
+				entraingrimper=true;
 			}
 		else if(entraingrimper==true)
 			{
