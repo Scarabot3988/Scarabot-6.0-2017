@@ -35,6 +35,14 @@ class BaseMobile
 			}
 		double GetDistance();
 		double GetAngleDelta();
+		void activerrampe()
+		{
+			presencerampe=true;
+		}
+		void desactiverrampe()
+		{
+			presencerampe=false;
+		}
 
 	private:
 		void CorrectionGyro();
@@ -47,6 +55,7 @@ class BaseMobile
 		double y;
 		double ancienx;
 		double ancieny;
+		bool presencerampe;
 
 		MultiSpeedController *moteurgauche;
 		MultiSpeedController *moteurdroit;
