@@ -42,6 +42,8 @@ BaseMobile::~BaseMobile()
 
 void BaseMobile::Drive(float _x, float _y)
 {
+	if (presencerampe==true)
+	{
 	float accy;
 	accy=_y-y;
 	if (accy>0.1)
@@ -69,10 +71,15 @@ void BaseMobile::Drive(float _x, float _y)
 		}
 
 	x=x+accx;
+	}
 
+	else
+	{
+		x=_x;
+		y=_y;
 
-	//x=_x;
-	//y=_y;
+	}
+
 }
 
 void BaseMobile::SetAngleCible(double _anglecible)
