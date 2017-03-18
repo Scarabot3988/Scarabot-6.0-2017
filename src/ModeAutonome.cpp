@@ -35,8 +35,10 @@ void ModeAutonome::Execute(int t)
 {
 	unsigned int i=commandeencours;
 	static int n=0;
-	if(listecommande.size()==0)
+	if(listecommande.size()==0){
+		std::cout << "liste commande vide" << std::endl;
 		return;
+	}
 	n++;
 
 	if(bEndOfExecution==true)
@@ -163,7 +165,7 @@ void ModeAutonome::choose_scenario(std::string nomScenario )
 			if(bCommentaire==false)
 				{
 					listecommande.push_back(Commande(systemesdecontrole,nomdelacommande,param1,param2));
-					//std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
+					std::cout << "creating cmd " << nomdelacommande << " with params " << param1 << " " << param2 <<std::endl;
 				}
 		}
 
