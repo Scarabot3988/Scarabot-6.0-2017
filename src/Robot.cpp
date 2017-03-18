@@ -11,7 +11,13 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include "CANTalon.h"
 #include "Sensors.h"
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui.hpp>
+#include "wpilib.h"
 
+
+bool button_pic;
 class Robot: public frc::IterativeRobot
 {
 	private:
@@ -87,8 +93,40 @@ void RobotInit()
 		compressor->Start();
 		blocker->Set(true);
 
+		 std::thread visionThread(VisionThread);
+		visionThread.detach();
 
 	}
+
+static void VisionThread()
+	    {
+	        cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+	        camera.SetResolution(640, 480);
+	        camera.SetBrightness(20);
+	        cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
+	        cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
+	        cv::Mat source;
+	        cv::Mat output;
+	        cv::Mat edgeim;
+	        bool takepic=false;
+	        int n=0;
+	        while(true) {
+	            cvSink.GrabFrame(source);
+	            cvtColor(source, output, cv::COLOR_BGR2GRAY);
+	            //cv::Canny(output,edgeim,100,200,3);
+	            outputStreamStd.PutFrame(output);
+
+if(button_pic==true) {
+	char str[128];
+	sprintf(str,"/home/lvuser/peg%d.png",n++);
+
+	std::cout <<  "saving image "<<str << std::endl;
+	cv::imwrite(str,output);
+	            }
+
+	        }
+	    }
+
 
 void AutonomousInit() override
 	{
@@ -116,7 +154,7 @@ void TeleopInit()
 
 void TeleopPeriodic()
 	{
-
+	button_pic=joyPilote->GetRawButton(11);
 // CORRECTION /////////////////////////////////////////////////////////////////////////////////
 
 // DRIVE //////////////////////////////////////////////////////////////////////////////////////
