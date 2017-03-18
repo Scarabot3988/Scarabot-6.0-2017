@@ -39,7 +39,6 @@ void Commande::start(int t)
 
 	if (nomdelacommande == "placergear")
 		{
-			std::cout<<"on place la gear"<<std::endl;
 			sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
@@ -63,14 +62,13 @@ bool Commande::isfinished(int t)
 
 	if (nomdelacommande == "tourner" && fabs(sdc->basemobile.GetAngleDelta()) <= 2)
 		{
-			std::cout << "atteint"<< std::endl;
 			sdc->basemobile.Drive(0, 0);
 			return true;
 		}
 
 	if (nomdelacommande == "avancer" && sdc->basemobile.GetDistance() >= targetdistance)
 		{
-		sdc->basemobile.Drive(0, 0);
+			sdc->basemobile.Drive(0, 0);
 			return true;
 		}
 
