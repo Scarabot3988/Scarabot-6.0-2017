@@ -53,16 +53,11 @@ class Robot: public frc::IterativeRobot
 void RobotInit()
 	{
 		chooser.AddDefault("RB", "RB");
-		chooser.AddObject("RBS", "RBS");
 		chooser.AddDefault("RC", "RC");
-		chooser.AddObject("RCS", "RCS");
 		chooser.AddDefault("RF", "RF");
-		chooser.AddObject("RFS", "RFS");
-		chooser.AddDefault("BB", "BB");
-		chooser.AddObject("BBS", "BBS");
-		chooser.AddDefault("BC", "BC");
-		chooser.AddObject("BCS", "BCS");
-		chooser.AddDefault("BF", "BF");
+		chooser.AddDefault("Droite", "Droite");
+		chooser.AddDefault("Centre", "Centre");
+		chooser.AddDefault("Gauche", "Gauche");
 		chooser.AddDefault("NONE", "NONE");
 
 
@@ -92,6 +87,7 @@ void RobotInit()
 		compressor->Start();
 		blocker->Set(true);
 
+
 	}
 
 void AutonomousInit() override
@@ -100,6 +96,7 @@ void AutonomousInit() override
 		autoSelected=chooser.GetSelected();
 		modeautonome->choose_scenario(autoSelected);
 		t=0;
+		sdc->basemobile.desactiverrampe();
 	}
 
 void AutonomousPeriodic()
@@ -113,6 +110,7 @@ void AutonomousPeriodic()
 void TeleopInit()
 	{
 		sdc->basemobile.ResetTurbo();
+		sdc->basemobile.activerrampe();
 	}
 
 void TeleopPeriodic()
@@ -130,7 +128,7 @@ void TeleopPeriodic()
 
 // CAPOT //////////////////////////////////////////////////////////////////////////////////////
 
-		bool button_capot=joyPilote->GetRawButton(1);
+		/*bool button_capot=joyPilote->GetRawButton(1);
 		if(button_capot==true)
 			{
 				capot->Set(DoubleSolenoid::Value::kReverse);
@@ -138,17 +136,22 @@ void TeleopPeriodic()
 		else
 			{
 				capot->Set(DoubleSolenoid::Value::kForward);
-			}
+			}*/
 
 
 // RAMASSEUR DE BALLES ////////////////////////////////////////////////////////////////////////
 
 		bool button_ramasseur=joyPilote->GetRawButton(2);
+		bool button_ramasseur_reverse=joyPilote->GetRawButton(1);
 
 		if(button_ramasseur==true)
 			{
 				ramasseur->Set(0.25);
 				std::cout << "Courant ramasseur : " << ramasseur->GetOutputCurrent() << std::endl;
+			}
+		else if (button_ramasseur_reverse==true)
+			{
+				ramasseur->Set(-1);
 			}
 		else
 			{
@@ -254,9 +257,9 @@ void TeleopPeriodic()
 			}
 
 // BOUTTON GRIMPEUR /////////////////////////////////////////////////////
-
-		bool button_grimpeur=joyPilote->GetRawButton(10);
-		if(button_grimpeur==true)
+		bool button_grimpeur1=joyPilote->GetRawButton(10);
+		//bool button_grimpeur2=joyPilote->GetRawButton(11);
+		if(button_grimpeur1==true)
 			{
 				if(entraingrimper==false)
 					sdc->basemobile.ResetDistance();
@@ -264,7 +267,7 @@ void TeleopPeriodic()
 				grimpeurpiston->Set(true);
 				blocker->Set(false);
 				sdc->basemobile.SetTurbo();
-				sdc->basemobile.Drive(0,0.5);
+				sdc->basemobile.Drive(0,1);
 				entraingrimper=true;
 			}
 		else if(entraingrimper==true)
