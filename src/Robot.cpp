@@ -52,9 +52,9 @@ class Robot: public frc::IterativeRobot
 
 void RobotInit()
 	{
-		chooser.AddDefault("RB", "RB");
+		/*chooser.AddDefault("RB", "RB");
 		chooser.AddDefault("RC", "RC");
-		chooser.AddDefault("RF", "RF");
+		chooser.AddDefault("RF", "RF");*/
 		chooser.AddDefault("Droite", "Droite");
 		chooser.AddDefault("Centre", "Centre");
 		chooser.AddDefault("Gauche", "Gauche");
@@ -97,6 +97,7 @@ void AutonomousInit() override
 		modeautonome->choose_scenario(autoSelected);
 		t=0;
 		sdc->basemobile.desactiverrampe();
+		//shifter->Set(true);
 	}
 
 void AutonomousPeriodic()
@@ -258,7 +259,6 @@ void TeleopPeriodic()
 
 // BOUTTON GRIMPEUR /////////////////////////////////////////////////////
 		bool button_grimpeur1=joyPilote->GetRawButton(10);
-		//bool button_grimpeur2=joyPilote->GetRawButton(11);
 		if(button_grimpeur1==true)
 			{
 				if(entraingrimper==false)
@@ -266,7 +266,6 @@ void TeleopPeriodic()
 				std::cout << "Distance grimpage: " << sdc->basemobile.GetDistance()<<std::endl;
 				grimpeurpiston->Set(true);
 				blocker->Set(false);
-				sdc->basemobile.SetTurbo();
 				sdc->basemobile.Drive(0,1);
 				entraingrimper=true;
 			}
@@ -274,6 +273,7 @@ void TeleopPeriodic()
 			{
 				sdc->basemobile.Drive(0,0);
 				blocker->Set(false);
+
 			}
 		t=t+1;
 

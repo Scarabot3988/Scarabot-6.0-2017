@@ -187,6 +187,7 @@ void BaseMobile::Update()
 		}
 
 	drive->ArcadeDrive(y, x);
+
 	//x = y = 0;
 }
 
@@ -197,7 +198,12 @@ void BaseMobile::donnersensor(Sensors * _sensor)
 
 double BaseMobile::GetDistance()
 {
-	//std::cout<<"distance parcourue ="<<sensors->encoderdriveL->Get()/155.0<<std::endl;
+	static int n=0;
+	if(!(n%20)){
+		std::cout<<"distance parcourue G ="<<sensors->encoderdriveL->Get()/155.0<<std::endl;
+		std::cout<<"distance parcourue D ="<<sensors->encoderdriveR->Get()/155.0<<std::endl;
+	}
+	n++;
 	return (-sensors->encoderdriveR->Get() + sensors->encoderdriveL->Get()) / 310.0;
 }
 
