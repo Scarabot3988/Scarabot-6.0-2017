@@ -26,9 +26,6 @@ class Robot: public frc::IterativeRobot
 		ModeAutonome *modeautonome;
 		frc::LiveWindow* lw = LiveWindow::GetInstance();
 		frc::SendableChooser<std::string> chooser;
-		const std::string autoNameDefault = "RB";
-		const std::string autoNameCustom = "RBS";
-
 		std::string autoSelected;
 
 		unsigned int t = 0;
@@ -45,11 +42,6 @@ class Robot: public frc::IterativeRobot
 		Solenoid *grimpeurpiston;
 		Solenoid *blocker;
 		Solenoid *secoue;
-		CANTalon *intake;
-		DoubleSolenoid *capot;
-		CANTalon *shooter1;
-		CANTalon *shooter2;
-		CANTalon *feeder;
 		Compressor *compressor;
 
 		bool activation_grimpeur;
@@ -83,40 +75,36 @@ void RobotInit()
 		grimpeurpiston=new Solenoid(SOL_grimpeurpiston);
 		secoue=new Solenoid(SOL_secoue);
 		blocker=new Solenoid(SOL_blocker);
-		capot=new DoubleSolenoid(SOL_capot1,SOL_capot2);
-		feeder=new CANTalon(3);
-		//shooter1=new CANTalon(5);
-		//shooter2=new CANTalon(9);
 		ramasseur=new CANTalon(7);
 		//intake=new CANTalon(15);
 		compressor=new Compressor(0);
 		compressor->Start();
 		blocker->Set(true);
 
-		 std::thread visionThread(VisionThread);
+		std::thread visionThread(VisionThread);
 		visionThread.detach();
 
 	}
 
 static void VisionThread()
-	    {
-	        cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-	        camera.SetResolution(640, 480);
-	        camera.SetBrightness(20);
-	        cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
-	        cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
-	        cv::Mat source;
-	        cv::Mat output;
-	        cv::Mat edgeim;
-	        bool takepic=false;
-	        int n=0;
-	        while(true) {
-	            cvSink.GrabFrame(source);
-	            cvtColor(source, output, cv::COLOR_BGR2GRAY);
-	            //cv::Canny(output,edgeim,100,200,3);
-	            outputStreamStd.PutFrame(output);
+    {
+        cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+        camera.SetResolution(640, 480);
+        camera.SetBrightness(20);
+        cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
+        cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
+        cv::Mat source;
+        cv::Mat output;
+        cv::Mat edgeim;
+        bool takepic=false;
+        int n=0;
+        while(true) {
+        	cvSink.GrabFrame(source);
+        	cvtColor(source, output, cv::COLOR_BGR2GRAY);
+	        //cv::Canny(output,edgeim,100,200,3);
+	        outputStreamStd.PutFrame(output);
 
-if(button_pic==true) {
+	    if(button_pic==true) {
 	char str[128];
 	sprintf(str,"/home/lvuser/peg%d.png",n++);
 
@@ -148,14 +136,13 @@ void AutonomousPeriodic()
 
 void TeleopInit()
 	{
-		sdc->basemobile.ResetTurbo();
+		//sdc->basemobile.ResetTurbo();
 		sdc->basemobile.activerrampe();
 	}
 
 void TeleopPeriodic()
 	{
 	button_pic=joyPilote->GetRawButton(11);
-// CORRECTION /////////////////////////////////////////////////////////////////////////////////
 
 // DRIVE //////////////////////////////////////////////////////////////////////////////////////
 		if(entraingrimper==false)
@@ -164,19 +151,6 @@ void TeleopPeriodic()
 			}
 
 		sdc->Update();
-
-// CAPOT //////////////////////////////////////////////////////////////////////////////////////
-
-		/*bool button_capot=joyPilote->GetRawButton(1);
-		if(button_capot==true)
-			{
-				capot->Set(DoubleSolenoid::Value::kReverse);
-			}
-		else
-			{
-				capot->Set(DoubleSolenoid::Value::kForward);
-			}*/
-
 
 // RAMASSEUR DE BALLES ////////////////////////////////////////////////////////////////////////
 
@@ -232,7 +206,7 @@ void TeleopPeriodic()
 #endif
 
 // TURBO ///////////////////////////////////////////////////////////
-
+/*
 		bool turbo=joyPilote->GetRawButton(5);
 		if(turbo==true)
 			{
@@ -242,7 +216,7 @@ void TeleopPeriodic()
 			{
 				sdc->basemobile.ResetTurbo();
 			}
-
+*/
 // GEAR ///////////////////////////////////////////////////////////
 
 		bool button_secoue= joyPilote->GetRawButton(6);
@@ -264,24 +238,6 @@ void TeleopPeriodic()
 			{
 				secoue->Set(false);
 			}
-
-// SHOOTER ///////////////////////////////////////////////////
-
-		/*bool button_vitesseUP=joyPilote->GetRawButton(8);
-
-		if (button_vitesseUP==true)
-			{
-				v=0.75;
-			}
-		else
-			{
-				v=0;
-			}
-
-		sdc->shooter1->Set(v);
-		sdc->shooter2->Set(v);
-		sdc->intake->Set(v);
-		*/
 
 // SHIFTER //////////////////////////////////////////////////////////////
 

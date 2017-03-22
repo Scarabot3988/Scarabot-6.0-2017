@@ -42,15 +42,6 @@ void Commande::start(int t)
 			sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
-
-	/*if (nomdelacommande == "lancer")
-		{
-			std::cout<<"on shoot"<<std::endl;
-			sdc->shooter1->Set(0.75);
-			sdc->shooter2->Set(0.75);
-			sdc->intake->Set(0.75);
-
-		}*/
 }
 
 bool Commande::isfinished(int t)
@@ -83,15 +74,6 @@ bool Commande::isfinished(int t)
 			sdc->gear->Set(DoubleSolenoid::Value::kReverse);
 			return true;
 		}
-
-	/*if (nomdelacommande == "lancer")
-		{
-			std::cout<<"fin shoot"<<std::endl;
-			sdc->shooter1->Set(0);
-			sdc->shooter2->Set(0);
-			sdc->intake->Set(0);
-			return true;
-		}*/
 
 	return false;
 }

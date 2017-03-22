@@ -24,9 +24,6 @@ class SystemesDeControle
 		Sensors *sensors;
 		Vision modulevision;
 		DoubleSolenoid *gear;
-		CANTalon *shooter1;
-		CANTalon *shooter2;
-		CANTalon *intake;
 };
 
 #endif /* SRC_SYSTEMESDECONTROLE_H_ */

@@ -112,70 +112,9 @@ void BaseMobile::SetAngleDelta(double delta)
 	y=0;
 }
 
-void BaseMobile::CorrectionGyro()
-{
-	double delta=GetAngleDelta();
-	double absdelta=abs(delta);
-	if (absdelta>3)
-		{
-			if (absdelta<45)
-				{
-					x=0.2;
-				}
-			else
-				{
-					x=0.3;
-				}
-		}
-
-	if(delta>0)
-		{
-			x=-x;
-
-			if (absdelta<45)
-				{
-					x=0.2;
-				}
-			else
-				{
-					x=0.45;
-				}
-		}
-
-	if(y!=0)
-		{
-			x=x*y/abs(y);
-		}
-}
-
 void BaseMobile::Update()
 {
-	/*if (abs(x)<=0.1)
-		{
-			x=0;
-		}
-
-	if(x!=0)
-		{
-			t=20;
-		}
-
-	else
-		{
-			if (t != 0)
-				{
-					t = t - 1;
-				}
-
-			else
-				{
-					CorrectionGyro();
-
-				}
-		}*/
-
-
-	if(turbo==false)
+/*	if(turbo==false)
 		{
 			moteurgauche->ResetTurbo();
 			moteurdroit->ResetTurbo();
@@ -184,7 +123,7 @@ void BaseMobile::Update()
 		{
 			moteurgauche->SetTurbo();
 			moteurdroit->SetTurbo();
-		}
+		}*/
 
 	drive->ArcadeDrive(y, x);
 
@@ -199,10 +138,12 @@ void BaseMobile::donnersensor(Sensors * _sensor)
 double BaseMobile::GetDistance()
 {
 	static int n=0;
-	if(!(n%20)){
-		std::cout<<"distance parcourue G ="<<sensors->encoderdriveL->Get()/155.0<<std::endl;
-		std::cout<<"distance parcourue D ="<<sensors->encoderdriveR->Get()/155.0<<std::endl;
-	}
+	if(!(n%20))
+		{
+			std::cout<<"distance parcourue G ="<<sensors->encoderdriveL->Get()/155.0<<std::endl;
+			std::cout<<"distance parcourue D ="<<sensors->encoderdriveR->Get()/155.0<<std::endl;
+		}
+
 	n++;
 	return (-sensors->encoderdriveR->Get() + sensors->encoderdriveL->Get()) / 310.0;
 }
