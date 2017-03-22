@@ -6,6 +6,7 @@
  */
 
 #include <Commande.h>
+#include <Math.h>
 
 Commande::~Commande()
 {
@@ -42,6 +43,12 @@ void Commande::start(int t)
 			sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
+	if (nomdelacommande == "GetDistanceFromImage")
+		{
+			dist = A - B*sqrt(surface);
+			surface = largeur*hauteur;
+		}
+
 }
 
 bool Commande::isfinished(int t)
@@ -75,5 +82,9 @@ bool Commande::isfinished(int t)
 			return true;
 		}
 
+	if (nomdelacommande == "GetDistanceFromImage")
+	{
+		return true;
+	}
 	return false;
 }
