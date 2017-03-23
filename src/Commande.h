@@ -37,11 +37,6 @@ class Commande
 						targetdistance = -param1;
 						targetspeed = param2;
 					}
-				if (nom == "GetDistanceFromImage")
-				{
-					hauteur = param1;
-					largeur = param1;
-				}
 
 				nomdelacommande = nom;
 				tempsdebut = 0;
@@ -68,6 +63,7 @@ class Commande
 		float targetspeed;
 		bool demarre;
 		bool termine;
+		bool visionfollowup;
 		float GetDistanceFromImage;
 		float hauteur;
 		float largeur;

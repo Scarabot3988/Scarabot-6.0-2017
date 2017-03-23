@@ -43,10 +43,11 @@ void Commande::start(int t)
 			sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
-	if (nomdelacommande == "GetDistanceFromImage")
+	if (nomdelacommande == "aligner" ||
+		nomdelacommande == "approcher"	)
 		{
-			dist = A - B*sqrt(surface);
-			surface = largeur*hauteur;
+			Vision::Start();
+			visionfollowup=false;
 		}
 
 }
@@ -82,9 +83,36 @@ bool Commande::isfinished(int t)
 			return true;
 		}
 
-	if (nomdelacommande == "GetDistanceFromImage")
+	if (nomdelacommande == "aligner")
 	{
-		return true;
+		if(Vision::IsDone()){
+			if(visionfollowup==false){
+				sdc->basemobile.SetAngleDelta(Vision::GetAngle());
+				visionfollowup=true;
+			}
+			else if(fabs(sdc->basemobile.GetAngleDelta()) <= 2)
+			{
+				sdc->basemobile.Drive(0, 0);
+				return true;
+			}
+		}
 	}
+
+	if (nomdelacommande == "approcher")
+	{
+		if(Vision::IsDone()){
+			if(visionfollowup==false){
+				sdc->basemobile.ResetDistance();
+				visionfollowup=true;
+			}
+			else if(sdc->basemobile.GetDistance() >= Vision::GetDistance())
+			{
+				sdc->basemobile.Drive(0, 0);
+				return true;
+			}
+		}
+	}
+
+
 	return false;
 }

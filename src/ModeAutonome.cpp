@@ -46,10 +46,6 @@ void ModeAutonome::Execute(int t)
 			return;
 		}
 
-	if(!(n%20))
-		{
-		}
-
 	if(listecommande[0].demarre==false)
 		{
 			listecommande[0].demarre=true;
