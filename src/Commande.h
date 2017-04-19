@@ -16,6 +16,12 @@ class Commande
 		Commande(SystemesDeControle* p, std::string nom, float param1, float param2 = 0)
 			{
 				sdc = p;
+				if(nom == "avancerdelai")
+					{
+						deltatemps = param1;
+					}
+
+
 				if (nom == "delai")
 					{
 						deltatemps = param1;

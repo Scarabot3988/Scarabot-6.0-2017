@@ -16,11 +16,18 @@ int i=0;
 
 void Commande::start(int t)
 {
+	std::cout << "starting -" << nomdelacommande << "-" << std::endl;
 	if (nomdelacommande == "delai")
 		{
 			tempsdebut = t;
 		}
 
+
+	if (nomdelacommande=="avancerdelai")
+	{
+		tempsdebut = t;
+		sdc->basemobile.Drive(0.21, 0.6);
+	}
 	if (nomdelacommande == "tourner")
 		{
 			sdc->basemobile.SetAngleDelta(deltaangle);
@@ -29,13 +36,13 @@ void Commande::start(int t)
 	if (nomdelacommande == "avancer")
 		{
 			sdc->basemobile.ResetDistance();
-			sdc->basemobile.Drive(0, targetspeed);
+			sdc->basemobile.Drive(0.19, targetspeed);
 		}
 
 	if (nomdelacommande == "reculer")
 		{
 			sdc->basemobile.ResetDistance();
-			sdc->basemobile.Drive(0, -targetspeed);
+			sdc->basemobile.Drive(-0.21, -targetspeed);
 		}
 
 	if (nomdelacommande == "placergear")
@@ -43,9 +50,10 @@ void Commande::start(int t)
 			sdc->gear->Set(DoubleSolenoid::Value::kForward);
 			tempsdebut=t;
 		}
-	if (nomdelacommande == "aligner" ||
+	if (/*nomdelacommande == "aligner" ||*/
 		nomdelacommande == "approcher"	)
 		{
+			std::cout<<"start aligner"<<std::endl;
 			Vision::Start();
 			visionfollowup=false;
 		}
@@ -58,6 +66,13 @@ bool Commande::isfinished(int t)
 		{
 			return true;
 		}
+
+	if (nomdelacommande == "avancerdelai" && t > tempsdebut + 50*deltatemps)
+			{
+			sdc->basemobile.Drive(0, 0);
+
+			return true;
+			}
 
 	if (nomdelacommande == "tourner" && fabs(sdc->basemobile.GetAngleDelta()) <= 2)
 		{
@@ -84,24 +99,33 @@ bool Commande::isfinished(int t)
 		}
 
 	if (nomdelacommande == "aligner")
-	{
-		if(Vision::IsDone()){
-			if(visionfollowup==false){
-				sdc->basemobile.SetAngleDelta(Vision::GetAngle());
-				visionfollowup=true;
-			}
-			else if(fabs(sdc->basemobile.GetAngleDelta()) <= 2)
-			{
-				sdc->basemobile.Drive(0, 0);
-				return true;
-			}
+		{
+
+			if(Vision::IsDone())
+				{
+
+
+					if(visionfollowup==false)
+						{
+							sdc->basemobile.SetAngleDelta(Vision::GetAngle());
+							visionfollowup=true;
+						}
+					else if(fabs(sdc->basemobile.GetAngleDelta()) <= 2)
+						{
+							sdc->basemobile.Drive(0, 0);
+							return true;
+						}
+				}
 		}
-	}
 
 	if (nomdelacommande == "approcher")
-	{
-		if(Vision::IsDone()){
-			if(visionfollowup==false){
+		{
+
+			if(Vision::IsDone())
+				{
+
+					if(visionfollowup==false)
+						{
 				sdc->basemobile.ResetDistance();
 				visionfollowup=true;
 			}
