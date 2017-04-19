@@ -4,7 +4,7 @@
  *  Created on: Feb 18, 2017
  *      Author: XPS15
  */
-
+#include <unistd.h>
 #include <Vision.h>
 #include <vector>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -13,8 +13,8 @@
 #include <opencv2/features2d.hpp>
 
 #include "wpilib.h"
-#define MINRECTSIZE  5000
-#define MAXRECTSIZE  20000
+#define MINRECTSIZE  500
+#define MAXRECTSIZE  2000
 
 static void VisionThread();
 bool Vision::m_bStart=false;
@@ -22,7 +22,7 @@ bool Vision::m_bDone=false;
 int Vision::m_nCentreX=-1;
 int Vision::m_nCentreY=-1;
 int Vision::m_nHauteur=-1;
-int Vision::m_nlargeur=-1;
+int Vision::m_nLargeur=-1;
 
 
 void Vision::Init()
@@ -32,43 +32,64 @@ void Vision::Init()
 
 }
 
-
-float Vision::GetDistance(){
-//dist = A - B*sqrt(surface);
-	float d;
-
-
-
-	return d;
+float Vision::GetDistance()
+{
+	float distance=0;
+	float surface;
+	surface=m_nHauteur*m_nLargeur;
+	std::cout<<"surface= "<<surface<<std::endl;
+	if(surface>1)
+		{
+			distance=sqrt(32250/surface)*13;
+		}
+	std::cout<<"distance= "<<distance<<std::endl;
+			return distance;
 }
 
-float Vision::GetAngle(){
-float angle;
+float Vision::GetAngle()
+{
+	float angle=0;
+	float distance=GetDistance();
 
-
-return angle;
+angle=atan2(45,distance);
+angle=angle*360/(2*3.1415962);
+std::cout<<"angle= "<<angle<<std::endl;
+	return angle;
 }
-
 
 static void VisionThread()
     {
-        cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-        camera.SetResolution(640, 480);
+        cs::UsbCamera camera =CameraServer::GetInstance()->StartAutomaticCapture();
+
+        camera.SetResolution(320, 240);
         camera.SetBrightness(20);
-        cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
-        cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Vision", 640, 480);
+        camera.SetExposureManual(20);
+         cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
+        //cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Vision", 640, 360);
+
+
+
+        int n=0;
+        char str[80];
         cv::Mat source;
         cv::Mat output;
-        while(true) {
-        	cvSink.GrabFrame(source);
+        while(true)
+        {
 
-        	if(Vision::m_bStart){
+
+        	if(Vision::m_bStart)
+        	{
+        		cvSink.GrabFrame(source);
         		std::cout << "Doing vision" << std::endl;
+
         		Vision::m_nCentreX= -1;
   				Vision::m_nCentreY= -1;
   				Vision::m_nHauteur= -1;
-  				Vision::m_nlargeur= -1;
+  				Vision::m_nLargeur= -1;
+  				if(source.empty()==false){
         		cv::Mat image=source.clone();
+        		sprintf(str,"/home/lvuser/gear%d.png",n++);
+
 //        		cv::MSER ms(5, 5000, 50000);
         		        std::vector<std::vector<cv::Point>> regions;
         		        std::vector<cv::Rect> bboxes;
@@ -76,6 +97,9 @@ static void VisionThread()
 
         		        cv::Ptr< cv::MSER> mser = cv::MSER::create(5,MINRECTSIZE, MAXRECTSIZE);
         		         mser->detectRegions(image, regions, bboxes);
+std::cout << bboxes.size() << " msers" << std::endl;
+for(unsigned int k=0; k<bboxes.size(); k++)
+	cv::rectangle(image,bboxes[k],cv::Scalar(0,255,255),2);
 
         		         /* opencv 2.4
         		        //std::vector<cv::RotatedRect> filtered_regions;
@@ -92,17 +116,23 @@ static void VisionThread()
 
         		        }*/
         		         std::vector<cv::Rect> filtered_regions;
+  std::cout << image.channels() << std::endl;
         		         for (unsigned int i = 0; i < bboxes.size(); i++)
         		         {
 							double w = bboxes[i].width;
 							double h = bboxes[i].height;
-
-							if (w/h >0.2 && w/h < 0.6)
+							int cx=bboxes[i].x+bboxes[i].width/2;
+							int cy=bboxes[i].y+bboxes[i].height/2;
+							std::cout << w << " " << h << std::endl;
+							if (w/h >0.1 && w/h < 0.60  && image.at<unsigned char>(cy,cx)>100)
 							{
 								filtered_regions.push_back(bboxes[i]);
 							}
 
 						}
+
+
+
 
 
         		        if(filtered_regions.size()>1){
@@ -126,22 +156,30 @@ static void VisionThread()
         		        				Vision::m_nCentreX= x1/2+x2/2;
         		        				Vision::m_nCentreY= y1/2+y2/2;
         		        				Vision::m_nHauteur= y2-y1;
-        		        				Vision::m_nlargeur= x2-x1;
-        		        				cv::rectangle(output,cv::Rect(x1,y1,x2-x1,y2-y1),cv::Scalar(0,255,255));
+        		        				Vision::m_nLargeur= x2-x1;
+        		        				cv::rectangle(image,cv::Rect(x1,y1,x2-x1,y2-y1),cv::Scalar(0,255,255));
+        		        				std::cout << "target found at "<< x1 << " " << y1 << std::endl;
         		        				stop=true;
         		        			}
         		        	}
         		        } else std::cout << "Targets not found (" << filtered_regions.size() << " regions)" << std::endl;
+        		        for(unsigned int k=0; k<filtered_regions.size(); k++)
+        		        	cv::rectangle(image,filtered_regions[k],cv::Scalar(0,255,0),2);
 
+        		        cv::imwrite(str,image);
+  				}
              	Vision::m_bStart=false;
         		Vision::m_bDone=true;
         	}
 
+sleep(10);
 
-        	outputStreamStd.PutFrame(output);
+        	//outputStreamStd.PutFrame(output);
+        }
 
 
-    } // while
+
+     // while
 }
 
 
