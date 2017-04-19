@@ -28,7 +28,7 @@ class Vision
 		static float GetAngle();
 		static bool m_bStart;
 		static bool m_bDone;
-		static int m_nCentreX,m_nCentreY, m_nHauteur, m_nlargeur;
+		static int m_nCentreX,m_nCentreY, m_nHauteur, m_nLargeur;
 };
 
 #endif /* SRC_VISION_H_ */
