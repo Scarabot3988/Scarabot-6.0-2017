@@ -145,7 +145,7 @@ double BaseMobile::GetDistance()
 		}
 
 	n++;
-	return (-sensors->encoderdriveR->Get() + sensors->encoderdriveL->Get()) / 310.0;
+	return (sensors->encoderdriveR->Get() - sensors->encoderdriveL->Get()) / 310.0;
 }
 
 void BaseMobile::ResetDistance()
@@ -154,3 +154,70 @@ void BaseMobile::ResetDistance()
 	sensors->encoderdriveR->Reset();
 	sensors->encoderdriveL->Reset();
 }
+#if 0
+void MyRobotDrive::ArcadeDrive(float moveValue, float rotateValue, bool squaredInputs)
+{
+	static bool reported = false;
+	if (!reported)
+	{
+		nUsageReporting::report(nUsageReporting::kResourceType_RobotDrive, GetNumMotors(), nUsageReporting::kRobotDrive_ArcadeStandard);
+		reported = true;
+	}
+
+	// local variables to hold the computed PWM values for the motors
+	float leftMotorOutput;
+	float rightMotorOutput;
+
+	moveValue = Limit(moveValue);
+	rotateValue = Limit(rotateValue);
+
+	if (squaredInputs)
+	{
+		// square the inputs (while preserving the sign) to increase fine control while permitting full power
+		if (moveValue >= 0.0)
+		{
+			moveValue = (moveValue * moveValue);
+		}
+		else
+		{
+			moveValue = -(moveValue * moveValue);
+		}
+		if (rotateValue >= 0.0)
+		{
+			rotateValue = (rotateValue * rotateValue);
+		}
+		else
+		{
+			rotateValue = -(rotateValue * rotateValue);
+		}
+	}
+
+	if (moveValue > 0.0)
+	{
+		if (rotateValue > 0.0)
+		{
+			leftMotorOutput = moveValue - rotateValue;
+			rightMotorOutput = std::max(moveValue, rotateValue);
+		}
+		else
+		{
+			leftMotorOutput = std::max(moveValue, -rotateValue);
+			rightMotorOutput = moveValue + rotateValue;
+		}
+	}
+	else
+	{
+		if (rotateValue > 0.0)
+		{
+			leftMotorOutput = - std::max(-moveValue, rotateValue);
+			rightMotorOutput = moveValue + rotateValue;
+		}
+		else
+		{
+			leftMotorOutput = moveValue - rotateValue;
+			rightMotorOutput = - std::max(-moveValue, -rotateValue);
+		}
+	}
+	SetLeftRightMotorOutputs(leftMotorOutput, rightMotorOutput);
+}
+#endif

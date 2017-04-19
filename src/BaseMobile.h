@@ -14,6 +14,23 @@
 #include "MultiSpeedController.h"
 #include "math.h"
 
+class MyRobotDrive: public RobotDrive {
+public:
+	MyRobotDrive(uint32_t leftMotorChannel, uint32_t rightMotorChannel);
+		MyRobotDrive(uint32_t frontLeftMotorChannel, uint32_t rearLeftMotorChannel,
+					uint32_t frontRightMotorChannel, uint32_t rearRightMotorChannel) : RobotDrive(frontLeftMotorChannel,rearLeftMotorChannel,
+							frontRightMotorChannel, rearRightMotorChannel){}
+		MyRobotDrive(SpeedController *leftMotor, SpeedController *rightMotor): RobotDrive(leftMotor, rightMotor){}
+		MyRobotDrive(SpeedController &leftMotor, SpeedController &rightMotor): RobotDrive(leftMotor, rightMotor){}
+		MyRobotDrive(SpeedController *frontLeftMotor, SpeedController *rearLeftMotor,
+					SpeedController *frontRightMotor, SpeedController *rearRightMotor) : RobotDrive(frontLeftMotor,rearLeftMotor,
+		frontRightMotor, rearRightMotor) {}
+		MyRobotDrive(SpeedController &frontLeftMotor, SpeedController &rearLeftMotor,
+					SpeedController &frontRightMotor, SpeedController &rearRightMotor):
+						RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor){}
+		void ArcadeDrive(float moveValue, float rotateValue, bool squaredInputs);
+};
+
 class BaseMobile
 {
 	public:
