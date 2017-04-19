@@ -52,6 +52,8 @@ void RobotInit()
 		chooser.AddDefault("Droite", "Droite");
 		chooser.AddDefault("Centre", "Centre");
 		chooser.AddDefault("Gauche", "Gauche");
+		chooser.AddDefault("Testealigner", "Testealigner");
+		chooser.AddDefault("Testeapprocher", "Testeapprocher");
 		chooser.AddDefault("NONE", "NONE");
 
 
@@ -77,6 +79,7 @@ void RobotInit()
 		compressor->Start();
 		blocker->Set(true);
 		Vision::Init();
+		shifter->Set(true);
 
 	}
 
@@ -108,7 +111,11 @@ void TeleopInit()
 
 void TeleopPeriodic()
 	{
-	button_pic=joyPilote->GetRawButton(11);
+
+
+//std::cout<<"nombre de tours droite  "<< sdc->sensors->encoderdriveR->GetRaw()<<std::endl;
+//std::cout<<"nombre de tours gauche  "<< sdc->sensors->encoderdriveL->GetRaw()<<std::endl;
+			button_pic=joyPilote->GetRawButton(11);
 
 // DRIVE //////////////////////////////////////////////////////////////////////////////////////
 		if(entraingrimper==false)
@@ -123,14 +130,14 @@ void TeleopPeriodic()
 		bool button_ramasseur=joyPilote->GetRawButton(2);
 		bool button_ramasseur_reverse=joyPilote->GetRawButton(1);
 
-		if(button_ramasseur==true)
+		if(button_ramasseur_reverse==true)
 			{
-				ramasseur->Set(0.25);
-				std::cout << "Courant ramasseur : " << ramasseur->GetOutputCurrent() << std::endl;
+				ramasseur->Set(1);
+			//	std::cout << "Courant ramasseur : " << ramasseur->GetOutputCurrent() << std::endl;
 			}
-		else if (button_ramasseur_reverse==true)
+		else if (button_ramasseur==true)
 			{
-				ramasseur->Set(-1);
+				ramasseur->Set(-0.4);
 			}
 		else
 			{
@@ -138,7 +145,7 @@ void TeleopPeriodic()
 			}
 
 // PISTONS GRIMPEUR //////////////////////////////////////////////////////////
-#if 0
+
 		bool button_pistongrimpeur=joyPilote->GetRawButton(3);
 
 		if (button_pistongrimpeur==true)
@@ -169,7 +176,7 @@ void TeleopPeriodic()
 				blocker->Set(true);
 			}
 
-#endif
+
 
 // TURBO ///////////////////////////////////////////////////////////
 /*
@@ -210,11 +217,11 @@ void TeleopPeriodic()
 		bool button_shifter=joyPilote->GetRawButton(9);
 		if(button_shifter==true)
 			{
-				shifter->Set(true);
+				shifter->Set(false);
 			}
 		else
 			{
-				shifter->Set(false);
+				shifter->Set(true);
 			}
 
 // BOUTTON GRIMPEUR /////////////////////////////////////////////////////
@@ -223,7 +230,7 @@ void TeleopPeriodic()
 			{
 				if(entraingrimper==false)
 					sdc->basemobile.ResetDistance();
-				std::cout << "Distance grimpage: " << sdc->basemobile.GetDistance()<<std::endl;
+				//std::cout << "Distance grimpage: " << sdc->basemobile.GetDistance()<<std::endl;
 				grimpeurpiston->Set(true);
 				blocker->Set(false);
 				sdc->basemobile.Drive(0,1);
