@@ -86,6 +86,8 @@ static void VisionThread()
 			Vision::m_nCentreY= -1;
 			Vision::m_nHauteur= -1;
 			Vision::m_nLargeur= -1;
+
+			// Si image pas vide
 			if(source.empty()==false){
 				cv::Mat image=source.clone();
 				sprintf(str,"/home/lvuser/gear%d.png",n++);
@@ -98,84 +100,40 @@ static void VisionThread()
 				cv::Ptr< cv::MSER> mser = cv::MSER::create(5,MINRECTSIZE, MAXRECTSIZE);
 				mser->detectRegions(image, regions, bboxes);
 
+				// Affichage des regions trouvees dans l'image
 				for(unsigned int k=0; k<bboxes.size(); k++)
 					cv::rectangle(image,bboxes[k],cv::Scalar(0,255,255),2);
 
-				/* opencv 2.4
-        		        //std::vector<cv::RotatedRect> filtered_regions;
-        		        for (int i = 0; i < regions.size(); i++)
-        		        {
-    		                cv::RotatedRect rectcandidate = cv::minAreaRect(regions[i]);
-    		                double w = rectcandidate.boundingRect().width;
-    		                double h = rectcandidate.boundingRect().height;
-
-        		            if (w/h >0.2 && w/h < 0.6)
-        		            {
-        		            	filtered_regions.push_back(rectcandidate);
-        		            }
-
-        		        }*/
-				std::vector<cv::Rect> filtered_regions;
-
+				// notre cible est la plus grosse region
+				cv::Rect oBestRegion(0,0,0,0);
 				for (unsigned int i = 0; i < bboxes.size(); i++)
 				{
 					double w = bboxes[i].width;
 					double h = bboxes[i].height;
 					int cx=bboxes[i].x+bboxes[i].width/2;
 					int cy=bboxes[i].y+bboxes[i].height/2;
-
+					// si le rapport largeur/hauteur est bon et que la boite est assez blanche
 					if (w/h >0.2 && w/h < 0.60  && image.at<cv::Vec3b>(cy,cx).val[1]>100)
 					{
-						filtered_regions.push_back(bboxes[i]);
+						// Si la region trouvee est plus grande que oBestRegion,
+						// oBestRegion est maintgenant egal a cette region
+						if(bboxes[i].height*bboxes[i].width > oBestRegion.height*oBestRegion.width){
+							oBestRegion=bboxes[i];
+						}
 					}
 
 				}
 
 
-				if(filtered_regions.size()>1){
+				if(oBestRegion.width>0){
+					Vision::m_nCentreX= oBestRegion.x+oBestRegion.width/2;
+					Vision::m_nCentreY= oBestRegion.y+oBestRegion.height/2;
+					Vision::m_nHauteur= oBestRegion.height;
+					Vision::m_nLargeur= oBestRegion.width;
+					cv::rectangle(image,oBestRegion,cv::Scalar(0,255,0));
+					std::cout << "target found at "<< Vision::m_nCentreX << " " << Vision::m_nCentreY << std::endl;
 
-					cv::Rect besttarget;
-					int bestscore=10000;
-					for(unsigned int i=0; i<filtered_regions.size(); i++)
-						for(unsigned int j=0; j<filtered_regions.size(); j++){
-							float wi=filtered_regions[i].width;
-							float wj=filtered_regions[j].width;
-							float hi=filtered_regions[i].height;
-							float hj=filtered_regions[j].height;
-							if(i!=j && fabs(filtered_regions[i].y - filtered_regions[j].y) < 10 &&
-									fabs(wi-wj)/(1+wi) < 0.1 &&
-									fabs(hi-hj)/(1+hi) < 0.1){
-								cv::Rect r1=filtered_regions[i];
-								cv::Rect r2=filtered_regions[j];
-
-								int x1=std::min(r1.x,r2.x);
-								int y1=std::min(r1.y,r2.y);
-								int x2=std::max(r1.x+r1.width, r2.x+r2.width);
-								int y2=std::max(r1.y+r1.height, r2.y+r2.height);
-								int w=x2-x1;
-								int h=y2-y1;
-								int color1=image.at<cv::Vec3b>(r1.y+r1.height/2,r1.x+r1.width/2).val[1];
-								int color2=image.at<cv::Vec3b>(r2.y+r2.height/2,r2.x+r2.width/2).val[1];
-								int diffcolor=abs(color2-color1);
-
-								if(fabs(w/(1.0+h) - 2) < 0.2 && diffcolor<bestscore){
-									besttarget=cv::Rect(x1,y1,w,h);
-									bestscore=diffcolor;
-								}
-							}
-						}
-					if(bestscore<100){
-								Vision::m_nCentreX= besttarget.x+besttarget.width/2;
-								Vision::m_nCentreY= besttarget.y+besttarget.height/2;
-								Vision::m_nHauteur= besttarget.height;
-								Vision::m_nLargeur= besttarget.width;
-								cv::rectangle(image,besttarget,cv::Scalar(0,255,0));
-								std::cout << "target found at "<< Vision::m_nCentreX << " " << Vision::m_nCentreY << std::endl;
-
-						}
-				} else std::cout << "Targets not found (" << filtered_regions.size() << " regions)" << std::endl;
-				for(unsigned int k=0; k<filtered_regions.size(); k++)
-					cv::rectangle(image,filtered_regions[k],cv::Scalar(0,255,255),2);
+				} else std::cout << "Target not found" << std::endl;
 
 				cv::imwrite(str,image);
 			}
@@ -189,8 +147,6 @@ static void VisionThread()
 	}
 
 
-
-	// while
 }
 
 
